@@ -1,33 +1,53 @@
 
 import React, {useState} from "react";
-//import logo from './logo.svg';
 import './App.css';
 //import { Home } from './components/home';
 //import { Detail } from './components/detail';
 //import { Layout } from './components/layout';
+import axios from "axios";
 
 function App() {
     // const [currentFrom, setCurrentFrom] = useState('Home');
     // const toggleForm = (formName) => {
     //     setCurrentFrom(formName);
     // }
-    const [uploadedImages, setUploadedImages] = useState(Array(10).fill(null));
+    
+    const [file, setFile] = useState(null);
 
-    const handleImageUpload = (event, index) => {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            setUploadedImages(prevImages => {
-              const newImages = [...prevImages];
-              newImages[index] = reader.result;
-              return newImages;
-            });
-          };
-          reader.readAsDataURL(file);
-        }
-      };
+    const onFormSubmit = (e) =>{
+        e.preventDefault();
 
+        const fromData = new FormData();
+        fromData.append('ImageName', file.name)
+        fromData.append('image', file)
+        const config = {
+            headers : {
+                'content-type' : 'multipart/form-data',
+            },
+        };
+
+        const url = "http://192.168.10.76:8080/web/upload";
+
+        axios.post(url, fromData, config)
+            .then((response) => {
+                console.log('Image upload successfully:');
+                alert('Image upload successfully');
+            })
+            .catch((error) => {
+                console.log('Error: ', error);
+                alert("Error: " + error);
+            })
+    }
+
+    const onInputChange = (e) => {
+        setFile(e.target.files[0]);
+    };
+
+    const onMouseOverCaptureHandler = () => {
+        alert('Image 1 Alert!!!')
+        
+    };
+    
     return(
         // <div className="App">
         //     {
@@ -36,115 +56,37 @@ function App() {
         // </div>
         <div className="container">
 
-            {/* grid1-1 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
+            {/* grid */}
+            <div  className="grid1-1">
+                <img src="image/image1.jpg" alt="computer" onMouseOverCapture={onMouseOverCaptureHandler}/>
+            </div>
 
-            {/* grid1-2 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
+            <div  className="grid1-2">
+                <img src="image/image2.jpg" alt="computer"/>
+            </div>
 
-            {/* grid1-3 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
+            <div  className="grid1-3">
+                <img src="image/image3.jpg" alt="computer"/>
+            </div>
 
-            {/* grid1-4 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
+            <div  className="grid1-4">
+                <img src="image/image4.jpg" alt="computer"/>
+            </div>
 
-            {/* grid1-5 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
+            <div  className="grid1-5">
+                <img src="image/image5.jpg" alt="computer"/>
+            </div>
 
-            {/* grid2-1 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
+            <div  className="grid1-6">
+                <img src="image/image6.jpg" alt="computer"/>
+            </div>
+            
+        <br></br>
+        <form onSubmit={onFormSubmit}>
+            <input type="file"  onChange={onInputChange} />
+            <button type="submit">Upload</button>
+        </form>
 
-            {/* grid2-2 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
-
-            {/* grid2-3 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
-
-            {/* grid2-4 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
-
-            {/* grid2-5 */}
-            {uploadedImages.map((imageData, index) => (
-        <div key={index} className={`grid${Math.floor(index / 5) + 1}-${(index % 5) + 1}`}>
-          {imageData ? (
-            <img src={imageData} alt={`Uploaded ${index}`} />
-          ) : (
-            <input type="file" onChange={(e) => handleImageUpload(e, index)} />
-          )}
-        </div>
-      ))}
         </div>
     );
 }
