@@ -48,7 +48,7 @@ export const Home = (props) => {
         <img
           src={previewUrl}
           alt="Preview"
-          style={{ width: "300px", height: "auto" }}
+          style={{ width: "300px", height: "300px" }}
         />
       )}
 
@@ -64,7 +64,5 @@ export const Home = (props) => {
         <button className="link-btn" onClick={() => props.onFormSwitch('Detail')}>เพิ่มข้อมูล</button>
       
       </div>
-      
-      
   )
 }
