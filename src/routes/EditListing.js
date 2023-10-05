@@ -23,10 +23,7 @@ export default function DataListing() {
             
             alert("Delete successful");
             window.location.reload(); 
-            console.error(`http://192.168.10.76:8080/web/pointer/${no}`);
-            console.error(`http://192.168.10.76:8080/web/department/${dept}`);
-            console.error(`http://192.168.10.76:8080/web/resource/${resource_id}`);
-
+            
             } catch (error){
                 console.error("Error Delete data:", error);
                 alert("Error delete:", error);

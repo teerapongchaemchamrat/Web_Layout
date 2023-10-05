@@ -27,6 +27,7 @@ export default function Factory1A() {
           strokeWidth="1"
           fill="black"
           cursor="pointer"
+          fillOpacity="0"
         />
     
       ));
@@ -59,7 +60,7 @@ export default function Factory1A() {
                       top: `${data.y}px`,
                       cursor: "pointer",
                       transform: "translate(-51%, 26%)", // Center the image
-                      opacity: 0.5
+                      opacity: 1.0
                   }}
               />} modal nested >
               {close => (

@@ -34,7 +34,7 @@ export default function Office_floor_2() {
           // strokeWidth="1"
           fill="black"
           cursor="pointer"
-          fillOpacity="0.5"
+          fillOpacity="0"
         />
 
       ));
@@ -67,7 +67,7 @@ export default function Office_floor_2() {
                       top: `${data.y}px`,
                       cursor: "pointer",
                       transform: "translate(-51%, 26%)", // Center the image
-                      opacity: 0.5
+                      opacity: 1.0
                       
                   }}
               />} modal nested >
@@ -210,7 +210,7 @@ export default function Office_floor_2() {
 
 const ClickableSVG = styled.svg`
   background: bisque;
-  background-image: url(../image/table.svg);
+  background-image: url(../image/layout1.svg);
   background-size: 100% 100%;
   -o-background-size: 100% 100%;
   -webkit-background-size: 100% 100%;
