@@ -31,13 +31,15 @@ function Alert(props) {
                 const response = await axios.post("http://49.0.65.4:3002/login", userData);
                 console.log("POST Response:", response.data);
                 setOpenSuccess(true);
-                if ( username === 'admin'){
-                    navigate('/home', {state:{valueUser: username, RoleType: "administrator"}});
+                if ( username === 'admin'){   // เครื่องหมายหรือ ||
+                    localStorage.setItem('RoleType', 'administrator');
+                    navigate('/home', {state:{valueUser: username}});
                 } else {
-                    navigate('/home', {state:{valueUser: username, RoleType: "user"}});
+                    localStorage.setItem('RoleType', 'user');
+                    navigate('/home', {state:{valueUser: username}});
                 }
             } catch (error) {
-                console.error("Error posting registration data:", error);
+                console.error("Error login data:", error);
                 setOpenError(true);
                 setPassword("");
             }

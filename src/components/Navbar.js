@@ -12,6 +12,8 @@ function Navbar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
+  const valueRole = localStorage.getItem('RoleType')
+
   const navigate = useNavigate();
 
   const PageEdit= () => {
@@ -25,14 +27,15 @@ function Navbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          
-          <button class="button-82-pushable" onClick={() => PageEdit()}>
-            <span class="button-82-shadow"></span>
-            <span class="button-82-edge"></span>
-            <span class="button-82-front text">
+          {valueRole === 'administrator' && (
+          <button className="button-82-pushable" onClick={() => PageEdit()}>
+            <span className="button-82-shadow"></span>
+            <span className="button-82-edge"></span>
+            <span className="button-82-front text">
             Edit Data
             </span>
         </button>
+          )}
           <div className="menu-bars-text">
               CHAIYOOT FACTORY
           </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import './Office_floor_2.css';
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
@@ -12,12 +12,6 @@ export default function Office_floor_2() {
   const [circles, setCircles] = useState([]);
   const [selectedCircle, setSelectedCircle] = useState(null);
   const [image, setImage] = useState(null);
-
-  const userPermisson = useLocation();
-
-  const valueRole = userPermisson?.state?.RoleType || "not found";
-
-  console.log("role: " + valueRole);
  
   const getCircle = async () => {
     try {
@@ -96,9 +90,9 @@ export default function Office_floor_2() {
                             Update
                           </button>
                         )} */}
-                        <button className="button-85" onClick={() => {navigate('/edit')}} >
+                        {/* <button className="button-85" onClick={() => {navigate('/edit')}} >
                           Update
-                        </button>
+                        </button> */}
                         
                       </div>
                     </div>

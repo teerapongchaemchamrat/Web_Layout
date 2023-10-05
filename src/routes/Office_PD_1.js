@@ -84,9 +84,9 @@ export default function Office_PD_1() {
                         <button className="button-85" onClick={() => {console.log('modal closed '); close();}}>
                           Close
                         </button>
-                        <button className="button-85" >
+                        {/* <button className="button-85" >
                           Update
-                        </button>
+                        </button> */}
                         
                       </div>
                     </div>
