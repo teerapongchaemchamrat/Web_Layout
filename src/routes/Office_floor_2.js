@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import './Office_floor_2.css';
 import axios from "axios";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
@@ -12,6 +12,12 @@ export default function Office_floor_2() {
   const [circles, setCircles] = useState([]);
   const [selectedCircle, setSelectedCircle] = useState(null);
   const [image, setImage] = useState(null);
+
+  const userPermisson = useLocation();
+
+  const valueRole = userPermisson?.state?.RoleType || "not found";
+
+  console.log("role: " + valueRole);
  
   const getCircle = async () => {
     try {
@@ -24,12 +30,13 @@ export default function Office_floor_2() {
           cx={circle.x}
           cy={circle.y}
           r={circle.diameter / 2}
-          stroke="black"
-          strokeWidth="1"
+          // stroke="black"
+          // strokeWidth="1"
           fill="black"
           cursor="pointer"
+          fillOpacity="0.5"
         />
-    
+
       ));
 
       setCircles(newCircles);
@@ -61,6 +68,7 @@ export default function Office_floor_2() {
                       cursor: "pointer",
                       transform: "translate(-51%, 26%)", // Center the image
                       opacity: 0.5
+                      
                   }}
               />} modal nested >
               {close => (
@@ -83,12 +91,15 @@ export default function Office_floor_2() {
                         <button className="button-85" onClick={() => {console.log('modal closed '); close();}}>
                           Close
                         </button>
-                        <button className="button-85" >
+                        {/* {valueRole === 'administrator' && (
+                          <button className="button-85" onClick={() => {navigate('/edit')}}>
+                            Update
+                          </button>
+                        )} */}
+                        <button className="button-85" onClick={() => {navigate('/edit')}} >
                           Update
                         </button>
-                        <button className="button-85" >
-                          Delete
-                        </button>
+                        
                       </div>
                     </div>
                   </div>
@@ -103,7 +114,7 @@ export default function Office_floor_2() {
       console.error("Error fetching image data:", error);
     }
   };
-
+  
   useEffect(() => {
     
     getCircle();
@@ -162,9 +173,8 @@ export default function Office_floor_2() {
       diameter: diameter,
     });
 
-    
-
-    navigate('/register',{state:{valueX:x, valueY:y}} ); //go to page register with parameter
+    console.log("circle" + selectedCircle);
+    navigate('/register',{state:{valueX:x, valueY:y, Location:"OFFICE FLOOR 2"}} ); //go to page register with parameter
 
     } else{
       setSelectedCircle(null);
@@ -197,17 +207,6 @@ export default function Office_floor_2() {
 //   align-items: center;
 // `;
 // 1920x849
-
-// const ClickableSVG = styled.svg`
-//   background: bisque;
-//   background-image: url(../image/table.svg);
-//   background-size:100% 100%;
-//   -o-background-size: 100% 100%;
-//   -webkit-background-size: 100% 100%;
-//   background-size:cover;
-//   width: 300vh; 
-//   height: 100vh;
-// `;
 
 const ClickableSVG = styled.svg`
   background: bisque;
