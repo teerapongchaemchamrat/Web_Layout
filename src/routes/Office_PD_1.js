@@ -15,7 +15,7 @@ export default function Office_PD_1() {
  
   const getCircle = async () => {
     try {
-      const response = await axios.get("http://192.168.10.76:8080/web/pointer/all");
+      const response = await axios.get("http://192.168.10.76:8080/web/pointer/location3");
       const fetchedCircles = response.data;
 
       const newCircles = fetchedCircles.map((circle) => (
@@ -41,7 +41,7 @@ export default function Office_PD_1() {
 
   const getImage = async () => {
     try {
-      const response = await axios.get("http://192.168.10.76:8080/web/pointer/all");
+      const response = await axios.get("http://192.168.10.76:8080/web/pointer/location3");
       const fetchedCircles = response.data;
 
       const newImages = fetchedCircles.map((data) => {

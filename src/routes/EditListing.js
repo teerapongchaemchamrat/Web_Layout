@@ -18,8 +18,15 @@ export default function DataListing() {
         if (window.confirm('Do you want to remove?')) {
             try {
             axios.delete(`http://192.168.10.76:8080/web/pointer/${no}`);
-            axios.delete(`http://192.168.10.76:8080/web/depertment/${dept}`);
+            axios.delete(`http://192.168.10.76:8080/web/department/${dept}`);
             axios.delete(`http://192.168.10.76:8080/web/resource/${resource_id}`);
+            
+            alert("Delete successful");
+            window.location.reload(); 
+            console.error(`http://192.168.10.76:8080/web/pointer/${no}`);
+            console.error(`http://192.168.10.76:8080/web/department/${dept}`);
+            console.error(`http://192.168.10.76:8080/web/resource/${resource_id}`);
+
             } catch (error){
                 console.error("Error Delete data:", error);
                 alert("Error delete:", error);

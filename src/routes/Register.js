@@ -48,7 +48,6 @@ export default function Register() {
           'content-type': 'multipart/form-data',
         },
       };
-      alert("Are you sure reg?");
   
       try {
         const [pointerResponse, resourceResponse, uploadResponse] = await Promise.all([
@@ -63,7 +62,7 @@ export default function Register() {
   
         alert("Save successful");
         
-        navigate('/office_floor_2'); 
+        navigate('/home'); 
       } catch (error) {
         console.error("Error posting registration data:", error);
         alert("Error:", error);

@@ -1,932 +1,212 @@
-import './Office_floor_1.css'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import './Office_floor_2.css';
 import axios from "axios";
+import { useNavigate  } from "react-router-dom";
 import Popup from 'reactjs-popup';
-import DataFetchingAPI from './DataFetchingAPI';
+import 'reactjs-popup/dist/index.css';
 
-function Office_floor_1() {
-
-  const [file, setFile] = useState(null);
-    
-    const onFormSubmit = (e) =>{
-        e.preventDefault();
-
-        const fromData = new FormData();
-        fromData.append('ImageName', file.name)
-        fromData.append('image', file)
-        const config = {
-            headers : {
-                'content-type' : 'multipart/form-data',
-            },
-        };
-
-        const url = "http://192.168.10.76:8080/web/upload";
-
-        axios.post(url, fromData, config)
-            .then((response) => {
-                console.log('Image upload successfully:');
-                alert('Image upload successfully');
-            })
-            .catch((error) => {
-                console.log('Error: ', error);
-                alert("Error: " + error);
-            })
-    }
-
-    const onInputChange = (e) => {
-        setFile(e.target.files[0]);
-    };
-
-  return (
-    // <div className="office_floor_1">
-    //   <h1>OFFICE FLOOR 1</h1>
-    // </div>
-    <div className="container">
-
-            {/* grid */}
-            <Popup trigger=
-                {<div className="grid1-1">
-                    <img src="image/image1.jpg" alt="image1.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={1} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid2-1">
-                    <img src="image/image2.jpg" alt="image2.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={2} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid3-7">
-                    <img src="image/image3.jpg" alt="image3.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={3} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid3-8">
-                    <img src="image/image4.jpg" alt="image4.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={4} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid3-9">
-                    <img src="image/image5.jpg" alt="image5.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={5} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid3-10">
-                    <img src="image/image6.jpg" alt="image6.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={6} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid5-2">
-                    <img src="image/image7.jpg" alt="image7.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={7} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid5-3">
-                    <img src="image/image8.jpg" alt="image8.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={8} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-            
-            <Popup trigger=
-                {<div className="grid5-4">
-                    <img src="image/image9.jpg" alt="image9.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={9} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid5-5">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid5-6">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid5-8">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid5-9">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid5-10">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-2">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-3">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-4">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-5">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-6">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-8">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-9">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid6-10">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid8-2">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid8-3">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid8-4">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid8-5">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid8-6">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid8-7">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid8-8">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid9-2">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid9-3">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid9-4">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid9-5">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid9-6">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid9-7">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid9-8">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid11-7">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
-
-            <Popup trigger=
-                {<div className="grid11-8">
-                    <img src="image/image10.jpg" alt="image10.jpg" />
-                </div>
-                }
-                modal nested>
-                {
-                    close => (
-                        <div className='modal'>
-                            <div className='content'>
-                            <DataFetchingAPI id={10} />
-                            </div>
-                            <div>
-                                <button onClick=
-                                    {() => close()}>
-                                        Close
-                                </button>
-                            </div>
-                        </div>
-                    )
-                }
-            </Popup>
+export default function Office_floor_1() {
+    const navigate = useNavigate();
+    const [circles, setCircles] = useState([]);
+    const [selectedCircle, setSelectedCircle] = useState(null);
+    const [image, setImage] = useState(null);
+   
+    const getCircle = async () => {
+      try {
+        const response = await axios.get("http://192.168.10.76:8080/web/pointer/location1");
+        const fetchedCircles = response.data;
+  
+        const newCircles = fetchedCircles.map((circle) => (
+          <circle
+            key={circle.no}
+            cx={circle.x}
+            cy={circle.y}
+            r={circle.diameter / 2}
+            stroke="black"
+            strokeWidth="1"
+            fill="black"
+            cursor="pointer"
+          />
+      
+        ));
+  
+        setCircles(newCircles);
         
-            <div className="upload" >
-                <form onSubmit={onFormSubmit} >
-                    <input type="file"  onChange={onInputChange} />
-                    <br></br>
-                    <button type="submit" className="button">Upload</button>
-                </form>
-            </div>
-        </div>
-  );
-}
-
-export default Office_floor_1;
+      } catch (error) {
+        console.error("Error fetching circle data:", error);
+      }
+    };
+  
+    const getImage = async () => {
+      try {
+        const response = await axios.get("http://192.168.10.76:8080/web/pointer/location1");
+        const fetchedCircles = response.data;
+  
+        const newImages = fetchedCircles.map((data) => {
+        const imageUrl = data.image_path.replace("D:/Project Web/react/myreact/public/", "");
+        //console.log("Image URL: " + imageUrl);
+          
+          return (
+            <Popup key={data.no}
+              trigger=
+                {<img className="img-size" 
+                    src={imageUrl}
+                    alt={data.model}
+                    style={{
+                        position: "absolute",
+                        left: `${data.x}px`,
+                        top: `${data.y}px`,
+                        cursor: "pointer",
+                        transform: "translate(-51%, 26%)", // Center the image
+                        opacity: 0.5
+                    }}
+                />} modal nested >
+                {close => (
+                    <div className="modal">
+                      <div className="header">
+                         <h3>Detail Image </h3>
+                         </div>
+                      <div className="content">
+                        <h5>Resource_ID : {data.resource_id}</h5>
+                        <br />
+                        <h5>Model : {data.model}</h5>
+                        <br />
+                        <h5>Department : {data.dept}</h5>
+                        <br />
+                        <h5>Location : {data.location}</h5>
+                      </div>
+                      
+                      <div className="footer">
+                        <div className="flex-container">
+                          <button className="button-85" onClick={() => {console.log('modal closed '); close();}}>
+                            Close
+                          </button>
+                          <button className="button-85" >
+                            Update
+                          </button>
+                          
+                        </div>
+                      </div>
+                    </div>
+            )}
+            </Popup>
+          );
+      });
+  
+        setImage(newImages);
+  
+      } catch (error) {
+        console.error("Error fetching image data:", error);
+      }
+    };
+  
+    useEffect(() => {
+      
+      getCircle();
+      getImage();
+         
+    }, []);
+  
+    const getClickCoords = (event) => {
+            // from: https://stackoverflow.com/a/29296049/14198287
+      // var e = event.target;
+      // var dim = e.getBoundingClientRect();
+      const { left, top } = event.currentTarget.getBoundingClientRect();
+      var x = event.clientX - left;
+      var y = event.clientY - top;
+      return [x, y];
+      
+    };
+  
+    const addCircle = async (event) => {
+      let [x, y] = getClickCoords(event);
+      let diameter = 20;
+  
+      const isInsideExistingCircle = circles.some((circle) => { //check area circle
+        const circleX = parseInt(circle.props.cx);
+        const circleY = parseInt(circle.props.cy);
+        const circleRadius = parseInt(circle.props.r);
+        const circleArea = Math.PI * circleRadius ** 2;
+        const squaredDistance = (x - circleX ) ** 2 + (y - circleY ) ** 2
+        return squaredDistance <= circleArea;
+      });
+  
+            // make new svg circle element
+            // more info here: https://www.w3schools.com/graphics/svg_circle.asp
+      if (!isInsideExistingCircle) {
+      let newCircle = (
+        <circle
+          key={circles.length + 1}
+          cx={x}
+          cy={y}
+          r={diameter / 2}
+          stroke="black"
+          strokeWidth="1"
+          fill="black"
+          cursor="pointer"
+        />
+        );
+            // update the array of circles; you HAVE to spread the current array
+            // as 'circles' is immutible and will not accept new info
+      let allCircles = [...circles, newCircle ];
+            
+      setCircles(allCircles);
+  
+      setSelectedCircle({
+        x: x,
+        y: y,
+        diameter: diameter,
+      });
+  
+      console.log("circle" + selectedCircle);
+      navigate('/register',{state:{valueX:x, valueY:y, Location:"OFFICE FLOOR 1"}} ); //go to page register with parameter
+  
+      } else{
+        setSelectedCircle(null);
+        alert("TEST");
+      }
+      
+    };
+  
+    //console.log("this circle",circles);
+  
+    return (
+      <div className="Container">
+          {image}
+          <ClickableSVG onClick={addCircle} >
+            {/* This loads your circles in the circles hook here */}
+            {circles}
+          </ClickableSVG>
+          
+      </div>
+      
+    );
+  }
+  
+  // const Container = styled.div`
+  //   width: 100%;
+  //   hieght: 100%;
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   align-items: center;
+  // `;
+  // 1920x849
+  
+  const ClickableSVG = styled.svg`
+    background: bisque;
+    background-image: url(../image/table.svg);
+    background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    background-size: cover;
+    width: 100%; /* Set the width to 100% */
+    height: auto; /* Allow the height to adjust proportionally */
+    
+    @media (min-width: 768px) {
+      /* Apply specific styles for screens wider than 768px */
+      width: 100%; /* For example, set a specific width */
+      height: 100%;
+    }
+  `;

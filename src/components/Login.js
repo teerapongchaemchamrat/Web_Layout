@@ -32,9 +32,9 @@ function Alert(props) {
                 console.log("POST Response:", response.data);
                 setOpenSuccess(true);
                 if ( username === 'admin'){
-                    navigate('/office_floor_2', {state:{valueUser: username, RoleType: "administrator"}});
+                    navigate('/home', {state:{valueUser: username, RoleType: "administrator"}});
                 } else {
-                    navigate('/office_floor_2', {state:{valueUser: username, RoleType: "user"}});
+                    navigate('/home', {state:{valueUser: username, RoleType: "user"}});
                 }
             } catch (error) {
                 console.error("Error posting registration data:", error);

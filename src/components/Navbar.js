@@ -19,9 +19,6 @@ function Navbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <div className="menu-bars">
-              <button>test</button>
-          </div>
           <div className="menu-bars-text">
               CHAIYOOT FACTORY
           </div>
