@@ -46,4 +46,5 @@ export const SidebarData = [
     icon: <IoIcons.IoIosGrid />,
     cName: "nav-text",
   }
+
 ];

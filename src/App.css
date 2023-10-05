@@ -17,6 +17,7 @@
   font-size: 3rem;
   background-color: #eccea5;
   color: #000000;
+  
 }
 
 /* Navbar CSS */
@@ -26,20 +27,22 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  z-index: 1;
 }
 
 .menu-bars {
   margin-left: 2rem;
   font-size: 2rem;
   background: none;
-  color: #ffffff;
+  color: #1aa707;
 }
 
 .menu-bars-text {
   margin-left: 78%;
-  font-size: 2rem;
+  font-size: 1.7rem;
   background: none;
   color: #ffffff;
+  
 }
 
 .nav-menu {

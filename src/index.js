@@ -3,21 +3,19 @@ import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link,
-  Outlet,
-  createRoutesFromElements,
+  Outlet
 } from "react-router-dom";
 import Home from "./routes/Home";
 import OfficeFloor1 from "./routes/Office_floor_1";
 import OfficeFloor2 from "./routes/Office_floor_2";
 import OfficePD1 from "./routes/Office_PD_1";
-import OfficePD2 from "./routes/Ofiice_PD_2";
+import OfficePD2 from "./routes/Office_PD_2";
 import Factory1A from "./routes/Factory1A";
 import Factory1B from "./routes/Factory1B";
+import Register from "./routes/Register";
 import Navbar from "./components/Navbar";
 import "./App.css";
-
+ 
 const AppLayout = () => (
   <>
     <Navbar />
@@ -57,10 +55,17 @@ const router = createBrowserRouter([
         path: "factory1b",
         element: <Factory1B />,
       },
+      {
+        path: "register",
+        element: <Register />,
+      },
     ],
   },
 ]);
 
+
 createRoot(document.getElementById("root")).render(
   <RouterProvider router={router} />
 );
+
+

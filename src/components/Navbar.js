@@ -6,6 +6,7 @@ import { SidebarData } from "./SidebarData";
 import "../App.css";
 import { IconContext } from "react-icons";
 
+
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
 
@@ -18,9 +19,13 @@ function Navbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
+          <div className="menu-bars">
+              <button>test</button>
+          </div>
           <div className="menu-bars-text">
               CHAIYOOT FACTORY
           </div>
+          
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items" onClick={showSidebar}>
