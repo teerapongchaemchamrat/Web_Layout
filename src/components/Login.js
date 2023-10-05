@@ -5,7 +5,6 @@ import axios from "axios";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
-
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
@@ -26,18 +25,18 @@ function Alert(props) {
             Username: username,
             WorkstationLogin: password
         }
-        
+         
         try {
                 const response = await axios.post("http://49.0.65.4:3002/login", userData);
                 console.log("POST Response:", response.data);
                 setOpenSuccess(true);
-                if ( username === 'admin'){   // เครื่องหมายหรือ ||
+                if ( username === 'admin' || username === 'teerapong'){  
                     localStorage.setItem('RoleType', 'administrator');
                     navigate('/home', {state:{valueUser: username}});
                 } else {
                     localStorage.setItem('RoleType', 'user');
                     navigate('/home', {state:{valueUser: username}});
-                }
+                }  
             } catch (error) {
                 console.error("Error login data:", error);
                 setOpenError(true);

@@ -133,8 +133,6 @@ export default function Office_floor_1() {
         return squaredDistance <= circleArea;
       });
   
-            // make new svg circle element
-            // more info here: https://www.w3schools.com/graphics/svg_circle.asp
       if (!isInsideExistingCircle) {
       let newCircle = (
         <circle
@@ -148,8 +146,7 @@ export default function Office_floor_1() {
           cursor="pointer"
         />
         );
-            // update the array of circles; you HAVE to spread the current array
-            // as 'circles' is immutible and will not accept new info
+            
       let allCircles = [...circles, newCircle ];
             
       setCircles(allCircles);

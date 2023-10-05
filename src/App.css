@@ -38,11 +38,29 @@
 }
 
 .menu-bars-text {
-  margin-left: 71%;
   font-size: 1.7rem;
   background: none;
   color: #ffffff;
-  
+  margin-left: 65%;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .menu-bars-text {
+    font-size: 1.5rem; /* Adjust font size for larger screens */
+  }
+}
+
+@media (min-width: 992px) {
+  .menu-bars-text {
+    font-size: 2.0rem; /* Adjust font size for even larger screens */
+  }
+}
+
+@media (min-width: 1200px) {
+  .menu-bars-text {
+    font-size: 2.5rem; /* Adjust font size for very large screens */
+  }
 }
 
 .nav-menu {
