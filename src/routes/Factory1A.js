@@ -23,8 +23,8 @@ export default function Factory1A() {
           cx={circle.x}
           cy={circle.y}
           r={circle.diameter / 2}
-          stroke="black"
-          strokeWidth="1"
+          // stroke="black"
+          // strokeWidth="1"
           fill="black"
           cursor="pointer"
           fillOpacity="0"

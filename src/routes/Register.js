@@ -74,66 +74,6 @@ export default function Register() {
       setImage(null);
     };
 
-    //   const pointerData = {
-    //     x: valueX,
-    //     y: valueY,
-    //     diameter: "20",
-    //     resource_id: resourceId,
-    //     dept: dept
-    //   };
-
-    //   try {
-    //     const response = await axios.post("http://192.168.10.76:8080/web/pointer/add", pointerData);
-    //     console.log("POST Response:", response.data);
-    //     alert("Save pointer successfully");
-    //   } catch (error) {
-    //     console.error("Error posting registration data:", error);
-    //     alert("Error data pointer:", error);
-    //   }
-
-    //   const resourceData = {
-    //     resource_id: resourceId,
-    //     model : model,
-    //     location : location
-    //   }
-
-    //   try{
-    //     const response = await axios.post("http://192.168.10.76:8080/web/resource/add", resourceData);
-    //     console.log("POST Response:", response.data);
-    //     alert("Save resource successfully");
-    //   } catch (error){
-    //     console.error("Error posting registration data:", error);
-    //     alert("Error data resource:", error)
-
-    //   }
-
-    //   const departmentData = {
-    //     dept: dept,
-    //     image: image
-    //   }
-    //   const config = {
-    //     headers : {
-    //         'content-type' : 'multipart/form-data',
-    //     },
-    //   };
-
-    //   try {
-    //     const response = await axios.post("http://192.168.10.76:8080/web/upload", departmentData, config);
-    //     console.log("POST Response:", response.data);
-    //     alert("Save department successfully");
-    //   } catch (error) {
-    //     console.error("Error posting registration data:", error);
-    //     alert("Error data department:", error);
-    //   }
-
-    //   setResourceId("");
-    //   setModel("");
-    //   setLocation("");
-    //   setDept("");
-    //   setImage(null);
-    
-    // };
-
       return (
         <div className="bg">
         <div className="form-container">

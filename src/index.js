@@ -17,8 +17,6 @@ import Register from "./routes/Register";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import EditPage from "./routes/EditListing";
-import EditData from "./routes/EditData";
-import DeleteData from "./routes/DeleteData";
 import "./App.css";
 
 const AppLayout = () => {
@@ -78,14 +76,6 @@ const router = createBrowserRouter([
       {
         path: "edit",
         element: <EditPage />,
-      },
-      {
-        path: "edit/update",
-        element: <EditData />,
-      },
-      {
-        path: "edit/delete",
-        element: <DeleteData />,
       },
     ],
   },
