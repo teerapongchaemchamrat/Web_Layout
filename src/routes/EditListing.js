@@ -28,6 +28,8 @@ export default function DataListing() {
     const [dept, setDept] = useState("");
     const [location, setLocation] = useState("");
 
+    const [searchTerm, setSearchTerm] = useState("");
+
     const navigate = useNavigate();
 
     const Removefunction = (no, dept, resource_id) => {
@@ -127,6 +129,13 @@ export default function DataListing() {
       navigate('/home');
     }
 
+    const filteredData = editdata
+    ? editdata.filter(item => {
+        const searchFields = [item.resource_id]; // fix column filter
+        return searchFields.some(field => field.toLowerCase().includes(searchTerm.toLowerCase()));
+      })
+    : [];
+
     return(
         <div>
         <section>
@@ -135,7 +144,24 @@ export default function DataListing() {
                 <h2>CHAIYOOT FACTORY</h2>
             </div>
         </section>
+        
+        <div className="btn-filter">
+        <form className="form">
+          <label for="search" className="label">Search</label>
+          <input id="search" type="search" pattern=".*\S.*" className="input" autoComplete="off"  
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  required/>
+          <span className="caret"></span>
+        </form>
         <button className="btn-back" onClick={() => buttonback()}>Back</button>
+        </div>
+        {/* <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      /> */}
         <table className="styled-table">
             <thead>
             <tr>
@@ -148,7 +174,7 @@ export default function DataListing() {
             </tr>
             </thead>
             <tbody>
-            {editdata &&
+            {/* {editdata &&
                 editdata.map(item => (
                 <tr key={item.no}>
                     <td>{item.no}</td>
@@ -162,7 +188,20 @@ export default function DataListing() {
                     </td>
                 </tr>
                 ))
-            }
+            } */}
+            {filteredData.map(item => (
+            <tr key={item.no}>
+              <td>{item.no}</td>
+              <td>{item.resource_id}</td>
+              <td>{item.dept}</td>
+              <td>{item.location}</td>
+              <td>{item.model}</td>
+              <td>
+                <button className="btn-edit" onClick={() => handleEdit(item)}>Edit</button>
+                <button onClick={() => Removefunction(item.no, item.dept, item.resource_id)} className="btn-remove">Remove</button>
+              </td>
+            </tr>
+          ))}
             </tbody>
         </table>
 
@@ -172,7 +211,7 @@ export default function DataListing() {
             borderRadius: "8px",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"}}>
         <div >
-          <h2 align="center">Edit Data</h2><br></br>
+          <h1 align="center">Edit Data</h1><br></br>
           <form >
             <div className="form-group">
               <label htmlFor="resource_id">Resource ID</label>
