@@ -29,6 +29,7 @@ function Alert(props) {
         try {
                 const response = await axios.post("http://49.0.65.4:3002/login", userData);
                 console.log("POST Response:", response.data);
+                localStorage.setItem('Username', username)
                 setOpenSuccess(true);
                 if ( username === 'admin') {    //   เครื่องหมายหรือ ||
                     localStorage.setItem('RoleType', 'administrator');
