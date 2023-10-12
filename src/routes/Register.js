@@ -5,13 +5,42 @@ import "./Register.css";
 
 export default function Register() {
 
-    const [resourceId, setResourceId] = useState("");
-    const [model, setModel] = useState("");
-    const [dept, setDept] = useState("");
+    const [step, setStep] = useState(1);
+
+    const [Uf_asset_SerialNumber, setUf_asset_SerialNumber] = useState("");
+    const [Uf_asset_Car_Exp, setUf_asset_Car_Exp] = useState("");
+    const [Uf_asset_Compulsory_Exp, setUf_asset_Compulsory_Exp] = useState("");
+    const [Uf_asset_Contact, setUf_asset_Contact] = useState("");
+    const [Uf_asset_ErectricCurrent, setUf_asset_ErectricCurrent]= useState("");
+    //const [Uf_asset_Location, setUf_asset_Location] = useState("");
+    const [Uf_asset_ModelNumber, setUf_asset_ModelNumber] = useState("");
+    const [Uf_asset_PmDurationTime, setUf_asset_PmDurationTime] = useState("");
+    const [Uf_asset_PmLink, setUf_asset_PmLink] = useState("");
+    const [Uf_asset_StartUsedDate, setUf_asset_StartUsedDate] = useState("");
+    const [Uf_asset_UserManual, setUf_asset_UserManual] = useState("");
+    const [Uf_asset_Voltage, setUf_asset_Voltage] = useState("");
+    const [Uf_asset_Weight, setUf_asset_Weight] = useState("");
+    const [Uf_asset_ErectricKw, setUf_asset_ErectricKw] = useState("");
+    const [Uf_asset_ExpireDate, setUf_asset_ExpireDate] = useState("");
+    const [Uf_asset_department, setUf_asset_department] = useState("");
+    const [Uf_asset_inventory_number, setUf_asset_inventory_number] = useState("");
     const [image, setImage] = useState(null);
 
     const navigate = useNavigate();
     const PosXY = useLocation();
+
+    const nextStep = () => {
+      // if (Uf_asset_SerialNumber && Uf_asset_Car_Exp && Uf_asset_Compulsory_Exp && Uf_asset_Contact && Uf_asset_ErectricCurrent) {
+      // setStep(step + 1);
+      // }else {
+      //   alert("Please fill out all required fields.");
+      // }
+      setStep(step + 1);
+    };
+
+    const prevStep = () => {
+      setStep(step - 1);
+    };
 
     const handleImageUpload = (event) => {
       const selectedImage = event.target.files[0];
@@ -20,7 +49,7 @@ export default function Register() {
 
     const valueX = PosXY?.state?.valueX || "not found";
     const valueY = PosXY?.state?.valueY || "not found";
-    const valueLocation = PosXY?.state?.Location || "not found";
+    const Uf_asset_Location = PosXY?.state?.Location || "not found";
 
     const onButtonSubmit = async(e) => {
       e.preventDefault();
@@ -29,18 +58,33 @@ export default function Register() {
         x: valueX,
         y: valueY,
         diameter: "20",
-        resource_id: resourceId,
-        dept: dept
+        Uf_asset_SerialNumber: Uf_asset_SerialNumber,
+        dept: Uf_asset_department,
+        stat: "1"
       };
   
       const resourceData = {
-        resource_id: resourceId,
-        model: model,
-        location: valueLocation
+        Uf_asset_SerialNumber: Uf_asset_SerialNumber,
+        Uf_asset_Car_Exp: Uf_asset_Car_Exp,
+        Uf_asset_Compulsory_Exp: Uf_asset_Compulsory_Exp,
+        Uf_asset_Contact: Uf_asset_Contact,
+        Uf_asset_ErectricCurrent: Uf_asset_ErectricCurrent,
+        Uf_asset_Location : Uf_asset_Location,
+        Uf_asset_ModelNumber: Uf_asset_ModelNumber,
+        Uf_asset_PmDurationTime: Uf_asset_PmDurationTime,
+        Uf_asset_PmLink: Uf_asset_PmLink,
+        Uf_asset_StartUsedDate: Uf_asset_StartUsedDate,
+        Uf_asset_UserManual: Uf_asset_UserManual,
+        Uf_asset_Voltage: Uf_asset_Voltage,
+        Uf_asset_Weight: Uf_asset_Weight,
+        Uf_asset_ErectricKw: Uf_asset_ErectricKw,
+        Uf_asset_ExpireDate: Uf_asset_ExpireDate,
+        Uf_asset_department: Uf_asset_department,
+        Uf_asset_inventory_number: Uf_asset_inventory_number
       }
   
       const departmentData = {
-        dept: dept,
+        dept: Uf_asset_department,
         image: image
       }
       const config = {
@@ -68,9 +112,22 @@ export default function Register() {
         alert("Error:", error);
       }
   
-      setResourceId("");
-      setModel("");
-      setDept("");
+      setUf_asset_SerialNumber("");
+      setUf_asset_Car_Exp("");
+      setUf_asset_Compulsory_Exp("");
+      setUf_asset_Contact("");
+      setUf_asset_ErectricCurrent("");
+      setUf_asset_ModelNumber("");
+      setUf_asset_PmDurationTime("");
+      setUf_asset_PmLink("");
+      setUf_asset_StartUsedDate("");
+      setUf_asset_UserManual("");
+      setUf_asset_Voltage("");
+      setUf_asset_Weight("");
+      setUf_asset_ErectricKw("");
+      setUf_asset_ExpireDate("");
+      setUf_asset_department("");
+      setUf_asset_inventory_number("");
       setImage(null);
     };
 
@@ -78,44 +135,77 @@ export default function Register() {
         <div className="bg">
         <div className="form-container">
       <form className="register-form" >
+      {step === 1 &&(
+        <>
         <h1 align="center">Sign up</h1><br></br>
           
         <h4 align="center">X : {valueX}</h4>
             
         <h4 align="center">Y : {valueY}</h4>
 
+        <label>Serial Number : (30)</label>
           <input
             className="form-field"
             type="text"
-            placeholder="Resource ID"
-            name="resource"
-            value={resourceId}
-            onChange={(e) => setResourceId(e.target.value)}
+            placeholder="SerialNumber"
+            name="Uf_asset_SerialNumber"
+            value={Uf_asset_SerialNumber}
+            onChange={(e) => setUf_asset_SerialNumber(e.target.value)}
             required 
-          />
-       
+          /> <br />
+        
+        <label>Car Exp : </label>
+          <input
+            className="form-field"
+            type="date"
+            placeholder="Car_Exp"
+            name="Uf_asset_Car_Exp" 
+            value={Uf_asset_Car_Exp}
+            onChange={(e) => setUf_asset_Car_Exp(e.target.value)}
+            required
+          /> <br />
+
+          <label>Compulsory Exp : </label>
+          <input
+            className="form-field"
+            type="date"
+            placeholder="Compulsory_Exp"
+            name="Uf_asset_Compulsory_Exp" 
+            value={Uf_asset_Compulsory_Exp}
+            onChange={(e) => setUf_asset_Compulsory_Exp(e.target.value)}
+            required
+          /> <br />
+
+          <label>Contact : (200)</label>
           <input
             className="form-field"
             type="text"
-            placeholder="Model"
-            name="model" 
-            value={model}
-            onChange={(e) => setModel(e.target.value)}
+            placeholder="Contact"
+            name="Uf_asset_Contact" 
+            value={Uf_asset_Contact}
+            onChange={(e) => setUf_asset_Contact(e.target.value)}
             required
-          />
+          /> <br />
     
-          {/* <input
+          <label>ErectricCurrent(A) : (3)</label>
+          <input
             className="form-field"
             type="text"
-            placeholder="Location"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            placeholder="ErectricCurrent"
+            name="Uf_asset_ErectricCurrent" 
+            value={Uf_asset_ErectricCurrent}
+            onChange={(e) => setUf_asset_ErectricCurrent(e.target.value)}
             required
-          /> */}
-          <br></br>
-          <h4>&nbsp; Location : {valueLocation}</h4>
-          <br></br>
+          /> <br />
+  
+          <h4>&nbsp; Location : {Uf_asset_Location}</h4>
+          
+          <div className="button-container">
+            <button className="btn-previous" type="button" onClick={()=>{navigate('/home')}}>Canel</button>
+            <button className="btn-next" type="button" onClick={nextStep} >Next</button>
+          </div>
+          </>
+      )}
           
           {/* <select
             className="form-field-select"
@@ -132,17 +222,140 @@ export default function Register() {
             <option value="FACTORY 1A">FACTORY 1A</option>
             <option value="FACTORY 1B">FACTORY 1B</option>
           </select> */}
-
+        {step === 2 &&(
+        <>
+        <h1 align="center">Step 2</h1><br></br>
+        <label>ModelNumber : (20)</label>
           <input
             className="form-field"
             type="text"
-            placeholder="Department"
-            name="department"
-            value={dept}
-            onChange={(e) => setDept(e.target.value)}
+            placeholder="ModelNumber"
+            name="Uf_asset_ModelNumber"
+            value={Uf_asset_ModelNumber}
+            onChange={(e) => setUf_asset_ModelNumber(e.target.value)}
+            required
+          /> <br />
+
+          <label>PM Duration Time (Hr.) : (int)</label>
+          <input
+            className="form-field"
+            type="number"
+            placeholder="PmDurationTime"
+            name="Uf_asset_PmDurationTime"
+            value={Uf_asset_PmDurationTime}
+            onChange={(e) => setUf_asset_PmDurationTime(e.target.value)}
+            required
+          /> <br />
+
+          <label>PM Document : (100)</label>
+          <input
+            className="form-field"
+            type="text"
+            placeholder="PmLink"
+            name="Uf_asset_PmLink"
+            value={Uf_asset_PmLink}
+            onChange={(e) => setUf_asset_PmLink(e.target.value)}
+            required
+          /> <br />
+
+          <label>StartUsedDate : </label>
+          <input
+            className="form-field"
+            type="date"
+            placeholder="StartUsedDate"
+            name="Uf_asset_StartUsedDate"
+            value={Uf_asset_StartUsedDate}
+            onChange={(e) => setUf_asset_StartUsedDate(e.target.value)}
+            required
+          /> <br />
+
+          <label>UserManual : (100)</label>
+          <input
+            className="form-field"
+            type="text"
+            placeholder="UserManual"
+            name="Uf_asset_UserManual"
+            value={Uf_asset_UserManual}
+            onChange={(e) => setUf_asset_UserManual(e.target.value)}
+            required
+          /> <br />
+
+          <label>Voltage : (20)</label>
+          <input
+            className="form-field"
+            type="text"
+            placeholder="Voltage"
+            name="Uf_asset_Voltage"
+            value={Uf_asset_Voltage}
+            onChange={(e) => setUf_asset_Voltage(e.target.value)}
             required
           />
+          <div className="button-container">
+            <button className="btn-previous" type="button" onClick={prevStep}>Previous</button>
+            <button className="btn-next" type="button" onClick={nextStep}>Next</button>
+          </div>
+          </>
+        )}
 
+        {step === 3 &&(
+        <>
+        <h1 align="center">Step 3</h1><br></br>
+        <label>Weight (kg) : (decimal)</label>
+          <input
+            className="form-field"
+            type="number" 
+            placeholder="Weight"
+            name="Uf_asset_Weight"
+            value={Uf_asset_Weight}
+            onChange={(e) => setUf_asset_Weight(e.target.value)}
+            required
+          /> <br />
+
+          <label>ElectricPower (kW) : (10)</label>
+          <input
+            className="form-field"
+            type="text"
+            placeholder="ErectricKw"
+            name="Uf_asset_ErectricKw"
+            value={Uf_asset_ErectricKw}
+            onChange={(e) => setUf_asset_ErectricKw(e.target.value)}
+            required
+          /> <br />
+
+          <label>ExpireDate : </label>
+          <input
+            className="form-field"
+            type="date"
+            placeholder="ExpireDate"
+            name="Uf_asset_ExpireDate"
+            value={Uf_asset_ExpireDate}
+            onChange={(e) => setUf_asset_ExpireDate(e.target.value)}
+            required
+          /> <br />
+
+          <label>Department : (100)</label>
+          <input
+            className="form-field"
+            type="text"
+            placeholder="department"
+            name="Uf_asset_department"
+            value={Uf_asset_department}
+            onChange={(e) => setUf_asset_department(e.target.value)}
+            required
+          /> <br />
+
+          <label>Inventory_number : (50)</label>
+          <input
+            className="form-field"
+            type="text"
+            placeholder="inventory_number"
+            name="Uf_asset_inventory_number"
+            value={Uf_asset_inventory_number}
+            onChange={(e) => setUf_asset_inventory_number(e.target.value)}
+            required
+          /> <br />
+
+          <label>Image : </label>
           <input
             className="form-field"
             type="file"
@@ -150,16 +363,20 @@ export default function Register() {
             onChange={handleImageUpload}
             required
           />
-          <button className="form-field" type="submit" onClick={onButtonSubmit}>
-            Register
-          </button>
-        
+          <div className="button-container">
+            <button className="btn-previous" type="button" onClick={prevStep}>Previous</button>
+            <button className="btn-next" type="submit" onClick={onButtonSubmit}>
+              Register
+            </button>
+          </div>
+          </>
+        )}
       </form>
     </div>
     </div>
       );
 
-      
+
 }
 
 

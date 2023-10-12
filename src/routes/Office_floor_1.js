@@ -38,6 +38,24 @@ export default function Office_floor_1() {
         console.error("Error fetching circle data:", error);
       }
     };
+
+    function formatDate(dateString) {
+      const originalDate = new Date(dateString);
+      
+      // Add 6 hours to the original date
+      const modifiedDate = new Date(originalDate.getTime() - 7 * 60 * 60 * 1000);
+
+      // Format the date portion as "dd-MM-yyyy"
+      const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const formattedDate = modifiedDate.toLocaleDateString('nl-NL', dateOptions);
+
+      // Format the time portion as "HH:mm:ss" (24-hour format)
+      // const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+      // const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(modifiedDate);
+
+      // return `${formattedDate} ${formattedTime}`;
+      return `${formattedDate}`;
+  }
   
     const getImage = async () => {
       try {
@@ -46,36 +64,137 @@ export default function Office_floor_1() {
   
         const newImages = fetchedCircles.map((data) => {
         const imageUrl = data.image_path.replace("D:/Project Web/react/myreact/public/", "");
-        //console.log("Image URL: " + imageUrl);
-          
+        //const stat = data.stat;
+        //console.log("stat " + stat);
           return (
-            <Popup key={data.no}
+            <Popup key={data.no} 
               trigger=
                 {<img className="img-size" 
                     src={imageUrl}
-                    alt={data.model}
+                    alt={data.Uf_asset_ModelNumber}
                     style={{
                         position: "absolute",
                         left: `${data.x}px`,
                         top: `${data.y}px`,
                         cursor: "pointer",
                         transform: "translate(-51%, 26%)", // Center the image
-                        opacity: 1.0
+                        opacity: 1.0,
+                        filter: data.stat === 0 ? "opacity(60%) brightness(50%) " : "none"
                     }}
-                />} modal nested >
+                />
+                } modal nested >
                 {close => (
-                    <div className="modal">
+                    <div className="modal" style={{ width: `100%`, height: `800px` }}>
                       <div className="header">
                          <h3>Detail Image </h3>
                          </div>
-                      <div className="content">
-                        <h5>Resource_ID : {data.resource_id}</h5>
-                        <br />
-                        <h5>Model : {data.model}</h5>
-                        <br />
-                        <h5>Department : {data.dept}</h5>
-                        <br />
-                        <h5>Location : {data.location}</h5>
+                      <div className="content" style={{ display: 'flex', maxHeight: '650px', overflowY: 'auto' }}>
+                        <div className="left-content" style={{ flex: '1', marginRight: '10px' }}>
+                          <div className="text-front">
+                            <h5>Car_Exp : &nbsp;</h5>
+                            <div className="text-back">
+                            <h5> {formatDate(data.Uf_asset_Car_Exp)}</h5>
+                            </div>
+                          </div><br />
+                          <div className="text-front">
+                            <h5>Compulsory_Exp : &nbsp;</h5>
+                            <div className="text-back">
+                            <h5>{formatDate(data.Uf_asset_Compulsory_Exp)}</h5>
+                            </div>
+                          </div><br />
+                          <div className="text-front">
+                            <h5>Contact : &nbsp;</h5>
+                            <div className="text-back">
+                            <h5>{data.Uf_asset_Contact}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>ElectricCurrent (A) : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_ErectricCurrent}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>Location : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_Location}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>Model Number : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_ModelNumber}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>PM Duration Time (Hr.) : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_PmDurationTime}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>PM Document : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_PmLink}</h5>
+                            </div>
+                          </div> <br /> 
+                          <div className="text-front">          
+                            <h5>Serial Number : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_SerialNumber}</h5>
+                            </div>
+                          </div> <br />
+                        </div>
+                        <div className="right-content" style={{ flex: '1' }}>
+                          <div className="text-front">
+                            <h5>StartUsedDate : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{formatDate(data.Uf_asset_StartUsedDate)}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>User Manual : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_UserManual}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>Voltage : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_Voltage}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>Weight (kg) : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_Weight}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>ElectricPower (kW) : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_ErectricKw}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>ExpireDate : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{formatDate(data.Uf_asset_ExpireDate)}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>Department : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.dept}</h5>
+                            </div>
+                          </div> <br />
+                          <div className="text-front">
+                            <h5>inventory_number : &nbsp;</h5>
+                            <div className="text-back">
+                              <h5>{data.Uf_asset_inventory_number}</h5>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       
                       <div className="footer">
@@ -83,10 +202,6 @@ export default function Office_floor_1() {
                           <button className="button-85" onClick={() => {console.log('modal closed '); close();}}>
                             Close
                           </button>
-                          {/* <button className="button-85" >
-                            Update
-                          </button> */}
-                          
                         </div>
                       </div>
                     </div>
@@ -103,11 +218,12 @@ export default function Office_floor_1() {
     };
   
     useEffect(() => {
-      
       getCircle();
-      getImage();
-         
     }, []);
+
+    useEffect(() => {
+      getImage();  
+    });
   
     const getClickCoords = (event) => {
             // from: https://stackoverflow.com/a/29296049/14198287
@@ -194,7 +310,7 @@ export default function Office_floor_1() {
   
   const ClickableSVG = styled.svg`
     background: bisque;
-    background-image: url(../image/table.svg);
+    background-image: url(../image/Office_floor_1.svg);
     background-size: 100% 100%;
     -o-background-size: 100% 100%;
     -webkit-background-size: 100% 100%;

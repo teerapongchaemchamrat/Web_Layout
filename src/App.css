@@ -15,6 +15,8 @@
   font-size: 3rem;
   background-color: #eccea5;
   color: #000000;
+  text-align: center;
+  
 }
 .office_floor_2,
 .office_floor_1 {
@@ -48,23 +50,29 @@
   font-size: 1.7rem;
   background: none;
   color: #ffffff;
-  margin-left: 65%;
+  margin-left: 52%;
   white-space: nowrap;
 }
 
 @media (min-width: 768px) {
   .menu-bars-text {
-    font-size: 1.5rem; /* Adjust font size for larger screens */
+    font-size: 0.8rem; /* Adjust font size for larger screens */
   }
 }
 
 @media (min-width: 992px) {
   .menu-bars-text {
-    font-size: 2.0rem; /* Adjust font size for even larger screens */
+    font-size: 1.2rem; /* Adjust font size for even larger screens */
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
+  .menu-bars-text {
+    font-size: 2rem; /* Adjust font size for very large screens */
+  }
+}
+
+@media (min-width: 1920px) {
   .menu-bars-text {
     font-size: 2.5rem; /* Adjust font size for very large screens */
   }
@@ -142,8 +150,8 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  margin-left: 2%;
-  
+  margin-left: 4%;
+
 }
 
 .button-82-shadow {
@@ -234,5 +242,113 @@
 }
 
 .button-82-pushable:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* Button edit */
+.button-81-pushable {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-left: 2%;
+  
+}
+
+.button-81-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  will-change: transform;
+  transform: translateY(2px);
+  transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+.button-81-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+    to left,
+    hsl(226deg, 99%, 30%) 0%,
+    hsl(214deg, 94%, 40%) 8%,
+    hsl(214deg, 94%, 40%) 92%,
+    hsl(226deg, 99%, 30%) 100%
+  );
+}
+
+.button-81-front {
+  display: block;
+  position: relative;
+  padding: 12px 27px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: white;
+  background: hsl(207, 95%, 48%);
+  will-change: transform;
+  transform: translateY(-4px);
+  transition:
+    transform
+    600ms
+    cubic-bezier(.3, .7, .4, 1);
+}
+
+@media (min-width: 768px) {
+  .button-81-front {
+    font-size: 1.20rem;
+    padding: 12px 42px;
+    
+  }
+}
+
+.button-81-pushable:hover {
+  filter: brightness(110%);
+  -webkit-filter: brightness(110%);
+}
+
+.button-81-pushable:hover .button-82-front {
+  transform: translateY(-6px);
+  transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-81-pushable:active .button-82-front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.button-81-pushable:hover .button-82-shadow {
+  transform: translateY(4px);
+  transition:
+    transform
+    250ms
+    cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.button-81-pushable:active .button-82-shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.button-81-pushable:focus:not(:focus-visible) {
   outline: none;
 }

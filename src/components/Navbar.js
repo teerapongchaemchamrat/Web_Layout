@@ -20,6 +20,10 @@ function Navbar() {
       navigate("/edit");
   }
 
+  const PageLogin= () => {
+    navigate("/");
+}
+
   return (
     <>
       <IconContext.Provider value={{ color: "undefined" }}>
@@ -27,12 +31,19 @@ function Navbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          {valueRole === 'administrator' && (
-          <button className="button-82-pushable" onClick={() => PageEdit()}>
-            <span className="button-82-shadow"></span>
+          <button className="button-82-pushable" onClick={() => PageLogin()}>
+          <span className="button-82-shadow"></span>
             <span className="button-82-edge"></span>
             <span className="button-82-front text">
-            Edit Data
+            Log&nbsp;Out
+            </span>
+            </button>
+          {valueRole === 'administrator' && (
+          <button className="button-81-pushable" onClick={() => PageEdit()}>
+            <span className="button-81-shadow"></span>
+            <span className="button-81-edge"></span>
+            <span className="button-81-front text">
+            Edit&nbsp;Data
             </span>
         </button>
           )}

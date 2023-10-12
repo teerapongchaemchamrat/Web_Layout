@@ -5,12 +5,12 @@
     background-color: #eccea5;
   }
   .form-container {
-    width: 360px;
+    width: 660px;
     background-color: white;
     margin: auto;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     padding: 10px;
-    margin-top: 10%;
+    margin-top: 1%;
   }
   
   .register-form {
@@ -64,7 +64,7 @@
     border: 2px solid #ffa4a4;
   }
   
-  button {
+  /* button {
     background: #4caf50;
     color: white;
     cursor: pointer;
@@ -73,5 +73,29 @@
   
   button:disabled {
     cursor: default;
+  } */
+
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* This will evenly space the buttons */
+    margin-top: 20px; /* Adjust as needed */
   }
-  
+  .btn-next, .btn-previous {
+    display: inline-flex;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+  }
+  .btn-next {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+  }
+  .btn-previous {
+    background-color: #dc3545;
+    color: #fff;
+    align-self: flex-start; 
+  }

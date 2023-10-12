@@ -4,8 +4,8 @@ function Home() {
   const getUsername = localStorage.getItem('Username');
   return (
     <div className="home">
-      <h1>WELLCOME !<br/></h1>
-      <h3>{getUsername}</h3>
+      <h1 >WELLCOME ! <br /> {getUsername}</h1>
+      
     </div>
     
   );

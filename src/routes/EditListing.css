@@ -35,6 +35,7 @@
 }
 
 .btn-edit,
+.btn-stat,
 .btn-remove {
     display: inline-block;
     padding: 8px 16px;
@@ -53,6 +54,11 @@
 
 .btn-remove {
     background-color: #ff5555;
+    color: #ffffff;
+}
+
+.btn-stat {
+  background-color: #09beeb;
     color: #ffffff;
 }
 
@@ -80,7 +86,8 @@
 
   .btn-save,
   .btn-cancel,
-  .btn-back {
+  .btn-back,
+  .btn-upload-bg {
       display: inline-block;
       padding: 8px 16px;
       margin-left: 1px;
@@ -108,7 +115,14 @@
     color: #ffffff;
     margin-right: 10%;
     margin-top: 2%
-}
+  }
+
+  .btn-upload-bg{
+    background-color: #f79504;
+    color: #ffffff;
+    margin-right: 2%;
+    margin-top: 2%
+  }
 
   /* contentStyle={{
     maxWidth: "35%",
@@ -331,6 +345,20 @@ body {
 		height: 1.5em;
 		transform: translate(0,-1em) rotate(-180deg) translate(7.5em,-0.25em);
 	}
+}
+
+.react-switch{
+  margin-left: 10%;
+  margin-top: 0.5%;
+}
+
+.text-switch{
+  margin-left: 25%;
+}
+
+.txt-upload{
+  color:red;
+  text-decoration: underline overline;
 }
 
   
