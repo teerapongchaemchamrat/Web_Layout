@@ -1,7 +1,7 @@
 import React from "react";
 //import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
-import * as IoIcons from "react-icons/io";
+import * as IoIcons from "react-icons/io";  
 
 export const SidebarData = [
   {
@@ -32,7 +32,7 @@ export const SidebarData = [
     title: "OFFICE PD 2",
     path: "/office_pd_2",
     icon: <IoIcons.IoIosGrid />,
-    cName: "nav-text",
+    cName: "nav-text", 
   },
   {
     title: "FACTORY 1A",
@@ -45,6 +45,6 @@ export const SidebarData = [
     path: "/factory1b",
     icon: <IoIcons.IoIosGrid />,
     cName: "nav-text",
-  }
-
+  },
+  
 ];

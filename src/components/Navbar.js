@@ -50,8 +50,7 @@ function Navbar() {
           <div className="menu-bars-text">
               CHAIYOOT FACTORY
           </div>
-          
-          
+           
         </div>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items" onClick={showSidebar}>
