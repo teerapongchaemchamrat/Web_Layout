@@ -253,8 +253,8 @@ export default function DataListing() {
       })
     : [];
 
-    const sendEmailNotification = () => {
-      const nodemailer = require('nodemailer');
+    // const sendEmailNotification = () => {
+    //   const nodemailer = require('nodemailer');
 
       // let transporter = nodemailer.createTransport({
       //   service: 'gmail',
@@ -278,7 +278,7 @@ export default function DataListing() {
       //     console.log('Email sent: ' + info.response);
       //   }
       // }); 
-    }
+    //}
 
     return(
         <div>
