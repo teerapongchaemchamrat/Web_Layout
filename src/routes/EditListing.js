@@ -27,45 +27,42 @@ export default function DataListing() {
     const [popupBG, setPopupBG] = useState(false);
     const [checked, setChecked] = useState(true);
 
-    // const [resourceId, setResourceId] = useState("");
-    // const [model, setModel] = useState("");
-    // const [dept, setDept] = useState("");
-    // const [location, setLocation] = useState("");
-    const [Uf_asset_SerialNumber, setUf_asset_SerialNumber] = useState("");
-    const [Uf_asset_Car_Exp, setUf_asset_Car_Exp] = useState("");
-    const [Uf_asset_Compulsory_Exp, setUf_asset_Compulsory_Exp] = useState("");
-    const [Uf_asset_Contact, setUf_asset_Contact] = useState("");
-    const [Uf_asset_ErectricCurrent, setUf_asset_ErectricCurrent]= useState("");
-    const [Uf_asset_Location, setUf_asset_Location] = useState("");
-    const [Uf_asset_ModelNumber, setUf_asset_ModelNumber] = useState("");
-    const [Uf_asset_PmDurationTime, setUf_asset_PmDurationTime] = useState("");
-    const [Uf_asset_PmLink, setUf_asset_PmLink] = useState("");
-    const [Uf_asset_StartUsedDate, setUf_asset_StartUsedDate] = useState("");
-    const [Uf_asset_UserManual, setUf_asset_UserManual] = useState("");
-    const [Uf_asset_Voltage, setUf_asset_Voltage] = useState("");
-    const [Uf_asset_Weight, setUf_asset_Weight] = useState("");
-    const [Uf_asset_ErectricKw, setUf_asset_ErectricKw] = useState("");
-    const [Uf_asset_ExpireDate, setUf_asset_ExpireDate] = useState("");
-    const [Uf_asset_department, setUf_asset_department] = useState("");
-    const [Uf_asset_inventory_number, setUf_asset_inventory_number] = useState("");
-    const [stat, setStat] = useState("");
-    const [image, setImage] = useState("");
+    const [Uf_asset_RESID, setUf_asset_RESID] = useState('');
+    const [Uf_asset_SerialNumber, setUf_asset_SerialNumber] = useState('');
+    const [Uf_asset_Car_Exp, setUf_asset_Car_Exp] = useState('');
+    const [Uf_asset_Compulsory_Exp, setUf_asset_Compulsory_Exp] = useState('');
+    const [Uf_asset_Contact, setUf_asset_Contact] = useState('');
+    const [Uf_asset_ErectricCurrent, setUf_asset_ErectricCurrent]= useState('');
+    const [Uf_asset_Location, setUf_asset_Location] = useState('');
+    const [Uf_asset_ModelNumber, setUf_asset_ModelNumber] = useState('');
+    const [Uf_asset_PmDurationTime, setUf_asset_PmDurationTime] = useState('');
+    const [Uf_asset_PmLink, setUf_asset_PmLink] = useState('');
+    const [Uf_asset_StartUsedDate, setUf_asset_StartUsedDate] = useState('');
+    const [Uf_asset_UserManual, setUf_asset_UserManual] = useState('');
+    const [Uf_asset_Voltage, setUf_asset_Voltage] = useState('');
+    const [Uf_asset_Weight, setUf_asset_Weight] = useState('');
+    const [Uf_asset_ErectricKw, setUf_asset_ErectricKw] = useState('');
+    const [Uf_asset_ExpireDate, setUf_asset_ExpireDate] = useState('');
+    const [Uf_asset_department, setUf_asset_department] = useState('');
+    const [Uf_asset_inventory_number, setUf_asset_inventory_number] = useState('');
+    const [stat, setStat] = useState('');
+    const [image, setImage] = useState('');
 
     const [searchTerm, setSearchTerm] = useState("");
 
     const navigate = useNavigate();
 
-    const Removefunction = (no, dept, Uf_asset_SerialNumber) => {
+    const Removefunction = (no, Uf_asset_department, Uf_asset_RESID) => {
         if (window.confirm('Do you want to remove?')) {
-            deleteData(no, dept, Uf_asset_SerialNumber);
+            deleteData(no, Uf_asset_department, Uf_asset_RESID);
         }
-    }
+    };
     
-    const deleteData = async (no, dept, Uf_asset_SerialNumber) => {
+    const deleteData = async (no, Uf_asset_department, Uf_asset_RESID) => {
         try {
             await axios.delete(`http://192.168.10.76:8080/web/pointer/${no}`);
-            await axios.delete(`http://192.168.10.76:8080/web/department/${dept}`);
-            await axios.delete(`http://192.168.10.76:8080/web/resource/${Uf_asset_SerialNumber}`);
+            await axios.delete(`http://192.168.10.76:8080/web/department/${Uf_asset_department}`);
+            await axios.delete(`http://192.168.10.76:8080/web/resource/${Uf_asset_RESID}`);
             
             setOpenDeleteSuccess(true);
     
@@ -78,11 +75,12 @@ export default function DataListing() {
             console.error("Error Delete data:", error);
             setOpenDeleteError(true);
         }
-    }
+    };
     
     const handleEdit = (item) => {
         setSelectedItem(item);
         setPopupOpen(true);
+        setUf_asset_RESID(item.Uf_asset_RESID);
         setUf_asset_SerialNumber(item.Uf_asset_SerialNumber);
         setUf_asset_Car_Exp(item.Uf_asset_Car_Exp);
         setUf_asset_Compulsory_Exp(item.Uf_asset_Compulsory_Exp);
@@ -97,10 +95,10 @@ export default function DataListing() {
         setUf_asset_Weight(item.Uf_asset_Weight);
         setUf_asset_ErectricKw(item.Uf_asset_ErectricKw);
         setUf_asset_ExpireDate(item.Uf_asset_ExpireDate);
-        setUf_asset_department(item.dept);
+        setUf_asset_department(item.Uf_asset_department);
         setUf_asset_inventory_number(item.Uf_asset_inventory_number);
         setUf_asset_Location(item.Uf_asset_Location);
-      }
+      };
 
     const handleImageUpload = (event) => {
       const selectedImage = event.target.files[0];
@@ -109,37 +107,37 @@ export default function DataListing() {
 
     const handleStat = (item) => {
       setPopupStat(true);
-      setUf_asset_SerialNumber(item.Uf_asset_SerialNumber);
+      setUf_asset_RESID(item.Uf_asset_RESID);
       setStat(item.stat === 1 ? "0" : "1");
       setChecked(item.stat === 1);
-    }
+    };
 
     const handleChange = val => {
       setChecked(val);
       setStat(val ? "1" : "0");
-    }
+    };
 
     const onButtonSaveStat = async(e) => {
       e.preventDefault();
       try{
          const statDataUpdate = {
-            Uf_asset_SerialNumber: Uf_asset_SerialNumber,
+            Uf_asset_RESID: Uf_asset_RESID,
             stat: stat
          };
-         await axios.put(`http://192.168.10.76:8080/web/pointer/stat/${Uf_asset_SerialNumber}`, statDataUpdate);
+         await axios.put(`http://192.168.10.76:8080/web/pointer/stat/${Uf_asset_RESID}`, statDataUpdate);
          setOpenUpdateSuccess(true);
          setPopupStat(false);
-        //  console.log(`api: http://192.168.10.76:8080/web/pointer/stat/${Uf_asset_SerialNumber}`);
-        //  console.log("data serial: " + Uf_asset_SerialNumber +"|"+ stat);
+         // console.log(`api: http://192.168.10.76:8080/web/pointer/stat/${Uf_asset_RESID}`);
+         // console.log("data serial: " + Uf_asset_RESID +"|"+ stat);
          const response = await fetch("http://192.168.10.76:8080/web/pointer/all");
             const resp = await response.json();
             editdatachange(resp);
       } catch (error){
-            console.log("data serial: " + Uf_asset_SerialNumber);
+            console.log("data serial: " + Uf_asset_RESID);
             console.error("Error updating data:", error);
             setOpenUpdateError(true);
       }
-    }
+    };
 
     const onButtonUploadImage = async(e) =>{
       e.preventDefault();
@@ -151,7 +149,7 @@ export default function DataListing() {
         const DataUploadImage = {
           dept: Uf_asset_department,
           image: image
-        }
+        };
         const config = {
           headers: {
             'content-type': 'multipart/form-data',
@@ -175,49 +173,53 @@ export default function DataListing() {
         try {
             const pointerDataUpdate = {
                 no: selectedItem.no,
-                Uf_asset_SerialNumber: Uf_asset_SerialNumber,
-                dept: Uf_asset_department
+                Uf_asset_RESID: Uf_asset_RESID,
+                Uf_asset_department: Uf_asset_department
               };
           
-              const resourceDataUpdate = {
-                Uf_asset_SerialNumber: selectedItem.Uf_asset_SerialNumber,
-                Uf_asset_SerialNumber_update: Uf_asset_SerialNumber,
-                Uf_asset_Car_Exp: Uf_asset_Car_Exp + "T00:00:00.000Z",
-                Uf_asset_Compulsory_Exp: Uf_asset_Compulsory_Exp + "T00:00:00.000Z",
-                Uf_asset_Contact: Uf_asset_Contact,
-                Uf_asset_ErectricCurrent: Uf_asset_ErectricCurrent,
-                Uf_asset_Location : Uf_asset_Location,
-                Uf_asset_ModelNumber: Uf_asset_ModelNumber,
-                Uf_asset_PmDurationTime: Uf_asset_PmDurationTime,
-                Uf_asset_PmLink: Uf_asset_PmLink,
-                Uf_asset_StartUsedDate: Uf_asset_StartUsedDate + "T00:00:00.000Z",
-                Uf_asset_UserManual: Uf_asset_UserManual,
-                Uf_asset_Voltage: Uf_asset_Voltage,
-                Uf_asset_Weight: Uf_asset_Weight,
-                Uf_asset_ErectricKw: Uf_asset_ErectricKw,
-                Uf_asset_ExpireDate: Uf_asset_ExpireDate + "T00:00:00.000Z",
-                Uf_asset_department: Uf_asset_department,
-                Uf_asset_inventory_number: Uf_asset_inventory_number
-              }
+              const resourceDataUpdate = {   //Update resource error 
+                Uf_asset_RESID: selectedItem.Uf_asset_RESID,
+                Uf_asset_RESID_update: Uf_asset_RESID || null,
+                Uf_asset_SerialNumber: Uf_asset_SerialNumber || null,
+                Uf_asset_Car_Exp: Uf_asset_Car_Exp || null,
+                Uf_asset_Compulsory_Exp: Uf_asset_Compulsory_Exp || null,
+                Uf_asset_Contact: Uf_asset_Contact || null,
+                Uf_asset_ErectricCurrent: Uf_asset_ErectricCurrent || null,
+                Uf_asset_Location : Uf_asset_Location || null,
+                Uf_asset_ModelNumber: Uf_asset_ModelNumber || null,
+                Uf_asset_PmDurationTime: Uf_asset_PmDurationTime || null,
+                Uf_asset_PmLink: Uf_asset_PmLink || null,
+                Uf_asset_StartUsedDate: Uf_asset_StartUsedDate || null,
+                Uf_asset_UserManual: Uf_asset_UserManual || null,
+                Uf_asset_Voltage: Uf_asset_Voltage || null,
+                Uf_asset_Weight: Uf_asset_Weight || null,
+                Uf_asset_ErectricKw: Uf_asset_ErectricKw || null,
+                Uf_asset_ExpireDate: Uf_asset_ExpireDate || null,
+                Uf_asset_department: Uf_asset_department || null,
+                Uf_asset_inventory_number: Uf_asset_inventory_number || null
+              };
+
+              console.log('resourceDataUpdate:', JSON.stringify(resourceDataUpdate, null, 2));
           
               const departmentDataUpdate = {
                 dept: selectedItem.Uf_asset_department,
                 dept_new: Uf_asset_department
+              };
+
+              if (Uf_asset_RESID != null && Uf_asset_SerialNumber != null && Uf_asset_Location != null && Uf_asset_department != null && Uf_asset_StartUsedDate != null)
+              {
+                  await axios.put(`http://192.168.10.76:8080/web/pointer/${selectedItem.no}`, pointerDataUpdate);
+
+                  await axios.put(`http://192.168.10.76:8080/web/resource/${selectedItem.Uf_asset_RESID}`, resourceDataUpdate);
+
+                  await axios.put(`http://192.168.10.76:8080/web/department/${selectedItem.Uf_asset_department}`, departmentDataUpdate);
+                
+                  setOpenUpdateSuccess(true);
+                  setPopupOpen(false);
+              } else {
+                alert("Error: One or more requests failed");
               }
-            // Update pointer data
-            await axios.put(`http://192.168.10.76:8080/web/pointer/${selectedItem.no}`, pointerDataUpdate);
-
-            // Update resource data
-            await axios.put(`http://192.168.10.76:8080/web/resource/${selectedItem.Uf_asset_SerialNumber}`, resourceDataUpdate);
-
-            // Update department data
-            await axios.put(`http://192.168.10.76:8080/web/department/${selectedItem.dept}`, departmentDataUpdate);
-
-            setOpenUpdateSuccess(true);
-
-            // Close the popup
-            setPopupOpen(false);
-
+            
             const response = await fetch("http://192.168.10.76:8080/web/pointer/all");
             const resp = await response.json();
             editdatachange(resp);
@@ -246,10 +248,37 @@ export default function DataListing() {
 
     const filteredData = editdata
     ? editdata.filter(item => {
-        const searchFields = [item.Uf_asset_SerialNumber]; // fix column filter
+        const searchFields = [item.Uf_asset_RESID]; // fix column filter
         return searchFields.some(field => field.toLowerCase().includes(searchTerm.toLowerCase()));
       })
     : [];
+
+    const sendEmailNotification = () => {
+      const nodemailer = require('nodemailer');
+
+      // let transporter = nodemailer.createTransport({
+      //   service: 'gmail',
+      //   auth: {
+      //     user: 'jue03022541@gmail.com',
+      //     pass: '0835787035Jue'
+      //   }
+      // });
+
+      // let mailOptions = {
+      //   from: 'jue03022541@gmail.com',
+      //   to: 'teerapong@chaiyoot.com',
+      //   subject: 'Notification Subject',
+      //   text: 'This is the notification message.'
+      // };
+
+      // transporter.sendMail(mailOptions, function(error, info){
+      //   if (error) {
+      //     console.log(error);
+      //   } else {
+      //     console.log('Email sent: ' + info.response);
+      //   }
+      // }); 
+    }
 
     return(
         <div>
@@ -263,7 +292,7 @@ export default function DataListing() {
         <div className="btn-filter">
         {/* <label style={{position: "relative", marginTop:"2.5%", marginLeft:"5%"}}>Resource ID : </label> */}
         <form className="form">
-          <label >SerialNumber : </label>
+          <label >Resource ID : </label>
           <label htmlFor="search" className="label">Search</label>
           <input id="search" type="search" pattern=".*\S.*" className="input" autoComplete="off"  
                   value={searchTerm}
@@ -278,7 +307,7 @@ export default function DataListing() {
             <thead>
             <tr>
                 <td>NO</td>
-                <td>SerialNumber</td>
+                <td>Resource ID</td>
                 <td>Department</td>
                 <td>Location</td>
                 <td>Model</td>
@@ -289,13 +318,13 @@ export default function DataListing() {
             {filteredData.map(item => (
             <tr key={item.no}>
               <td>{item.no}</td>
-              <td>{item.Uf_asset_SerialNumber}</td>
-              <td>{item.dept}</td>
+              <td>{item.Uf_asset_RESID}</td>
+              <td>{item.Uf_asset_department}</td>
               <td>{item.Uf_asset_Location}</td>
               <td>{item.Uf_asset_ModelNumber}</td>
               <td>
                 <button className="btn-edit" onClick={() => handleEdit(item)}>Edit</button>
-                <button onClick={() => Removefunction(item.no, item.dept, item.Uf_asset_SerialNumber)} className="btn-remove">Remove</button>
+                <button onClick={() => Removefunction(item.no, item.dept, item.Uf_asset_RESID)} className="btn-remove">Remove</button>
                 <button className="btn-stat" onClick={() => handleStat(item)} >Status</button>
               </td>
             </tr>
@@ -313,12 +342,23 @@ export default function DataListing() {
           <h1 align="center">Edit Data</h1><br></br>
           <form>
             <div className="form-group" style={{maxHeight: '768px', overflowY: 'auto'}}>
+
+            <label htmlFor="Resource ID">Resource ID : </label>
+            <input
+              className="form-field"
+              type="text"
+              name="Uf_asset_RESID"
+              value={Uf_asset_RESID === null ? '' : Uf_asset_RESID}
+              onChange={(e) => setUf_asset_RESID(e.target.value)}
+              required 
+            /> <br />
+
             <label htmlFor="SerialNumber">Serial Number : </label>
             <input
               className="form-field"
               type="text"
               name="Uf_asset_SerialNumber"
-              value={Uf_asset_SerialNumber}
+              value={Uf_asset_SerialNumber === null ? '' : Uf_asset_SerialNumber}
               onChange={(e) => setUf_asset_SerialNumber(e.target.value)}
               required 
             /> <br />
@@ -328,7 +368,7 @@ export default function DataListing() {
               className="form-field"
               type="date"
               name="Uf_asset_Car_Exp" 
-              value={Uf_asset_Car_Exp}
+              value={Uf_asset_Car_Exp === null ? '' : Uf_asset_Car_Exp}
               onChange={(e) => setUf_asset_Car_Exp(e.target.value)}
               required
             /> <br />
@@ -338,7 +378,7 @@ export default function DataListing() {
               className="form-field"
               type="date"
               name="Uf_asset_Compulsory_Exp" 
-              value={Uf_asset_Compulsory_Exp}
+              value={Uf_asset_Compulsory_Exp === null ? '' : Uf_asset_Compulsory_Exp}
               onChange={(e) => setUf_asset_Compulsory_Exp(e.target.value)}
               required
             /> <br />
@@ -348,7 +388,7 @@ export default function DataListing() {
               className="form-field"
               type="text"
               name="Uf_asset_Contact" 
-              value={Uf_asset_Contact}
+              value={Uf_asset_Contact === null ? '' : Uf_asset_Contact}
               onChange={(e) => setUf_asset_Contact(e.target.value)}
               required
             /> <br />
@@ -358,7 +398,7 @@ export default function DataListing() {
               className="form-field"
               type="text"
               name="Uf_asset_ErectricCurrent" 
-              value={Uf_asset_ErectricCurrent}
+              value={Uf_asset_ErectricCurrent === null ? '' : Uf_asset_ErectricCurrent}
               onChange={(e) => setUf_asset_ErectricCurrent(e.target.value)}
               required
             /> <br />
@@ -366,7 +406,7 @@ export default function DataListing() {
             <label htmlFor="location">Location : </label>
             <select
               className="form-field-select"
-              value={Uf_asset_Location}
+              value={Uf_asset_Location === null ? '' : Uf_asset_Location}
               onChange={(e) => setUf_asset_Location(e.target.value)}
               required
             >
@@ -384,7 +424,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_ModelNumber"
-            value={Uf_asset_ModelNumber}
+            value={Uf_asset_ModelNumber === null ? '' : Uf_asset_ModelNumber}
             onChange={(e) => setUf_asset_ModelNumber(e.target.value)}
             required
           /> <br />
@@ -394,7 +434,7 @@ export default function DataListing() {
             className="form-field"
             type="number"
             name="Uf_asset_PmDurationTime"
-            value={Uf_asset_PmDurationTime}
+            value={Uf_asset_PmDurationTime === null ? '' : Uf_asset_PmDurationTime}
             onChange={(e) => setUf_asset_PmDurationTime(e.target.value)}
             required
           /> <br />
@@ -404,7 +444,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_PmLink"
-            value={Uf_asset_PmLink}
+            value={Uf_asset_PmLink === null ? '' : Uf_asset_PmLink}
             onChange={(e) => setUf_asset_PmLink(e.target.value)}
             required
           /> <br />
@@ -414,7 +454,7 @@ export default function DataListing() {
             className="form-field"
             type="date"
             name="Uf_asset_StartUsedDate"
-            value={Uf_asset_StartUsedDate}
+            value={Uf_asset_StartUsedDate === null ? '' : Uf_asset_StartUsedDate}
             onChange={(e) => setUf_asset_StartUsedDate(e.target.value)}
             required
           /> <br />
@@ -424,7 +464,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_UserManual"
-            value={Uf_asset_UserManual}
+            value={Uf_asset_UserManual === null ? '' : Uf_asset_UserManual}
             onChange={(e) => setUf_asset_UserManual(e.target.value)}
             required
           /> <br />
@@ -434,7 +474,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_Voltage"
-            value={Uf_asset_Voltage}
+            value={Uf_asset_Voltage === null ? '' : Uf_asset_Voltage}
             onChange={(e) => setUf_asset_Voltage(e.target.value)}
             required
           />
@@ -444,7 +484,7 @@ export default function DataListing() {
             className="form-field"
             type="number" 
             name="Uf_asset_Weight"
-            value={Uf_asset_Weight}
+            value={Uf_asset_Weight === null ? '' : Uf_asset_Weight}
             onChange={(e) => setUf_asset_Weight(e.target.value)}
             required
           /> <br />
@@ -454,7 +494,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_ErectricKw"
-            value={Uf_asset_ErectricKw}
+            value={Uf_asset_ErectricKw === null ? '' : Uf_asset_ErectricKw}
             onChange={(e) => setUf_asset_ErectricKw(e.target.value)}
             required
           /> <br />
@@ -464,7 +504,7 @@ export default function DataListing() {
             className="form-field"
             type="date"
             name="Uf_asset_ExpireDate"
-            value={Uf_asset_ExpireDate}
+            value={Uf_asset_ExpireDate === null ? '' : Uf_asset_ExpireDate}
             onChange={(e) => setUf_asset_ExpireDate(e.target.value)}
             required
           /> <br />
@@ -474,7 +514,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_department"
-            value={Uf_asset_department}
+            value={Uf_asset_department === null ? '' : Uf_asset_department}
             onChange={(e) => setUf_asset_department(e.target.value)}
             required
           /> <br />
@@ -484,7 +524,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_inventory_number"
-            value={Uf_asset_inventory_number}
+            value={Uf_asset_inventory_number === null ? '' : Uf_asset_inventory_number}
             onChange={(e) => setUf_asset_inventory_number(e.target.value)}
             required
           />
@@ -505,7 +545,7 @@ export default function DataListing() {
             <h1 htmlFor="status" align='center'>Status</h1> <br />
             <div style={{display: 'flex'}}>
               <div className="text-switch">
-                <h2 value={Uf_asset_SerialNumber}>Resource ID : {Uf_asset_SerialNumber} </h2>
+                <h2 value={Uf_asset_RESID}>Resource ID : {Uf_asset_RESID} </h2>
               </div>
             <ReactSwitch checked={checked} onChange={handleChange} value={stat} className="react-switch"></ReactSwitch>
             </div> <br />

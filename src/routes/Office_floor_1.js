@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import './Office_floor_2.css';
 import axios from "axios";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 export default function Office_floor_1() {
     const navigate = useNavigate();
+
     const [circles, setCircles] = useState([]);
     const [selectedCircle, setSelectedCircle] = useState(null);
     const [image, setImage] = useState(null);
@@ -40,6 +41,9 @@ export default function Office_floor_1() {
     };
 
     function formatDate(dateString) {
+      if (dateString === null) {
+        return ""; // Return an empty string if the date is null
+      }
       const originalDate = new Date(dateString);
       
       // Add 6 hours to the original date
@@ -90,14 +94,20 @@ export default function Office_floor_1() {
                          </div>
                       <div className="content" style={{ display: 'flex', maxHeight: '650px', overflowY: 'auto' }}>
                         <div className="left-content" style={{ flex: '1', marginRight: '10px' }}>
+                        <div className="text-front">
+                            <h5>Resource ID : &nbsp;</h5>
+                            <div className="text-back">
+                            <h5> {data.Uf_asset_RESID}</h5>
+                            </div>
+                          </div><br />
                           <div className="text-front">
-                            <h5>Car_Exp : &nbsp;</h5>
+                            <h5>ภาษีรถยนต์ : &nbsp;</h5>
                             <div className="text-back">
                             <h5> {formatDate(data.Uf_asset_Car_Exp)}</h5>
                             </div>
                           </div><br />
                           <div className="text-front">
-                            <h5>Compulsory_Exp : &nbsp;</h5>
+                            <h5>พ.ร.บ. : &nbsp;</h5>
                             <div className="text-back">
                             <h5>{formatDate(data.Uf_asset_Compulsory_Exp)}</h5>
                             </div>
@@ -138,14 +148,16 @@ export default function Office_floor_1() {
                               <h5>{data.Uf_asset_PmLink}</h5>
                             </div>
                           </div> <br /> 
-                          <div className="text-front">          
+                        </div>
+
+
+                        <div className="right-content" style={{ flex: '1' }}>
+                        <div className="text-front">          
                             <h5>Serial Number : &nbsp;</h5>
                             <div className="text-back">
                               <h5>{data.Uf_asset_SerialNumber}</h5>
                             </div>
                           </div> <br />
-                        </div>
-                        <div className="right-content" style={{ flex: '1' }}>
                           <div className="text-front">
                             <h5>StartUsedDate : &nbsp;</h5>
                             <div className="text-back">
@@ -224,7 +236,7 @@ export default function Office_floor_1() {
     useEffect(() => {
       getImage();  
     });
-  
+
     const getClickCoords = (event) => {
             // from: https://stackoverflow.com/a/29296049/14198287
       // var e = event.target;
@@ -310,7 +322,7 @@ export default function Office_floor_1() {
   
   const ClickableSVG = styled.svg`
     background: bisque;
-    background-image: url(../image/Office_floor_1.svg);
+    background-image: url(/image/Office_floor_1.svg?v=2);
     background-size: 100% 100%;
     -o-background-size: 100% 100%;
     -webkit-background-size: 100% 100%;

@@ -7,6 +7,7 @@ export default function Register() {
 
     const [step, setStep] = useState(1);
 
+    const [Uf_asset_RESID, setUf_asset_RESID] = useState(""); 
     const [Uf_asset_SerialNumber, setUf_asset_SerialNumber] = useState("");
     const [Uf_asset_Car_Exp, setUf_asset_Car_Exp] = useState("");
     const [Uf_asset_Compulsory_Exp, setUf_asset_Compulsory_Exp] = useState("");
@@ -58,34 +59,35 @@ export default function Register() {
         x: valueX,
         y: valueY,
         diameter: "20",
-        Uf_asset_SerialNumber: Uf_asset_SerialNumber,
-        dept: Uf_asset_department,
+        Uf_asset_RESID: Uf_asset_RESID || null,
+        Uf_asset_department: Uf_asset_department || null,
         stat: "1"
       };
   
       const resourceData = {
-        Uf_asset_SerialNumber: Uf_asset_SerialNumber,
-        Uf_asset_Car_Exp: Uf_asset_Car_Exp,
-        Uf_asset_Compulsory_Exp: Uf_asset_Compulsory_Exp,
-        Uf_asset_Contact: Uf_asset_Contact,
-        Uf_asset_ErectricCurrent: Uf_asset_ErectricCurrent,
-        Uf_asset_Location : Uf_asset_Location,
-        Uf_asset_ModelNumber: Uf_asset_ModelNumber,
-        Uf_asset_PmDurationTime: Uf_asset_PmDurationTime,
-        Uf_asset_PmLink: Uf_asset_PmLink,
-        Uf_asset_StartUsedDate: Uf_asset_StartUsedDate,
-        Uf_asset_UserManual: Uf_asset_UserManual,
-        Uf_asset_Voltage: Uf_asset_Voltage,
-        Uf_asset_Weight: Uf_asset_Weight,
-        Uf_asset_ErectricKw: Uf_asset_ErectricKw,
-        Uf_asset_ExpireDate: Uf_asset_ExpireDate,
-        Uf_asset_department: Uf_asset_department,
-        Uf_asset_inventory_number: Uf_asset_inventory_number
+        Uf_asset_RESID: Uf_asset_RESID || null,
+        Uf_asset_SerialNumber: Uf_asset_SerialNumber || null,
+        Uf_asset_Car_Exp: Uf_asset_Car_Exp || null,
+        Uf_asset_Compulsory_Exp: Uf_asset_Compulsory_Exp || null,
+        Uf_asset_Contact: Uf_asset_Contact || null,
+        Uf_asset_ErectricCurrent: Uf_asset_ErectricCurrent || null,
+        Uf_asset_Location : Uf_asset_Location || null,
+        Uf_asset_ModelNumber: Uf_asset_ModelNumber || null,
+        Uf_asset_PmDurationTime: Uf_asset_PmDurationTime || null,
+        Uf_asset_PmLink: Uf_asset_PmLink || null,
+        Uf_asset_StartUsedDate: Uf_asset_StartUsedDate || null,
+        Uf_asset_UserManual: Uf_asset_UserManual || null,
+        Uf_asset_Voltage: Uf_asset_Voltage || null,
+        Uf_asset_Weight: Uf_asset_Weight || null,
+        Uf_asset_ErectricKw: Uf_asset_ErectricKw || null,
+        Uf_asset_ExpireDate: Uf_asset_ExpireDate || null,
+        Uf_asset_department: Uf_asset_department || null,
+        Uf_asset_inventory_number: Uf_asset_inventory_number || null
       }
   
       const departmentData = {
-        dept: Uf_asset_department,
-        image: image
+        dept: Uf_asset_department || null,
+        image: image || null
       }
       const config = {
         headers: {
@@ -94,24 +96,24 @@ export default function Register() {
       };
   
       try {
-        const [pointerResponse, resourceResponse, uploadResponse] = await Promise.all([
-          axios.post("http://192.168.10.76:8080/web/pointer/add", pointerData),
-          axios.post("http://192.168.10.76:8080/web/resource/add", resourceData),
-          axios.post("http://192.168.10.76:8080/web/upload", departmentData, config),
-        ]);
-  
-        console.log("Pointer POST Response:", pointerResponse.data);
-        console.log("Resource POST Response:", resourceResponse.data);
-        console.log("Upload POST Response:", uploadResponse.data);
-  
-        alert("Save successful");
+
+          if (Uf_asset_RESID != null && Uf_asset_SerialNumber != null && Uf_asset_Location != null && Uf_asset_department != null && Uf_asset_StartUsedDate != null && image != null){
+           axios.post("http://192.168.10.76:8080/web/pointer/add", pointerData);
+           axios.post("http://192.168.10.76:8080/web/resource/add", resourceData);
+           axios.post("http://192.168.10.76:8080/web/upload", departmentData, config);
+          
+            alert("Save successful");
+            navigate('/home'); 
+          } else {
+            alert("Error: One or more requests failed");
+          }
         
-        navigate('/home'); 
       } catch (error) {
         console.error("Error posting registration data:", error);
         alert("Error:", error);
       }
-  
+
+      setUf_asset_RESID("");
       setUf_asset_SerialNumber("");
       setUf_asset_Car_Exp("");
       setUf_asset_Compulsory_Exp("");
@@ -143,7 +145,19 @@ export default function Register() {
             
         <h4 align="center">Y : {valueY}</h4>
 
-        <label>Serial Number : (30)</label>
+        <label>Resource ID : (30) <label style={{color: 'red'}}>***</label></label>
+        
+          <input
+            className="form-field"
+            type="text"
+            placeholder="Resource ID"
+            name="Uf_asset_RESID"
+            value={Uf_asset_RESID}
+            onChange={(e) => setUf_asset_RESID(e.target.value)}
+            required 
+          /> <br />
+
+        <label>Serial Number : (30) <label style={{color: 'red'}}>***</label></label>
           <input
             className="form-field"
             type="text"
@@ -154,7 +168,7 @@ export default function Register() {
             required 
           /> <br />
         
-        <label>Car Exp : </label>
+        <label>Car Exp (ภาษีรถยนต์) : </label>
           <input
             className="form-field"
             type="date"
@@ -165,7 +179,7 @@ export default function Register() {
             required
           /> <br />
 
-          <label>Compulsory Exp : </label>
+          <label>Compulsory Exp (พ.ร.บ.) : </label>
           <input
             className="form-field"
             type="date"
@@ -258,7 +272,7 @@ export default function Register() {
             required
           /> <br />
 
-          <label>StartUsedDate : </label>
+          <label>StartUsedDate : <label style={{color: 'red'}}>***</label></label>
           <input
             className="form-field"
             type="date"
@@ -333,7 +347,7 @@ export default function Register() {
             required
           /> <br />
 
-          <label>Department : (100)</label>
+          <label>Department : (100) <label style={{color: 'red'}}>***</label></label>
           <input
             className="form-field"
             type="text"
@@ -355,7 +369,7 @@ export default function Register() {
             required
           /> <br />
 
-          <label>Image : </label>
+          <label>Image : <label style={{color: 'red'}}>***</label></label>
           <input
             className="form-field"
             type="file"

@@ -44,7 +44,7 @@ function Alert(props) {
                 setPassword("");
             }
     }
-
+ 
   return (
     <div id="login-form">
       <h1>Login</h1>
