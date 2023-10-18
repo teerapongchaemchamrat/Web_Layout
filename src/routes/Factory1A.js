@@ -234,7 +234,8 @@ export default function Factory1A() {
 
   useEffect(() => {
     getImage();  
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getClickCoords = (event) => {
           // from: https://stackoverflow.com/a/29296049/14198287

@@ -6,6 +6,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Popup from 'reactjs-popup';
 import ReactSwitch from 'react-switch';
+import emailjs from '@emailjs/browser';
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -108,6 +109,8 @@ export default function DataListing() {
     const handleStat = (item) => {
       setPopupStat(true);
       setUf_asset_RESID(item.Uf_asset_RESID);
+      setUf_asset_SerialNumber(item.Uf_asset_SerialNumber);
+      setUf_asset_Location(item.Uf_asset_Location);
       setStat(item.stat === 1 ? "0" : "1");
       setChecked(item.stat === 1);
     };
@@ -127,11 +130,14 @@ export default function DataListing() {
          await axios.put(`http://192.168.10.76:8080/web/pointer/stat/${Uf_asset_RESID}`, statDataUpdate);
          setOpenUpdateSuccess(true);
          setPopupStat(false);
-         // console.log(`api: http://192.168.10.76:8080/web/pointer/stat/${Uf_asset_RESID}`);
-         // console.log("data serial: " + Uf_asset_RESID +"|"+ stat);
+
+         if (stat === "0") {
+          sendEmail(); // Send email only if stat is 0
+        }
+
          const response = await fetch("http://192.168.10.76:8080/web/pointer/all");
-            const resp = await response.json();
-            editdatachange(resp);
+         const resp = await response.json();
+         editdatachange(resp);
       } catch (error){
             console.log("data serial: " + Uf_asset_RESID);
             console.error("Error updating data:", error);
@@ -253,32 +259,28 @@ export default function DataListing() {
       })
     : [];
 
-    // const sendEmailNotification = () => {
-    //   const nodemailer = require('nodemailer');
+    const sendEmail = () => {
+      const date = new Date();
+      const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const CurrentDate = date.toLocaleDateString('nl-NL', dateOptions);
 
-      // let transporter = nodemailer.createTransport({
-      //   service: 'gmail',
-      //   auth: {
-      //     user: 'jue03022541@gmail.com',
-      //     pass: '0835787035Jue'
-      //   }
-      // });
-
-      // let mailOptions = {
-      //   from: 'jue03022541@gmail.com',
-      //   to: 'teerapong@chaiyoot.com',
-      //   subject: 'Notification Subject',
-      //   text: 'This is the notification message.'
-      // };
-
-      // transporter.sendMail(mailOptions, function(error, info){
-      //   if (error) {
-      //     console.log(error);
-      //   } else {
-      //     console.log('Email sent: ' + info.response);
-      //   }
-      // }); 
-    //}
+      const dataContent = {
+        resource: Uf_asset_RESID,
+        serialnumber: Uf_asset_SerialNumber,
+        location: Uf_asset_Location,
+        status: "Stop Working",
+        date: CurrentDate 
+      }
+      emailjs.send('service_3nmi6d8', 'template_6dja9bc', dataContent, 'uF0Gi7qXTufa0aNEz')
+      .then((result) => {
+        console.log("Send Email: " + result.text);
+        // console.log("resource: " + Uf_asset_RESID);
+        // console.log("serial number: " + Uf_asset_SerialNumber);
+        // console.log("location: " + Uf_asset_Location);
+      }, (error) => {
+        console.log("Send Email: " + error.text);
+      });
+    }
 
     return(
         <div>
@@ -326,6 +328,7 @@ export default function DataListing() {
                 <button className="btn-edit" onClick={() => handleEdit(item)}>Edit</button>
                 <button onClick={() => Removefunction(item.no, item.dept, item.Uf_asset_RESID)} className="btn-remove">Remove</button>
                 <button className="btn-stat" onClick={() => handleStat(item)} >Status</button>
+                
               </td>
             </tr>
           ))}
@@ -546,7 +549,10 @@ export default function DataListing() {
             <div style={{display: 'flex'}}>
               <div className="text-switch">
                 <h2 value={Uf_asset_RESID}>Resource ID : {Uf_asset_RESID} </h2>
+                <h2 style={{ display: 'none' }} value={Uf_asset_SerialNumber}>Serial Number : {Uf_asset_SerialNumber} </h2>
+                <h2 style={{ display: 'none' }} value={Uf_asset_Location}>Location : {Uf_asset_Location} </h2>
               </div>
+              
             <ReactSwitch checked={checked} onChange={handleChange} value={stat} className="react-switch"></ReactSwitch>
             </div> <br />
             <button type="button" className="btn-save" onClick={onButtonSaveStat}>Save</button>

@@ -234,8 +234,9 @@ export default function Office_floor_1() {
     }, []);
 
     useEffect(() => {
-      getImage();  
-    });
+      getImage();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []); 
 
     const getClickCoords = (event) => {
             // from: https://stackoverflow.com/a/29296049/14198287
@@ -319,6 +320,7 @@ export default function Office_floor_1() {
   //   align-items: center;
   // `;
   // 1920x849
+
   
   const ClickableSVG = styled.svg`
     background: bisque;
