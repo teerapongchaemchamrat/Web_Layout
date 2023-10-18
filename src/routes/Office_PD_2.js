@@ -314,9 +314,11 @@ export default function Office_PD_2() {
   );
 }
 
+const uniqueIdentifier = Math.floor(Math.random() * 1000000);
+
 const ClickableSVG = styled.svg`
   background: bisque;
-  background-image: url(/image/Office_pd_2.svg?v=2);
+  background-image: url(/image/Office_pd_2.svg?v=${uniqueIdentifier});
   background-size: 100% 100%;
   -o-background-size: 100% 100%;
   -webkit-background-size: 100% 100%;

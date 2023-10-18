@@ -311,10 +311,12 @@ export default function Factory1B() {
       
     );
   }
+
+  const uniqueIdentifier = Math.floor(Math.random() * 1000000);
   
   const ClickableSVG = styled.svg`
     background: bisque;
-    background-image: url(/image/Factory1B.svg?v=2);
+    background-image: url(/image/Factory1B.svg?v=${uniqueIdentifier});
     background-size: 100% 100%;
     -o-background-size: 100% 100%;
     -webkit-background-size: 100% 100%;
