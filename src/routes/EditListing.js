@@ -292,7 +292,6 @@ export default function DataListing() {
         </section>
         
         <div className="btn-filter">
-        {/* <label style={{position: "relative", marginTop:"2.5%", marginLeft:"5%"}}>Resource ID : </label> */}
         <form className="form">
           <label >Resource ID : </label>
           <label htmlFor="search" className="label">Search</label>

@@ -143,9 +143,9 @@ export default function Register() {
         <>
         <h1 align="center">Sign up</h1><br></br>
           
-        <h4 align="center">X : {valueX}</h4>
+        {/* <h4 align="center">X : {valueX}</h4>
             
-        <h4 align="center">Y : {valueY}</h4>
+        <h4 align="center">Y : {valueY}</h4> */}
 
         <label>Resource ID : (30) <label style={{color: 'red'}}>***</label></label>
         
