@@ -326,7 +326,7 @@ export default function DataListing() {
               <td>{item.Uf_asset_ModelNumber}</td>
               <td>
                 <button className="btn-edit" onClick={() => handleEdit(item)}>Edit</button>
-                <button onClick={() => Removefunction(item.no, item.dept, item.Uf_asset_RESID)} className="btn-remove">Remove</button>
+                <button onClick={() => Removefunction(item.no, item.Uf_asset_department, item.Uf_asset_RESID)} className="btn-remove">Remove</button>
                 <button className="btn-stat" onClick={() => handleStat(item)} >Status</button>
                 
               </td>
@@ -337,12 +337,13 @@ export default function DataListing() {
 
       <Popup open={popupOpen} onClose={() => setPopupOpen(false)} 
         contentStyle={{
-            padding: "20px",
+            padding: "15px",
             borderRadius: "8px",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            
             }}>
-        <div >
-          <h1 align="center">Edit Data</h1><br></br>
+        <div>
+          <h1 align="center">Edit Data</h1>
           <form>
             <div className="form-group" style={{maxHeight: '768px', overflowY: 'auto'}}>
 
@@ -366,7 +367,7 @@ export default function DataListing() {
               required 
             /> <br />
 
-            <label htmlFor="Car_Exp">Car Exp : {Uf_asset_Car_Exp}</label>
+            <label htmlFor="Car_Exp">ภาษีรถยนต์ : {Uf_asset_Car_Exp}</label>
             <input
               className="form-field"
               type="date"
@@ -376,7 +377,7 @@ export default function DataListing() {
               required
             /> <br />
 
-            <label htmlFor="Compulsory_Exp">Compulsory Exp : {Uf_asset_Compulsory_Exp}</label>
+            <label htmlFor="Compulsory_Exp">พ.ร.บ. : {Uf_asset_Compulsory_Exp}</label>
             <input
               className="form-field"
               type="date"
@@ -396,7 +397,7 @@ export default function DataListing() {
               required
             /> <br />
       
-            <label htmlFor="ErectricCurrent">ErectricCurrent : </label>
+            <label htmlFor="ErectricCurrent">ErectricCurrent(A) : </label>
             <input
               className="form-field"
               type="text"
@@ -432,7 +433,7 @@ export default function DataListing() {
             required
           /> <br />
 
-          <label htmlFor="PmDurationTime">PmDurationTime : </label>
+          <label htmlFor="PmDurationTime">PM Duration Time (Hr.) : </label>
           <input
             className="form-field"
             type="number"
@@ -442,7 +443,7 @@ export default function DataListing() {
             required
           /> <br />
 
-          <label htmlFor="PmLink">PmLink : </label>
+          <label htmlFor="PmLink">PM Document : </label>
           <input
             className="form-field"
             type="text"
@@ -482,7 +483,7 @@ export default function DataListing() {
             required
           />
 
-          <label htmlFor="Weight">Weight : </label>
+          <label htmlFor="Weight">Weight (kg) : </label>
           <input
             className="form-field"
             type="number" 
@@ -492,7 +493,7 @@ export default function DataListing() {
             required
           /> <br />
 
-          <label htmlFor="ErectricKw">ErectricKw : </label>
+          <label htmlFor="ErectricKw">ElectricPower (kW) : </label>
           <input
             className="form-field"
             type="text"

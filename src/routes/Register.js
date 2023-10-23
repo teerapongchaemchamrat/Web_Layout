@@ -45,6 +45,7 @@ export default function Register() {
 
     const handleImageUpload = (event) => {
       const selectedImage = event.target.files[0];
+      console.log("Image name: " + selectedImage.name);
       setImage(selectedImage);
     };
 
@@ -84,28 +85,29 @@ export default function Register() {
         Uf_asset_department: Uf_asset_department || null,
         Uf_asset_inventory_number: Uf_asset_inventory_number || null
       }
-  
+      
       const departmentData = {
         dept: Uf_asset_department || null,
         image: image || null
-      }
+      };
       const config = {
         headers: {
-          'content-type': 'multipart/form-data',
+          'content-type': 'multipart/form-data; charset=utf-8',
         },
       };
   
       try {
 
           if (Uf_asset_RESID != null && Uf_asset_SerialNumber != null && Uf_asset_Location != null && Uf_asset_department != null && Uf_asset_StartUsedDate != null && image != null){
-           axios.post("http://192.168.10.76:8080/web/pointer/add", pointerData);
-           axios.post("http://192.168.10.76:8080/web/resource/add", resourceData);
-           axios.post("http://192.168.10.76:8080/web/upload", departmentData, config);
-          
+            
+            axios.post("http://192.168.10.76:8080/web/upload", departmentData, config);
+            axios.post("http://192.168.10.76:8080/web/pointer/add", pointerData);
+            axios.post("http://192.168.10.76:8080/web/resource/add", resourceData); 
+            console.log("Image : " + departmentData);
             alert("Save successful");
             navigate('/home'); 
           } else {
-            alert("Error: One or more requests failed");
+            alert("กรุณากรอกข้อมูลที่มีเครื่องหมาย *** ให้ครบ");
           }
         
       } catch (error) {
@@ -374,7 +376,7 @@ export default function Register() {
             className="form-field"
             type="file"
             name="image"
-            onChange={handleImageUpload}
+            onChange={handleImageUpload} 
             required
           />
           <div className="button-container">

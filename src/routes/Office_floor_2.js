@@ -197,7 +197,7 @@ export default function Office_floor_2() {
                         <div className="text-front">
                           <h5>Department : &nbsp;</h5>
                           <div className="text-back">
-                            <h5>{data.dept}</h5>
+                            <h5>{data.Uf_asset_department}</h5>
                           </div>
                         </div> <br />
                         <div className="text-front">

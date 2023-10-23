@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate} from "react-router-dom";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+//import LoadingOverlay from 'react-loading-overlay-ts'; 
 
 export default function Office_floor_1() {
     const navigate = useNavigate();
@@ -30,7 +31,6 @@ export default function Office_floor_1() {
             cursor="pointer"
             fillOpacity="0"
           />
-      
         ));
   
         setCircles(newCircles);
@@ -60,7 +60,7 @@ export default function Office_floor_1() {
       // return `${formattedDate} ${formattedTime}`;
       return `${formattedDate}`;
   }
-  
+   
     const getImage = async () => {
       try {
         const response = await axios.get("http://192.168.10.76:8080/web/pointer/location1");
@@ -197,7 +197,7 @@ export default function Office_floor_1() {
                           <div className="text-front">
                             <h5>Department : &nbsp;</h5>
                             <div className="text-back">
-                              <h5>{data.dept}</h5>
+                              <h5>{data.Uf_asset_department}</h5>
                             </div>
                           </div> <br />
                           <div className="text-front">
@@ -226,7 +226,7 @@ export default function Office_floor_1() {
   
       } catch (error) {
         console.error("Error fetching image data:", error);
-      }
+      } 
     };
   
     useEffect(() => {
@@ -300,14 +300,12 @@ export default function Office_floor_1() {
   
     return (
       <div className="Container">
-          {image}
-          <ClickableSVG onClick={addCircle} >
-            {/* This loads your circles in the circles hook here */}
-            {circles}
-          </ClickableSVG>
-          
+            {image}
+            <ClickableSVG onClick={addCircle} >
+              {/* This loads your circles in the circles hook here */}
+              {circles}
+            </ClickableSVG>
       </div>
-      
     );
   }
   
