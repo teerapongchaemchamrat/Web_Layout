@@ -7,6 +7,9 @@ import MuiAlert from '@mui/material/Alert';
 import Popup from 'reactjs-popup';
 import ReactSwitch from 'react-switch';
 import emailjs from '@emailjs/browser';
+import TemplatePPT from '../Background_Web.pptx'
+import UploadManual from '../Manual_Upload.pdf'
+
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -55,7 +58,7 @@ export default function DataListing() {
 
     const Removefunction = (no, Uf_asset_department, Uf_asset_RESID) => {
         if (window.confirm('Do you want to remove?')) {
-            deleteData(no, Uf_asset_department, Uf_asset_RESID);
+            deleteData(no, Uf_asset_department, Uf_asset_RESID); 
         }
     };
     
@@ -274,9 +277,6 @@ export default function DataListing() {
       emailjs.send('service_3nmi6d8', 'template_6dja9bc', dataContent, 'uF0Gi7qXTufa0aNEz')
       .then((result) => {
         console.log("Send Email: " + result.text);
-        // console.log("resource: " + Uf_asset_RESID);
-        // console.log("serial number: " + Uf_asset_SerialNumber);
-        // console.log("location: " + Uf_asset_Location);
       }, (error) => {
         console.log("Send Email: " + error.text);
       });
@@ -567,13 +567,16 @@ export default function DataListing() {
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               }}>
             <h1 htmlFor="status" align='center'>Upload Background</h1> <br />
+            <label>ดาวน์โหลดคู่มือการ Upload ได้ที่นี่ 👉 <a href={UploadManual} download="คู่มือการ Upload Background">Download คู่มือการใช้งาน</a></label><br />
+            <label>ดาวน์โหลด PowerPoint ได้ที่นี่ 👉 <a href={TemplatePPT} download="TemplateBackground">Download file</a></label><br /><br />
             <h3 className="txt-upload">โปรดกำหนดชื่อไฟล์ดังนี้</h3>
             <label>OFFICE FLOOR 1 ให้ตั้งชื่อไฟล์เป็น Office_floor_1.svg</label><br />
             <label>OFFICE FLOOR 2 ให้ตั้งชื่อไฟล์เป็น Office_floor_2.svg</label><br />
             <label>OFFICE PD 1 ให้ตั้งชื่อไฟล์เป็น Office_pd_1.svg</label><br />
             <label>OFFICE PD 2 ให้ตั้งชื่อไฟล์เป็น Office_pd_2.svg</label><br />
             <label>FACTORY 1A ให้ตั้งชื่อไฟล์เป็น Factory1A.svg</label><br />
-            <label>FACTORY 1B ให้ตั้งชื่อไฟล์เป็น Factory1B.svg</label><br /><br /><br />
+            <label>FACTORY 1B ให้ตั้งชื่อไฟล์เป็น Factory1B.svg</label><br /><br />
+          
             <form>
                 <label htmlFor="location">Location : </label>
                 <select
