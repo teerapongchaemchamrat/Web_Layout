@@ -258,7 +258,7 @@ export default function Office_floor_1() {
         const circleY = parseInt(circle.props.cy);
         const circleRadius = parseInt(circle.props.r);
         const circleArea = Math.PI * circleRadius ** 2;
-        const squaredDistance = (x - circleX ) ** 2 + (y - circleY ) ** 2
+        const squaredDistance = (x - circleX ) ** 2 + (y - circleY ) ** 2;
         return squaredDistance <= circleArea;
       });
   

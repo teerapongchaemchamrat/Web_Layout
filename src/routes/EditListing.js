@@ -180,13 +180,13 @@ export default function DataListing() {
             return;
           }
         try {
-            const pointerDataUpdate = {
+            const pointerDataUpdate = { //Update pointer data
                 no: selectedItem.no,
                 Uf_asset_RESID: Uf_asset_RESID,
                 Uf_asset_department: Uf_asset_department
               };
           
-              const resourceDataUpdate = {   //Update resource error 
+              const resourceDataUpdate = {   //Update resource data
                 Uf_asset_RESID: selectedItem.Uf_asset_RESID,
                 Uf_asset_RESID_update: Uf_asset_RESID || null,
                 Uf_asset_SerialNumber: Uf_asset_SerialNumber || null,
@@ -205,7 +205,7 @@ export default function DataListing() {
                 Uf_asset_ErectricKw: Uf_asset_ErectricKw || null,
                 Uf_asset_ExpireDate: Uf_asset_ExpireDate || null,
                 Uf_asset_department: Uf_asset_department || null,
-                Uf_asset_inventory_number: Uf_asset_inventory_number || null
+                Uf_asset_inventory_number: Uf_asset_inventory_number || null 
               };
 
               console.log('resourceDataUpdate:', JSON.stringify(resourceDataUpdate, null, 2));
@@ -282,6 +282,27 @@ export default function DataListing() {
       });
     }
 
+    function formatDate(dateString) {
+      if (dateString === null) {
+        return ""; // Return an empty string if the date is null
+      }
+      const originalDate = new Date(dateString);
+      
+      // Add 6 hours to the original date
+      const modifiedDate = new Date(originalDate.getTime() - 7 * 60 * 60 * 1000);
+
+      // Format the date portion as "dd-MM-yyyy"
+      const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const formattedDate = modifiedDate.toLocaleDateString('nl-NL', dateOptions);
+
+      // Format the time portion as "HH:mm:ss" (24-hour format)
+      // const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+      // const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(modifiedDate);
+
+      // return `${formattedDate} ${formattedTime}`;
+      return `${formattedDate}`;
+  }
+
     return(
         <div>
         <section>
@@ -346,17 +367,18 @@ export default function DataListing() {
           <form>
             <div className="form-group" style={{maxHeight: '768px', overflowY: 'auto'}}>
 
-            <label htmlFor="Resource ID">Resource ID : </label>
+            <label htmlFor="Resource ID">Resource ID : <label style={{color: 'red'}}>***</label></label>
             <input
               className="form-field"
               type="text"
               name="Uf_asset_RESID"
+              maxLength={30}
               value={Uf_asset_RESID === null ? '' : Uf_asset_RESID}
               onChange={(e) => setUf_asset_RESID(e.target.value)}
               required 
             /> <br />
 
-            <label htmlFor="SerialNumber">Serial Number : </label>
+            <label htmlFor="SerialNumber">Serial Number : <label style={{color: 'red'}}>***</label></label>
             <input
               className="form-field"
               type="text"
@@ -366,7 +388,7 @@ export default function DataListing() {
               required 
             /> <br />
 
-            <label htmlFor="Car_Exp">ภาษีรถยนต์ : {Uf_asset_Car_Exp}</label>
+            <label htmlFor="Car_Exp">ภาษีรถยนต์ : {formatDate(Uf_asset_Car_Exp)}</label>
             <input
               className="form-field"
               type="date"
@@ -376,7 +398,7 @@ export default function DataListing() {
               required
             /> <br />
 
-            <label htmlFor="Compulsory_Exp">พ.ร.บ. : {Uf_asset_Compulsory_Exp}</label>
+            <label htmlFor="Compulsory_Exp">พ.ร.บ. : {formatDate(Uf_asset_Compulsory_Exp)}</label>
             <input
               className="form-field"
               type="date"
@@ -391,6 +413,7 @@ export default function DataListing() {
               className="form-field"
               type="text"
               name="Uf_asset_Contact" 
+              maxLength= {200}
               value={Uf_asset_Contact === null ? '' : Uf_asset_Contact}
               onChange={(e) => setUf_asset_Contact(e.target.value)}
               required
@@ -401,12 +424,13 @@ export default function DataListing() {
               className="form-field"
               type="text"
               name="Uf_asset_ErectricCurrent" 
+              maxLength= {3}
               value={Uf_asset_ErectricCurrent === null ? '' : Uf_asset_ErectricCurrent}
               onChange={(e) => setUf_asset_ErectricCurrent(e.target.value)}
               required
             /> <br />
 
-            <label htmlFor="location">Location : </label>
+            <label htmlFor="location">Location :  <label style={{color: 'red'}}>***</label></label>
             <select
               className="form-field-select"
               value={Uf_asset_Location === null ? '' : Uf_asset_Location}
@@ -427,6 +451,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_ModelNumber"
+            maxLength= {20}
             value={Uf_asset_ModelNumber === null ? '' : Uf_asset_ModelNumber}
             onChange={(e) => setUf_asset_ModelNumber(e.target.value)}
             required
@@ -447,12 +472,13 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_PmLink"
+            maxLength= {100}
             value={Uf_asset_PmLink === null ? '' : Uf_asset_PmLink}
             onChange={(e) => setUf_asset_PmLink(e.target.value)}
             required
           /> <br />
 
-          <label htmlFor="PmLink">StartUsedDate : {Uf_asset_StartUsedDate}</label>
+          <label htmlFor="PmLink">StartUsedDate : {formatDate(Uf_asset_StartUsedDate)} <label style={{color: 'red'}}>***</label></label>
           <input
             className="form-field"
             type="date"
@@ -467,6 +493,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_UserManual"
+            maxLength= {100}
             value={Uf_asset_UserManual === null ? '' : Uf_asset_UserManual}
             onChange={(e) => setUf_asset_UserManual(e.target.value)}
             required
@@ -477,6 +504,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_Voltage"
+            maxLength= {20}
             value={Uf_asset_Voltage === null ? '' : Uf_asset_Voltage}
             onChange={(e) => setUf_asset_Voltage(e.target.value)}
             required
@@ -497,12 +525,13 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_ErectricKw"
+            maxLength= {10}
             value={Uf_asset_ErectricKw === null ? '' : Uf_asset_ErectricKw}
             onChange={(e) => setUf_asset_ErectricKw(e.target.value)}
             required
           /> <br />
 
-          <label htmlFor="ExpireDate">ExpireDate : {Uf_asset_ExpireDate}</label>
+          <label htmlFor="ExpireDate">ExpireDate : {formatDate(Uf_asset_ExpireDate)}</label>
           <input
             className="form-field"
             type="date"
@@ -512,11 +541,12 @@ export default function DataListing() {
             required
           /> <br />
 
-          <label htmlFor="department">Department : </label>
+          <label htmlFor="department">Department : <label style={{color: 'red'}}>***</label></label>
           <input
             className="form-field"
             type="text"
             name="Uf_asset_department"
+            maxLength= {100}
             value={Uf_asset_department === null ? '' : Uf_asset_department}
             onChange={(e) => setUf_asset_department(e.target.value)}
             required
@@ -527,6 +557,7 @@ export default function DataListing() {
             className="form-field"
             type="text"
             name="Uf_asset_inventory_number"
+            maxLength= {50}
             value={Uf_asset_inventory_number === null ? '' : Uf_asset_inventory_number}
             onChange={(e) => setUf_asset_inventory_number(e.target.value)}
             required

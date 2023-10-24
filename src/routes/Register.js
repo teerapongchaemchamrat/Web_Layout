@@ -148,12 +148,12 @@ export default function Register() {
         <h4 align="center">Y : {valueY}</h4> */}
 
         <label>Resource ID : (30) <label style={{color: 'red'}}>***</label></label>
-        
           <input
             className="form-field"
             type="text"
             placeholder="Resource ID"
             name="Uf_asset_RESID"
+            maxLength={30}
             value={Uf_asset_RESID}
             onChange={(e) => setUf_asset_RESID(e.target.value)}
             required 
@@ -165,6 +165,7 @@ export default function Register() {
             type="text"
             placeholder="SerialNumber"
             name="Uf_asset_SerialNumber"
+            maxLength={30}
             value={Uf_asset_SerialNumber}
             onChange={(e) => setUf_asset_SerialNumber(e.target.value)}
             required 
@@ -198,6 +199,7 @@ export default function Register() {
             type="text"
             placeholder="Contact"
             name="Uf_asset_Contact" 
+            maxLength={200}
             value={Uf_asset_Contact}
             onChange={(e) => setUf_asset_Contact(e.target.value)}
             required
@@ -209,6 +211,7 @@ export default function Register() {
             type="text"
             placeholder="ErectricCurrent"
             name="Uf_asset_ErectricCurrent" 
+            maxLength={3}
             value={Uf_asset_ErectricCurrent}
             onChange={(e) => setUf_asset_ErectricCurrent(e.target.value)}
             required
@@ -217,7 +220,7 @@ export default function Register() {
           <h4>&nbsp; Location : {Uf_asset_Location}</h4>
           
           <div className="button-container">
-            <button className="btn-previous" type="button" onClick={()=>{navigate('/home')}}>Canel</button>
+            <button className="btn-previous" type="button" onClick={()=>{navigate('/home')}}>Cancel</button>
             <button className="btn-next" type="button" onClick={nextStep} >Next</button>
           </div>
           </>
@@ -247,6 +250,7 @@ export default function Register() {
             type="text"
             placeholder="ModelNumber"
             name="Uf_asset_ModelNumber"
+            maxLength={20}
             value={Uf_asset_ModelNumber}
             onChange={(e) => setUf_asset_ModelNumber(e.target.value)}
             required
@@ -269,6 +273,7 @@ export default function Register() {
             type="text"
             placeholder="PmLink"
             name="Uf_asset_PmLink"
+            maxLength={100}
             value={Uf_asset_PmLink}
             onChange={(e) => setUf_asset_PmLink(e.target.value)}
             required
@@ -291,6 +296,7 @@ export default function Register() {
             type="text"
             placeholder="UserManual"
             name="Uf_asset_UserManual"
+            maxLength={100}
             value={Uf_asset_UserManual}
             onChange={(e) => setUf_asset_UserManual(e.target.value)}
             required
@@ -302,6 +308,7 @@ export default function Register() {
             type="text"
             placeholder="Voltage"
             name="Uf_asset_Voltage"
+            maxLength={20}
             value={Uf_asset_Voltage}
             onChange={(e) => setUf_asset_Voltage(e.target.value)}
             required
@@ -333,6 +340,7 @@ export default function Register() {
             type="text"
             placeholder="ErectricKw"
             name="Uf_asset_ErectricKw"
+            maxLength={10}
             value={Uf_asset_ErectricKw}
             onChange={(e) => setUf_asset_ErectricKw(e.target.value)}
             required
@@ -355,6 +363,7 @@ export default function Register() {
             type="text"
             placeholder="department"
             name="Uf_asset_department"
+            maxLength={100}
             value={Uf_asset_department}
             onChange={(e) => setUf_asset_department(e.target.value)}
             required
@@ -366,6 +375,7 @@ export default function Register() {
             type="text"
             placeholder="inventory_number"
             name="Uf_asset_inventory_number"
+            maxLength={50}
             value={Uf_asset_inventory_number}
             onChange={(e) => setUf_asset_inventory_number(e.target.value)}
             required

@@ -31,7 +31,7 @@ function Alert(props) {
                 console.log("POST Response:", response.data);
                 localStorage.setItem('Username', username)
                 setOpenSuccess(true);
-                if ( username === 'admin') {    //   เครื่องหมายหรือ ||
+                if ( username === 'admin' || username === 'teerapong') {    //   เครื่องหมายหรือ ||
                     localStorage.setItem('RoleType', 'administrator');
                     navigate('/home', {state:{valueUser: username}});
                 } else {
