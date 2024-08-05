@@ -28,7 +28,7 @@ export default function CustomLayout() {
 
   const fetchImage = async () => {
     try {
-      const response = await axios.get(`http://192.168.10.27:5000/web/pointer/location/${valueSelect}`);
+      const response = await axios.get(`http://XX.XX.XX.XX:XX/web/pointer/location/${valueSelect}`);
       const responseImage = response.data;
       const newImages = responseImage.map((data) => ({
         ...data,
@@ -65,7 +65,7 @@ export default function CustomLayout() {
       };
       try{
         setloading(true);
-        await axios.put(`http://192.168.10.27:5000/web/pointer/${image.Uf_asset_RESID}`, updatePointer);
+        await axios.put(`http://XX.XX.XX.XX:XX/web/pointer/${image.Uf_asset_RESID}`, updatePointer);
         setloading(false);
         setOpenUpdateSuccess(true);
       }catch (error) {
@@ -120,7 +120,7 @@ export default function CustomLayout() {
     while (currentAttempt <= maxAttempts) {
         try {
           setloading(true);
-          const response = await axios.get(`http://192.168.10.27:5000/web/location/${valueSelect}`, {timeout: 3000});
+          const response = await axios.get(`http://XX.XX.XX.XX:XX/web/location/${valueSelect}`, {timeout: 3000});
           const dataArray = response.data;
         
           if (dataArray && dataArray.length > 0) {
@@ -166,25 +166,6 @@ export default function CustomLayout() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // const res = async () => {
-  //   const [num_x, setNum_x] = useState('');
-  //   const [num_y, setNum_y] = useState('');
-    
-  //   getClickCoords();
-  
-  //   const sendData = async () => {
-  //     try{
-  //     setloading(true);
-  //     await axios.post(`http://192.168.10.27:5000/web/pointer/${num_x}`);
-  //     setNum_x('');
-  //     setNum_y(''); 
-  //     setloading(false);
-  //     } catch (error) {
-  //       console.error("sendData error: " , error);
-  //     }
-  //   };  
-  // };
 
     return (
       <div className="Container">
