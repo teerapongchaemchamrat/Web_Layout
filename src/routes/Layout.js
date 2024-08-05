@@ -6,8 +6,6 @@ import axios from "axios";
 import { useNavigate} from "react-router-dom";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-//import ReactSwitch from 'react-switch';
-//import emailjs from '@emailjs/browser';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import Backdrop from '@mui/material/Backdrop';
@@ -73,20 +71,14 @@ export default function Layout() {
       // Format the date portion as "dd-MM-yyyy"
       const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
       const formattedDate = modifiedDate.toLocaleDateString('nl-NL', dateOptions);
-
-      // Format the time portion as "HH:mm:ss" (24-hour format)
-      // const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-      // const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(modifiedDate);
-
-      // return `${formattedDate} ${formattedTime}`;
       return `${formattedDate}`;
     };
 
     const getImage = async () => {
       try {
         setloading(true);
-        const response = await axios.get(`http://192.168.10.27:5000/web/pointer/location/${valueSelect}`);
-        const responseListLocation = await axios.get("http://192.168.10.27:5000/web/location");
+        const response = await axios.get(`http://XX.XX.XX.XX:XX/web/pointer/location/${valueSelect}`);
+        const responseListLocation = await axios.get("http://XX.XX.XX.XX:XX/web/location");
         setListLocation(responseListLocation.data);
         
         const fetchedCircles = response.data;
@@ -348,7 +340,7 @@ export default function Layout() {
       while (currentAttempt <= maxAttempts) {
           try {
             setloading(true);
-            const response = await axios.get(`http://192.168.10.27:5000/web/location/${valueSelect}`, {timeout: 3000});
+            const response = await axios.get(`http://XX.XX.XX.XX:XX/web/location/${valueSelect}`, {timeout: 3000});
             const dataArray = response.data;
           
             if (dataArray && dataArray.length > 0) {
@@ -389,7 +381,6 @@ export default function Layout() {
     useEffect(() => {
       
       const fetchData = async () => {
-        //await getCircle();
         //console.log('Fetching image location...');
         await imageLocation();
         //console.log('Fetching image...');
@@ -401,9 +392,6 @@ export default function Layout() {
     }, [valueSelect]);
 
     const getClickCoords = (event) => {
-            // from: https://stackoverflow.com/a/29296049/14198287
-      // var e = event.target;
-      // var dim = e.getBoundingClientRect();
       const { left, top } = event.currentTarget.getBoundingClientRect();
       var x = event.clientX - left;
       var y = event.clientY - top;
@@ -454,7 +442,6 @@ export default function Layout() {
       
           } else{
             setSelectedCircle(null);
-            //alert("TEST");
           }
       }
       
@@ -467,27 +454,8 @@ export default function Layout() {
       setUf_asset_SerialNumber(data.Uf_asset_SerialNumber);
       setUf_asset_Location(data.Uf_asset_Location);
       setStat(data.stat);
-      // setStat(data.stat === 1 ? "0" : "1");
-      // setChecked(data.stat === 1);
+    
     };
-
-    // const handleChange = val => {
-    //   setChecked(val);
-    //   setStat(val ? "1" : "0"); 
-    //   console.log("stat: " + stat);
-    // };
-
-    // const handleChange = val => {
-    //   if(valueRole === 'SuperAdministrator' && (val || !val)){
-    //     setChecked(val);
-    //     setStat(val ? "0" : "1");
-    //     console.log("stat: " + stat);
-    //   } else if ((valueRole === "Administrator" && val) || (valueRole === "Production" && !val)) {
-    //     setChecked(val);
-    //     setStat(val ? "1" : "0");
-    //     console.log("stat: " + stat);
-    //   }
-    // };
 
     const handleChange = (e) => {
       setStat(e.target.value);
@@ -501,7 +469,7 @@ export default function Layout() {
             stat: stat
          };
          setloading(true);
-         await axios.put(`http://192.168.10.27:5000/web/pointer/stat/${Uf_asset_RESID}`, statDataUpdate);
+         await axios.put(`http://XX.XX.XX.XX:XX/web/pointer/stat/${Uf_asset_RESID}`, statDataUpdate);
          setOpenUpdateSuccess(true);
          setPopupStat(false);
 
@@ -530,9 +498,9 @@ export default function Layout() {
             };      
 
             //sendEmail(); // send email by EmailJS
-            await axios.post(`http://192.168.10.27:5000/web/log/add`, logData);
-            //await axios.get(`http://192.168.10.27:5000/web/pointer/email/${Uf_asset_RESID}`); // send email by sql
-            await axios.post(`http://192.168.10.27:5000/web/send-notification`, configLineNotify); // Line Notify
+            await axios.post(`http://XX.XX.XX.XX:XX/web/log/add`, logData);
+            //await axios.get(`http://XX.XX.XX.XX:XX/web/pointer/email/${Uf_asset_RESID}`); // send email by sql
+            await axios.post(`http://XX.XX.XX.XX:XX/web/send-notification`, configLineNotify); // Line Notify
         }
 
         if (stat === "1") {
@@ -559,8 +527,8 @@ export default function Layout() {
                        "\n6️⃣วันที่แจ้ง : " + formattedDate
             }; 
           
-          await axios.post(`http://192.168.10.27:5000/web/log/add`, logData);
-          await axios.post(`http://192.168.10.27:5000/web/send-notification`, configLineNotify); // Line Notify
+          await axios.post(`http://XX.XX.XX.XX:XX/web/log/add`, logData);
+          await axios.post(`http://XX.XX.XX.XX:XX/web/send-notification`, configLineNotify); // Line Notify
         }
 
         getImage();
@@ -572,27 +540,6 @@ export default function Layout() {
             setOpenUpdateError(true);
       }
     };
-
-    // const sendEmail = () => {
-    //   const date = new Date();
-    //   const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    //   const CurrentDate = date.toLocaleDateString('nl-NL', dateOptions);
-
-    //   const dataContent = {
-    //     resource: Uf_asset_RESID,
-    //     serialnumber: Uf_asset_SerialNumber,
-    //     location: Uf_asset_Location,
-    //     status: "Stop Working",
-    //     note : Value_Note,
-    //     date: CurrentDate 
-    //   }
-    //   emailjs.send('service_6oju5zk', 'template_s8zinja', dataContent, 'u2G-71zzuU8byo7kE') 
-    //   .then((result) => {
-    //     console.log("Send Email: " + result.text);
-    //   }, (error) => {
-    //     console.log("Send Email: " + error.text);
-    //   });
-    // };
 
     const handleEdit = (data) => {
       setSelectedItem(data);
@@ -659,11 +606,11 @@ export default function Layout() {
               if (Uf_asset_RESID != null || Uf_asset_SerialNumber != null || Uf_asset_Location != null || Uf_asset_department != null || Uf_asset_StartUsedDate != null || Uf_asset_ModelNumber != null)
               {
                   setloading(true);
-                  await axios.put(`http://192.168.10.27:5000/web/pointer/${selectedItem.no}`, pointerDataUpdate);
+                  await axios.put(`http://XX.XX.XX.XX:XX/web/pointer/${selectedItem.no}`, pointerDataUpdate);
 
-                  await axios.put(`http://192.168.10.27:5000/web/resource/${selectedItem.Uf_asset_RESID}`, resourceDataUpdate);
+                  await axios.put(`http://XX.XX.XX.XX:XX/web/resource/${selectedItem.Uf_asset_RESID}`, resourceDataUpdate);
 
-                  await axios.put(`http://192.168.10.27:5000/web/department/${selectedItem.Uf_asset_department}`, departmentDataUpdate);
+                  await axios.put(`http://XX.XX.XX.XX:XX/web/department/${selectedItem.Uf_asset_department}`, departmentDataUpdate);
                 
                   setOpenUpdateSuccess(true);
                   setPopupEdit(false);
@@ -969,55 +916,3 @@ export default function Layout() {
     );
 
   }
-
-  // const Container = styled.div`
-  //   width: 100%;
-  //   hieght: 100%;
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   align-items: center;
-  // `;
-  // 1920x849
-
-  
-    
-  // const response = await axios.get(`http://192.168.10.27:5000/web/location/1`);
-  // const data_location = response.data;
-  // const locationUrl = data_location.image_location.replace("D:/WebLayout-react/public/", "/");
-       
-  // const uniqueIdentifier = Math.floor(Math.random() * 1000000);
-
-  // const ClickableSVG = styled.svg`
-  //   background: bisque;
-  //   background-image: url(${locationUrl}?v=${uniqueIdentifier});
-  //   background-size: 100% 100%;
-  //   -o-background-size: 100% 100%;
-  //   -webkit-background-size: 100% 100%;
-  //   background-size: cover;
-  //   width: 100%; /* Set the width to 100% */
-  //   height: auto; /* Allow the height to adjust proportionally */
-    
-  //   @media (min-width: 1024px) {
-  //     /* Apply specific styles for screens wider than 768px */
-  //     width: 100%; /* For example, set a specific width */
-  //     height: 100%;
-  //   }
-
-  //   @media (min-width: 1280px) {
-  //     /* Apply specific styles for screens wider than 1280px */
-  //     width: 100%;
-  //     height: 100%; /* Set a specific height for the 1280x1024 resolution */
-  //   }
-
-  //   @media (min-width: 1680px) {
-  //     width: 100%;
-  //     height: 100%;
-  //   }
-
-  //   @media (min-width: 1920px) {
-  //     /* Apply specific styles for screens wider than 1920px */
-  //     width: 100%;
-  //     height: 100%; /* Set a specific height for the 1920x1080 resolution */
-  //   }
-  // `;
