@@ -34,7 +34,7 @@ export default function Navbar() {
 
   const fetchDataAndUpdateState = async () => {
     try {
-      const response = await axios.get("http://192.168.10.27:5000/web/location", { timeout: 1000 });
+      const response = await axios.get("http://XX.XX.XX.XX:XX/web/location", { timeout: 1000 });
       const data = response.data;
       const uniqueLocations = [...new Set(data.map((item) => item.Uf_asset_Location))];
       const locationValues = [];
@@ -49,12 +49,7 @@ export default function Navbar() {
         })));
       }
     } catch (error) {
-      //console.error("Error fetching data:", error);
-      // if (axios.isCancel(error)) {
-      //   console.log("Request canceled:", error.message);
-      // } else {
-      //   console.error("Error fetching data:", error);
-      // }
+        console.error("Error fetching data:", error);
     }
   };
 
@@ -109,7 +104,7 @@ export default function Navbar() {
             const maxIndexValue = Math.max(...locations.map(location => location.value), 0) + 1;
             locationControll.values_select = maxIndexValue.toString();
 
-            await axios.post("http://192.168.10.27:5000/web/location/add", locationControll);
+            await axios.post("http://XX.XX.XX.XX:XX/web/location/add", locationControll);
             alert("Add successful");
             console.log('locationControll :', JSON.stringify(locationControll, null, 2));
             setpopupAddLocation(false);
@@ -138,16 +133,7 @@ export default function Navbar() {
         <div className="navbar">
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
-          </Link>
-          {/* <button className="button-82-pushable" onClick={() => PageLogin()}>
-            <span className="button-82-shadow"></span>
-            <span className="button-82-edge"></span>
-            <span className="button-82-front text">
-              Log&nbsp;Out
-            </span>
-          </button> */}
-          
-            
+          </Link> 
           {(valueRole === 'Administrator' || valueRole ==='SuperAdministrator') && (
             <button className="button-81-pushable" onClick={() => PageEdit()}>
               <span className="button-81-shadow"></span>
@@ -267,5 +253,3 @@ export default function Navbar() {
     </>
   );
 }
-
-//export default Navbar;
