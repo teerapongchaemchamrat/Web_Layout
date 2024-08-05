@@ -41,7 +41,7 @@ function Alert(props) {
       try {
           setloading(true); 
 
-          const userListResponse = await axios.get("http://192.168.10.27:5000/login/list/user");
+          const userListResponse = await axios.get("http://XX.XX.XX.XX:XX/login/list/user");
           const userList = userListResponse.data;
           // Check if the username exists in the user list
           const normalizedUsername = username.trim().toLowerCase();
@@ -51,7 +51,7 @@ function Alert(props) {
           if (username.trim() !== '' && role.trim() !== '') {
             if (userExists) {
                 // User found, proceed with role update
-                await axios.put("http://192.168.10.27:5000/login/role/update", NewRole);
+                await axios.put("http://XX.XX.XX.XX:XX/login/role/update", NewRole);
                 setUsername("");
                 setOpenSuccess(true);
                 setloading(false);
@@ -76,7 +76,7 @@ function Alert(props) {
   useEffect(() => {
       const fetchUserList = async () => {
           try {
-              const response = await axios.get("http://192.168.10.27:5000/login/list/user");
+              const response = await axios.get("http://XX.XX.XX.XX:XX/login/list/user");
               setUserList(response.data);
           } catch (error) {
               console.error("Error fetching user list:", error);
@@ -114,38 +114,31 @@ function Alert(props) {
             <div id="login-form">
               <h1>Update Role</h1>
               <form>
-                {/* <label htmlFor="fullname">Username :</label>
-                <input 
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                type="text"
-            /> */}
-
-          <div>
-            <label htmlFor="username">Username:</label>
-            <input 
-                value={username}
-                onChange={handleInputChange}
-                type="text"
-                id="username"
-            />
-
-            {/* Dropdown list for user selection */}
-            {showDropdown && (
-                <div style={{ border: "1px solid #ccc", marginTop: "-20px", maxHeight: "150px", overflowY: "auto", borderRadius: "10px" }}>
-                    {filteredUserList.map(user => (
-                        <div 
-                            key={user} 
-                            style={{ padding: "5px", cursor: "pointer", color: "gray" }} 
-                            onClick={() => handleUserSelect(user)}
-                        >
-                            {user}
+                  <div>
+                    <label htmlFor="username">Username:</label>
+                    <input 
+                        value={username}
+                        onChange={handleInputChange}
+                        type="text"
+                        id="username"
+                    />
+        
+                    {/* Dropdown list for user selection */}
+                    {showDropdown && (
+                        <div style={{ border: "1px solid #ccc", marginTop: "-20px", maxHeight: "150px", overflowY: "auto", borderRadius: "10px" }}>
+                            {filteredUserList.map(user => (
+                                <div 
+                                    key={user} 
+                                    style={{ padding: "5px", cursor: "pointer", color: "gray" }} 
+                                    onClick={() => handleUserSelect(user)}
+                                >
+                                    {user}
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            )}
-          </div>
-  
+                    )}
+                  </div>
+          
                 <label htmlFor="role">Role :</label>
                 <select id="roles" value={role} onChange={(e) => setRole(e.target.value)}>
                   <option value="" disabled hidden>Choose Role</option>
@@ -155,8 +148,7 @@ function Alert(props) {
                   <option value="Production">Production</option>
                   <option value="User">User</option>
                 </select>
-                
-                     
+                            
                 <input type="submit" value="SAVE" onClick={onSubmit} /> <br/><br/>
                 <input type="reset" value="BACK" onClick={btnCancel} />
               </form>
