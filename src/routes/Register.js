@@ -36,11 +36,6 @@ export default function Register() {
     const PosXY = useLocation();
 
     const nextStep = () => {
-      // if (Uf_asset_SerialNumber && Uf_asset_Car_Exp && Uf_asset_Compulsory_Exp && Uf_asset_Contact && Uf_asset_ErectricCurrent) {
-      // setStep(step + 1);
-      // }else {
-      //   alert("Please fill out all required fields.");
-      // }
       setStep(step + 1);
     };
 
@@ -111,32 +106,9 @@ export default function Register() {
       try {
           setloading(true);
           if (Uf_asset_RESID != null && Uf_asset_SerialNumber != null && Uf_asset_Location != null && Uf_asset_department != null && Uf_asset_StartUsedDate != null && image != null){
-            
-            // try{
-            //   const department_resp = await axios.post("http://192.168.10.27:5000/web/upload", departmentData, config);
-            //   const data = department_resp.data;
-            //   console.log('Department : ', JSON.stringify(data, null, 2));
-            // } catch (error) {
-            //   console.error("Error posting Department data:", error.message);
-            // }
-            // try{
-            //   const pointer_resp = await axios.post("http://192.168.10.27:5000/web/pointer/add", pointerData);
-            //   const data = pointer_resp.data;
-            //   console.log('Pointer : ', JSON.stringify(data, null, 2));
-            // } catch (error) {
-            //   console.error("Error posting Pointer data:", error.message);
-            // }
-            // try{
-            //   const resource_resp = await axios.post("http://192.168.10.27:5000/web/resource/add", resourceData); 
-            //   const data = resource_resp.data; 
-            //   console.log('Resource : ', JSON.stringify(data, null, 2));
-            // } catch (error) {
-            //   console.error("Error posting Resource data:", error.message);
-            // }
-            //console.log("Image : " + departmentData);
-            await axios.post("http://192.168.10.27:5000/web/pointer/add", pointerData);
-            await axios.post("http://192.168.10.27:5000/web/resource/add", resourceData); 
-            await axios.post("http://192.168.10.27:5000/web/upload", departmentData, config);
+            await axios.post("http://XX.XX.XX.XX:XX/web/pointer/add", pointerData);
+            await axios.post("http://XX.XX.XX.XX:XX/web/resource/add", resourceData); 
+            await axios.post("http://XX.XX.XX.XX:XX/web/upload", departmentData, config);
             alert("Save successful"); 
             navigate('/home'); 
           } else {
@@ -173,10 +145,6 @@ export default function Register() {
       {step === 1 &&(
         <>
         <h1 align="center">Sign up</h1><br></br>
-          
-        {/* <h4 align="center">X : {valueX}</h4>
-            
-        <h4 align="center">Y : {valueY}</h4> */}
 
         <label>Resource ID : (30) <label style={{color: 'red'}}>***</label></label>
           <input
@@ -235,21 +203,6 @@ export default function Register() {
           </>
       )}
           
-          {/* <select
-            className="form-field-select"
-            placeholder="Location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            required
-          >
-            <option value="" disabled hidden>Choose Location</option>
-            <option value="OFFICE FLOOR 1">OFFICE FLOOR 1</option>
-            <option value="OFFICE FLOOR 2">OFFICE FLOOR 2</option>
-            <option value="OFFICE PD 1">OFFICE PD 1</option>
-            <option value="OFFICE PD 2">OFFICE PD 2</option>
-            <option value="FACTORY 1A">FACTORY 1A</option>
-            <option value="FACTORY 1B">FACTORY 1B</option>
-          </select> */}
         {step === 2 &&(
         <>
         <h1 align="center">Step 2</h1><br></br>
@@ -419,5 +372,3 @@ export default function Register() {
     </div>
       );
 }
-
-
