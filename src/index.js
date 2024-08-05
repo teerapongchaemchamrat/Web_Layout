@@ -7,27 +7,28 @@ import {
   useLocation 
 } from "react-router-dom";
 import Home from "./routes/Home";
-import OfficeFloor1 from "./routes/Office_floor_1";
-import OfficeFloor2 from "./routes/Office_floor_2";
-import OfficePD1 from "./routes/Office_PD_1";
-import OfficePD2 from "./routes/Office_PD_2";
-import Factory1A from "./routes/Factory1A";
-import Factory1B from "./routes/Factory1B";
+import Layout from "./routes/Layout";
 import Register from "./routes/Register";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import EditPage from "./routes/EditListing";
+import SpareParePage from "./routes/SparePart";
+import NewuserPage from "./components/NewUser";
+import ResetPasswordPage from "./components/ResetPassword";
+import UpdateRoleUserPage from "./components/UpdateRoleUser";
+import CustomLayoutPage from "./routes/CustomLayout"
 import "./App.css";
 
 const AppLayout = () => {
   const location = useLocation();
   const isLoginPage = location.pathname === '/';
   const isEditPage = location.pathname === '/edit';
-  const isEditData = location.pathname === '/edit/update';
-  const isDeleteData = location.pathname === '/edit/delete';
+  //const isNewUserPage = location.pathname === '/newuser';
+  // const isDeleteData = location.pathname === '/edit/delete';
+  const isSparePart = location.pathname === '/sparepart';
   return (
     <>
-      {!isLoginPage && !isEditPage && !isEditData && !isDeleteData && <Navbar />}
+      {!isLoginPage && !isEditPage && !isSparePart  && <Navbar />}
       <Outlet />
     </>
   );
@@ -39,44 +40,44 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Login />,
+        element: <Login />
       },
       {
         path: "/home",
-        element: <Home />,
+        element: <Home />
       },
       {
-        path: "office_floor_1",
-        element: <OfficeFloor1 />,
+        path: "layout",
+        element: <Layout />
       },
       {
-        path: "office_floor_2",
-        element: <OfficeFloor2 />,
-      },
-      {
-        path: "office_pd_1",
-        element: <OfficePD1 />,
-      },
-      {
-        path: "office_pd_2",
-        element: <OfficePD2 />,
-      },
-      {
-        path: "factory1a",
-        element: <Factory1A />,
-      },
-      {
-        path: "factory1b",
-        element: <Factory1B />,
+        path: "layout/custom",
+        element: <CustomLayoutPage />
       },
       {
         path: "register",
-        element: <Register />,
+        element: <Register />
       },
       {
         path: "edit",
-        element: <EditPage />,
+        element: <EditPage />
       },
+      {
+        path: "sparepart",
+        element: <SpareParePage />
+      },
+      {
+        path: "user/newuser",
+        element: <NewuserPage />
+      },
+      {
+        path : "user/reset/password",
+        element: <ResetPasswordPage />
+      },
+      {
+        path : "user/role",
+        element: <UpdateRoleUserPage />
+      }
     ],
   },
 ]);

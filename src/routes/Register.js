@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Register() {
 
+    const getUsername = localStorage.getItem('Username');
+    const valueSelect = localStorage.getItem('Values_select');
+    const locationSelect = localStorage.getItem('Location_select');
+
     const [step, setStep] = useState(1);
+    const [loading, setloading] = useState(false);
 
     const [Uf_asset_RESID, setUf_asset_RESID] = useState(""); 
     const [Uf_asset_SerialNumber, setUf_asset_SerialNumber] = useState("");
-    const [Uf_asset_Car_Exp, setUf_asset_Car_Exp] = useState("");
-    const [Uf_asset_Compulsory_Exp, setUf_asset_Compulsory_Exp] = useState("");
     const [Uf_asset_Contact, setUf_asset_Contact] = useState("");
     const [Uf_asset_ErectricCurrent, setUf_asset_ErectricCurrent]= useState("");
     //const [Uf_asset_Location, setUf_asset_Location] = useState("");
@@ -45,7 +50,7 @@ export default function Register() {
 
     const handleImageUpload = (event) => {
       const selectedImage = event.target.files[0];
-      console.log("Image name: " + selectedImage.name);
+      //console.log("Image name: " + selectedImage.name);
       setImage(selectedImage);
     };
 
@@ -62,17 +67,18 @@ export default function Register() {
         diameter: "20",
         Uf_asset_RESID: Uf_asset_RESID || null,
         Uf_asset_department: Uf_asset_department || null,
-        stat: "1"
+        stat: "1",
+        values_select : valueSelect
       };
+
+      console.log('pointerData:', JSON.stringify(pointerData, null, 2));
   
       const resourceData = {
         Uf_asset_RESID: Uf_asset_RESID || null,
         Uf_asset_SerialNumber: Uf_asset_SerialNumber || null,
-        Uf_asset_Car_Exp: Uf_asset_Car_Exp || null,
-        Uf_asset_Compulsory_Exp: Uf_asset_Compulsory_Exp || null,
         Uf_asset_Contact: Uf_asset_Contact || null,
         Uf_asset_ErectricCurrent: Uf_asset_ErectricCurrent || null,
-        Uf_asset_Location : Uf_asset_Location || null,
+        Uf_asset_Location : locationSelect || null,
         Uf_asset_ModelNumber: Uf_asset_ModelNumber || null,
         Uf_asset_PmDurationTime: Uf_asset_PmDurationTime || null,
         Uf_asset_PmLink: Uf_asset_PmLink || null,
@@ -83,8 +89,12 @@ export default function Register() {
         Uf_asset_ErectricKw: Uf_asset_ErectricKw || null,
         Uf_asset_ExpireDate: Uf_asset_ExpireDate || null,
         Uf_asset_department: Uf_asset_department || null,
-        Uf_asset_inventory_number: Uf_asset_inventory_number || null
+        Uf_asset_inventory_number: Uf_asset_inventory_number || null,
+        create_by : getUsername,
+        values_select : valueSelect
       }
+
+      console.log('resourceData:', JSON.stringify(resourceData, null, 2));
       
       const departmentData = {
         dept: Uf_asset_department || null,
@@ -96,29 +106,50 @@ export default function Register() {
         },
       };
   
-      try {
+      console.log('departmentData:', JSON.stringify(departmentData, null, 2));
 
+      try {
+          setloading(true);
           if (Uf_asset_RESID != null && Uf_asset_SerialNumber != null && Uf_asset_Location != null && Uf_asset_department != null && Uf_asset_StartUsedDate != null && image != null){
             
-            axios.post("http://192.168.10.76:8080/web/upload", departmentData, config);
-            axios.post("http://192.168.10.76:8080/web/pointer/add", pointerData);
-            axios.post("http://192.168.10.76:8080/web/resource/add", resourceData); 
-            console.log("Image : " + departmentData);
-            alert("Save successful");
+            // try{
+            //   const department_resp = await axios.post("http://192.168.10.27:5000/web/upload", departmentData, config);
+            //   const data = department_resp.data;
+            //   console.log('Department : ', JSON.stringify(data, null, 2));
+            // } catch (error) {
+            //   console.error("Error posting Department data:", error.message);
+            // }
+            // try{
+            //   const pointer_resp = await axios.post("http://192.168.10.27:5000/web/pointer/add", pointerData);
+            //   const data = pointer_resp.data;
+            //   console.log('Pointer : ', JSON.stringify(data, null, 2));
+            // } catch (error) {
+            //   console.error("Error posting Pointer data:", error.message);
+            // }
+            // try{
+            //   const resource_resp = await axios.post("http://192.168.10.27:5000/web/resource/add", resourceData); 
+            //   const data = resource_resp.data; 
+            //   console.log('Resource : ', JSON.stringify(data, null, 2));
+            // } catch (error) {
+            //   console.error("Error posting Resource data:", error.message);
+            // }
+            //console.log("Image : " + departmentData);
+            await axios.post("http://192.168.10.27:5000/web/pointer/add", pointerData);
+            await axios.post("http://192.168.10.27:5000/web/resource/add", resourceData); 
+            await axios.post("http://192.168.10.27:5000/web/upload", departmentData, config);
+            alert("Save successful"); 
             navigate('/home'); 
           } else {
             alert("กรุณากรอกข้อมูลที่มีเครื่องหมาย *** ให้ครบ");
           }
-        
+          setloading(false);
       } catch (error) {
-        console.error("Error posting registration data:", error);
-        alert("Error:", error);
+        console.error("Error posting registration data:", error.message);
+        alert("Error: ", error);
       }
 
       setUf_asset_RESID("");
       setUf_asset_SerialNumber("");
-      setUf_asset_Car_Exp("");
-      setUf_asset_Compulsory_Exp("");
       setUf_asset_Contact("");
       setUf_asset_ErectricCurrent("");
       setUf_asset_ModelNumber("");
@@ -138,7 +169,7 @@ export default function Register() {
       return (
         <div className="bg">
         <div className="form-container">
-      <form className="register-form" >
+      <form className="register-form">
       {step === 1 &&(
         <>
         <h1 align="center">Sign up</h1><br></br>
@@ -171,28 +202,6 @@ export default function Register() {
             required 
           /> <br />
         
-        <label>Car Exp (ภาษีรถยนต์) : </label>
-          <input
-            className="form-field"
-            type="date"
-            placeholder="Car_Exp"
-            name="Uf_asset_Car_Exp" 
-            value={Uf_asset_Car_Exp}
-            onChange={(e) => setUf_asset_Car_Exp(e.target.value)}
-            required
-          /> <br />
-
-          <label>Compulsory Exp (พ.ร.บ.) : </label>
-          <input
-            className="form-field"
-            type="date"
-            placeholder="Compulsory_Exp"
-            name="Uf_asset_Compulsory_Exp" 
-            value={Uf_asset_Compulsory_Exp}
-            onChange={(e) => setUf_asset_Compulsory_Exp(e.target.value)}
-            required
-          /> <br />
-
           <label>Contact : (200)</label>
           <input
             className="form-field"
@@ -217,7 +226,7 @@ export default function Register() {
             required
           /> <br />
   
-          <h4>&nbsp; Location : {Uf_asset_Location}</h4>
+          <h4>&nbsp; Location : {locationSelect}</h4>
           
           <div className="button-container">
             <button className="btn-previous" type="button" onClick={()=>{navigate('/home')}}>Cancel</button>
@@ -399,10 +408,16 @@ export default function Register() {
         )}
       </form>
     </div>
+
+    <Backdrop 
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+    </Backdrop>
+
     </div>
       );
-
-
 }
 
 

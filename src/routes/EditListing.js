@@ -4,11 +4,13 @@ import "./EditListing.css";
 import axios from "axios";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import Popup from 'reactjs-popup';
-import ReactSwitch from 'react-switch';
-import emailjs from '@emailjs/browser';
-import TemplatePPT from '../Background_Web.pptx'
-import UploadManual from '../Manual_Upload.pdf'
+//import ReactSwitch from 'react-switch';
+//import emailjs from '@emailjs/browser';
+// import TemplatePPT from '../Background_Web.pptx'
+// import UploadManual from '../Manual_Upload.pdf'
 
 
 function Alert(props) {
@@ -17,7 +19,10 @@ function Alert(props) {
 
 export default function DataListing() {
 
+    const getUsername = localStorage.getItem('Username');
+
     const [editdata, editdatachange] = useState(null);
+    const [BgLocation, setBgLocation] = useState(null);
    
     const [openDeleteSuccess, setOpenDeleteSuccess] = useState(false);
     const [openDeleteError, setOpenDeleteError] = useState(false);
@@ -25,16 +30,33 @@ export default function DataListing() {
     const [openUpdateSuccess, setOpenUpdateSuccess] = useState(false);
     const [openUpdateError, setOpenUpdateError] = useState(false);
 
+    const [openWithdrawSuccess, setopenWithdrawSuccess] = useState(false);
+    const [openWithdrawError, setopenWithdrawError] = useState(false);
+
     const [selectedItem, setSelectedItem] = useState(null);
     const [popupOpen, setPopupOpen] = useState(false);
-    const [popupStat, setPopupStat] = useState(false);
+    //const [popupStat, setPopupStat] = useState(false);
     const [popupBG, setPopupBG] = useState(false);
-    const [checked, setChecked] = useState(true);
+    //const [checked, setChecked] = useState(true);
+    const [popupWithdraw, setPopupWithdraw] = useState(false);
+    const [stockSparePart, setstockSparePart] = useState(null);
+    const [loading, setloading] = useState(false);
+
+    const [selectedParts, setSelectedParts] = useState([]);
+    const [selectedLogs, setSelectedLogs] = useState([]);
+
+    // const [selectCount, setSelectCount] = useState(1);
+
+    // const handleAddButtonClick = () => {
+    //   setSelectCount(prevCount => prevCount + 1);
+    // }
+
+    // const handleDelButtonClick = () => {
+    //   setSelectCount(prevCount => prevCount - 1);
+    // }
 
     const [Uf_asset_RESID, setUf_asset_RESID] = useState('');
     const [Uf_asset_SerialNumber, setUf_asset_SerialNumber] = useState('');
-    const [Uf_asset_Car_Exp, setUf_asset_Car_Exp] = useState('');
-    const [Uf_asset_Compulsory_Exp, setUf_asset_Compulsory_Exp] = useState('');
     const [Uf_asset_Contact, setUf_asset_Contact] = useState('');
     const [Uf_asset_ErectricCurrent, setUf_asset_ErectricCurrent]= useState('');
     const [Uf_asset_Location, setUf_asset_Location] = useState('');
@@ -49,8 +71,13 @@ export default function DataListing() {
     const [Uf_asset_ExpireDate, setUf_asset_ExpireDate] = useState('');
     const [Uf_asset_department, setUf_asset_department] = useState('');
     const [Uf_asset_inventory_number, setUf_asset_inventory_number] = useState('');
-    const [stat, setStat] = useState('');
+    //const [stat, setStat] = useState('');
     const [image, setImage] = useState('');
+
+    const [Part_no, setPart_no] = useState('');
+    const [Part_name, setPart_name] = useState('');
+    let [Quantity, setQuantity] = useState(1); 
+    const [DefaultQty, setDefaultQty] = useState('');
 
     const [searchTerm, setSearchTerm] = useState("");
 
@@ -64,17 +91,18 @@ export default function DataListing() {
     
     const deleteData = async (no, Uf_asset_department, Uf_asset_RESID) => {
         try {
-            await axios.delete(`http://192.168.10.76:8080/web/pointer/${no}`);
-            await axios.delete(`http://192.168.10.76:8080/web/department/${Uf_asset_department}`);
-            await axios.delete(`http://192.168.10.76:8080/web/resource/${Uf_asset_RESID}`);
+            setloading(true);
+            await axios.delete(`http://192.168.10.27:5000/web/pointer/${no}`);
+            await axios.delete(`http://192.168.10.27:5000/web/department/${Uf_asset_department}`);
+            await axios.delete(`http://192.168.10.27:5000/web/resource/${Uf_asset_RESID}`);
             
             setOpenDeleteSuccess(true);
     
             // Update state to trigger a re-render
-            const response = await fetch("http://192.168.10.76:8080/web/pointer/all");
+            const response = await fetch("http://192.168.10.27:5000/web/pointer/all");
             const resp = await response.json();
             editdatachange(resp);
-    
+            setloading(false);
         } catch (error) {
             console.error("Error Delete data:", error);
             setOpenDeleteError(true);
@@ -86,8 +114,6 @@ export default function DataListing() {
         setPopupOpen(true);
         setUf_asset_RESID(item.Uf_asset_RESID);
         setUf_asset_SerialNumber(item.Uf_asset_SerialNumber);
-        setUf_asset_Car_Exp(item.Uf_asset_Car_Exp);
-        setUf_asset_Compulsory_Exp(item.Uf_asset_Compulsory_Exp);
         setUf_asset_Contact(item.Uf_asset_Contact);
         setUf_asset_ErectricCurrent(item.Uf_asset_ErectricCurrent);
         setUf_asset_ModelNumber(item.Uf_asset_ModelNumber);
@@ -109,54 +135,65 @@ export default function DataListing() {
       setImage(selectedImage);
     };
 
-    const handleStat = (item) => {
-      setPopupStat(true);
-      setUf_asset_RESID(item.Uf_asset_RESID);
-      setUf_asset_SerialNumber(item.Uf_asset_SerialNumber);
-      setUf_asset_Location(item.Uf_asset_Location);
-      setStat(item.stat === 1 ? "0" : "1");
-      setChecked(item.stat === 1);
-    };
+    // const handleStat = (item) => {
+    //   setPopupStat(true);
+    //   setUf_asset_RESID(item.Uf_asset_RESID);
+    //   setUf_asset_SerialNumber(item.Uf_asset_SerialNumber);
+    //   setUf_asset_Location(item.Uf_asset_Location);
+    //   setStat(item.stat === 1 ? "0" : "1");
+    //   setChecked(item.stat === 1);
+    // };
 
-    const handleChange = val => {
-      setChecked(val);
-      setStat(val ? "1" : "0");
-    };
+    // const handleChange = val => {
+    //   setChecked(val);
+    //   setStat(val ? "1" : "0");
+    // };
 
-    const onButtonSaveStat = async(e) => {
+    // const onButtonSaveStat = async(e) => {
+    //   e.preventDefault();
+    //   try{
+    //      const statDataUpdate = {
+    //         Uf_asset_RESID: Uf_asset_RESID,
+    //         stat: stat
+    //      };
+
+    //      const logData ={
+    //         Uf_asset_RESID : Uf_asset_RESID,
+    //         Part_no : null,
+    //         Part_name : null,
+    //         Quantity : null,
+    //         Note : 'แจ้งเสีย'
+    //      };
+
+    //      await axios.put(`http://192.168.10.114:93/web/pointer/stat/${Uf_asset_RESID}`, statDataUpdate);
+    //      setOpenUpdateSuccess(true);
+    //      setPopupStat(false);
+
+    //      if (stat === "0") {
+    //       sendEmail(); // Send email only if stat is 0
+    //       await axios.post(`http://192.168.10.27:8080/web/log/add`, logData)
+    //     }
+
+    //      const response = await fetch("http://192.168.10.114:93/web/pointer/all");
+    //      const resp = await response.json();
+    //      editdatachange(resp);
+    //   } catch (error){
+    //         console.log("data serial: " + Uf_asset_RESID);
+    //         console.error("Error updating data:", error);
+    //         setOpenUpdateError(true);
+    //   }
+    // };
+
+    const onButtonUploadImage = async(e) => {
       e.preventDefault();
-      try{
-         const statDataUpdate = {
-            Uf_asset_RESID: Uf_asset_RESID,
-            stat: stat
-         };
-         await axios.put(`http://192.168.10.76:8080/web/pointer/stat/${Uf_asset_RESID}`, statDataUpdate);
-         setOpenUpdateSuccess(true);
-         setPopupStat(false);
-
-         if (stat === "0") {
-          sendEmail(); // Send email only if stat is 0
-        }
-
-         const response = await fetch("http://192.168.10.76:8080/web/pointer/all");
-         const resp = await response.json();
-         editdatachange(resp);
-      } catch (error){
-            console.log("data serial: " + Uf_asset_RESID);
-            console.error("Error updating data:", error);
-            setOpenUpdateError(true);
-      }
-    };
-
-    const onButtonUploadImage = async(e) =>{
-      e.preventDefault();
-      if (!Uf_asset_department){
+      if (!Uf_asset_Location){
         setOpenUpdateError(true);
         return;
       }
       try{
+        setloading(true);
         const DataUploadImage = {
-          dept: Uf_asset_department,
+          Uf_asset_Location: Uf_asset_Location,
           image: image
         };
         const config = {
@@ -164,9 +201,10 @@ export default function DataListing() {
             'content-type': 'multipart/form-data',
           },
         };
-        await axios.post(`http://192.168.10.76:8080/web/upload/bg`, DataUploadImage, config);
+        await axios.post(`http://192.168.10.27:5000/web/upload/bg/new`, DataUploadImage, config);
         setOpenUpdateSuccess(true);
         setPopupBG(false);
+        setloading(false);
       } catch (error) {
         console.error("Error Upload Image Bg:", error);
         setOpenUpdateError(true);
@@ -175,37 +213,37 @@ export default function DataListing() {
     
     const onButtonSubmit = async(e) => {
         e.preventDefault();
-        if (!Uf_asset_SerialNumber || !Uf_asset_department || !Uf_asset_ModelNumber || !Uf_asset_Location) {
+        if (!Uf_asset_SerialNumber || !Uf_asset_department || !Uf_asset_RESID || !Uf_asset_Location) {
             setOpenUpdateError(true);
             return;
           }
         try {
+            setloading(true);
             const pointerDataUpdate = { //Update pointer data
                 no: selectedItem.no,
                 Uf_asset_RESID: Uf_asset_RESID,
                 Uf_asset_department: Uf_asset_department
               };
           
-              const resourceDataUpdate = {   //Update resource data
+              const resourceDataUpdate = {  //Update resource data
                 Uf_asset_RESID: selectedItem.Uf_asset_RESID,
                 Uf_asset_RESID_update: Uf_asset_RESID || null,
                 Uf_asset_SerialNumber: Uf_asset_SerialNumber || null,
-                Uf_asset_Car_Exp: Uf_asset_Car_Exp || null,
-                Uf_asset_Compulsory_Exp: Uf_asset_Compulsory_Exp || null,
                 Uf_asset_Contact: Uf_asset_Contact || null,
                 Uf_asset_ErectricCurrent: Uf_asset_ErectricCurrent || null,
                 Uf_asset_Location : Uf_asset_Location || null,
-                Uf_asset_ModelNumber: Uf_asset_ModelNumber || null,
+                Uf_asset_ModelNumber: Uf_asset_ModelNumber || null ,
                 Uf_asset_PmDurationTime: Uf_asset_PmDurationTime || null,
                 Uf_asset_PmLink: Uf_asset_PmLink || null,
                 Uf_asset_StartUsedDate: Uf_asset_StartUsedDate || null,
                 Uf_asset_UserManual: Uf_asset_UserManual || null,
                 Uf_asset_Voltage: Uf_asset_Voltage || null,
-                Uf_asset_Weight: Uf_asset_Weight || null,
+                Uf_asset_Weight: Uf_asset_Weight || null, 
                 Uf_asset_ErectricKw: Uf_asset_ErectricKw || null,
                 Uf_asset_ExpireDate: Uf_asset_ExpireDate || null,
                 Uf_asset_department: Uf_asset_department || null,
-                Uf_asset_inventory_number: Uf_asset_inventory_number || null 
+                Uf_asset_inventory_number: Uf_asset_inventory_number || null,
+                update_by: getUsername
               };
 
               console.log('resourceDataUpdate:', JSON.stringify(resourceDataUpdate, null, 2));
@@ -215,13 +253,13 @@ export default function DataListing() {
                 dept_new: Uf_asset_department
               };
 
-              if (Uf_asset_RESID != null && Uf_asset_SerialNumber != null && Uf_asset_Location != null && Uf_asset_department != null && Uf_asset_StartUsedDate != null)
+              if (Uf_asset_RESID != null || Uf_asset_SerialNumber != null || Uf_asset_Location != null || Uf_asset_department != null || Uf_asset_StartUsedDate != null || Uf_asset_ModelNumber != null)
               {
-                  await axios.put(`http://192.168.10.76:8080/web/pointer/${selectedItem.no}`, pointerDataUpdate);
+                  await axios.put(`http://192.168.10.27:5000/web/pointer/${selectedItem.no}`, pointerDataUpdate);
 
-                  await axios.put(`http://192.168.10.76:8080/web/resource/${selectedItem.Uf_asset_RESID}`, resourceDataUpdate);
+                  await axios.put(`http://192.168.10.27:5000/web/resource/${selectedItem.Uf_asset_RESID}`, resourceDataUpdate);
 
-                  await axios.put(`http://192.168.10.76:8080/web/department/${selectedItem.Uf_asset_department}`, departmentDataUpdate);
+                  await axios.put(`http://192.168.10.27:5000/web/department/${selectedItem.Uf_asset_department}`, departmentDataUpdate);
                 
                   setOpenUpdateSuccess(true);
                   setPopupOpen(false);
@@ -229,10 +267,11 @@ export default function DataListing() {
                 alert("Error: One or more requests failed");
               }
             
-            const response = await fetch("http://192.168.10.76:8080/web/pointer/all");
+            const response = await fetch("http://192.168.10.27:5000/web/pointer/all");
             const resp = await response.json();
             editdatachange(resp);
-            
+            setloading(false);
+
         } catch (error) {
             console.error("Error updating data:", error);
             
@@ -241,19 +280,62 @@ export default function DataListing() {
         
     }
 
+    const fetchPointerAll = async () => {
+      try {
+        setloading(true);
+        const response = await axios.get('http://192.168.10.27:5000/web/pointer/all');
+        editdatachange(response.data);
+        setloading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
+        alert("Error fetching data");
+      }
+    };
+
+    const fetchSparepartAll = async () => {
+      try {
+        setloading(true);
+        const response = await axios.get('http://192.168.10.27:5000/web/sparepart/all');
+        setstockSparePart(response.data);
+        setloading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error.message);
+      }
+    };
+
+    
     useEffect(() => {
-        fetch("http://192.168.10.76:8080/web/pointer/all").then((res) => {
-            return res.json();
-        }).then((resp) => {
-            editdatachange(resp);
-        }).catch((err) => {
-            console.log(err.message);
-        })
-    }, [])
+      const fetchData = async () => {
+        await fetchPointerAll();
+        await fetchSparepartAll();
+      }
+      fetchData();
+    }, []);
+
+    // useEffect(() => {
+    //     fetch("http://192.168.10.27:5000/web/pointer/all").then((res) => {
+    //         return res.json();
+    //     }).then((resp) => {
+    //         editdatachange(resp);
+    //     }).catch((err) => {
+    //         console.log(err.message);
+    //     })
+        
+    // }, []);
+
+  //   useEffect(() => {
+  //     fetch("http://192.168.10.27:5000/web/location").then((res) => {
+  //         return res.json();
+  //     }).then((resp) => {
+  //         setBgLocation(resp);
+  //     }).catch((err) => {
+  //         console.log(err.message);
+  //     })
+  // }, []);
 
     const buttonback = () => {
       navigate('/home');
-    }
+    };
 
     const filteredData = editdata
     ? editdata.filter(item => {
@@ -262,25 +344,25 @@ export default function DataListing() {
       })
     : [];
 
-    const sendEmail = () => {
-      const date = new Date();
-      const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-      const CurrentDate = date.toLocaleDateString('nl-NL', dateOptions);
+    // const sendEmail = () => {
+    //   const date = new Date();
+    //   const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    //   const CurrentDate = date.toLocaleDateString('nl-NL', dateOptions);
 
-      const dataContent = {
-        resource: Uf_asset_RESID,
-        serialnumber: Uf_asset_SerialNumber,
-        location: Uf_asset_Location,
-        status: "Stop Working",
-        date: CurrentDate 
-      }
-      emailjs.send('service_3nmi6d8', 'template_6dja9bc', dataContent, 'uF0Gi7qXTufa0aNEz')
-      .then((result) => {
-        console.log("Send Email: " + result.text);
-      }, (error) => {
-        console.log("Send Email: " + error.text);
-      });
-    }
+    //   const dataContent = {
+    //     resource: Uf_asset_RESID,
+    //     serialnumber: Uf_asset_SerialNumber,
+    //     location: Uf_asset_Location,
+    //     status: "Stop Working",
+    //     date: CurrentDate 
+    //   }
+    //   emailjs.send('service_6oju5zk', 'template_s8zinja', dataContent, 'u2G-71zzuU8byo7kE') 
+    //   .then((result) => {
+    //     console.log("Send Email: " + result.text);
+    //   }, (error) => {
+    //     console.log("Send Email: " + error.text);
+    //   });
+    // }
 
     function formatDate(dateString) {
       if (dateString === null) {
@@ -303,6 +385,136 @@ export default function DataListing() {
       return `${formattedDate}`;
   }
 
+  const handleWithdraw = (item) => {
+    setPopupWithdraw(true);
+    setSelectedItem(item);
+    setUf_asset_RESID(item.Uf_asset_RESID);
+    setPart_no(item.Part_no);
+    setPart_name(item.Part_name);
+    setDefaultQty(item.Quantity);
+  };
+
+//   useEffect(() => {
+//     fetch("http://192.168.10.27:5000/web/sparepart/all").then((res) => {
+//         return res.json();
+//     }).then((response) => {
+//         setstockSparePart(response);
+//     }).catch((err) => {
+//         console.log(err.message);
+//     })
+// }, []);
+
+//console.log('data:', JSON.stringify(stockSparePart, null, 2));
+
+function incrementCount() {
+  if (Quantity === '' || Quantity < 30){
+      Quantity = Quantity + 1;
+      setQuantity(Quantity);
+  }
+}
+function decrementCount() {
+  if (Quantity === '' || Quantity > 1){
+      Quantity = Quantity - 1;
+      setQuantity(Quantity);
+  }
+}
+
+function onButtonClose(){
+  setPopupWithdraw(false);
+  setSelectedParts([]);
+  setSelectedLogs([]);
+}
+
+const onButtonWithdrawStock = async(e) => {
+  e.preventDefault();
+  try {
+      if (selectedParts.length === 0){
+        alert("กรุณาเพิ่มรายการเบิก");
+        return;
+      } 
+        for (let i = 0; i < selectedParts.length; i++) {
+          const partData = selectedParts[i];
+          const logData = selectedLogs[i];
+          setloading(true);
+          await axios.put(`http://192.168.10.27:5000/web/sparepart/minus/stock/${partData.Part_no}`, partData);
+          await axios.post(`http://192.168.10.27:5000/web/log/add`, logData);
+          //console.log("part data: ",JSON.stringify(partData, null, 2));
+          //console.log("log data: ",JSON.stringify(logData, null, 2));
+        }
+         
+        setPopupWithdraw(false);
+        setopenWithdrawSuccess(true);
+        setSelectedParts([]);
+        setSelectedLogs([]);
+        setloading(false);
+
+  }catch (error){
+      setopenWithdrawError(true);
+      console.log("Error Withdraw stock: ", error);
+  }
+}
+
+const handleAddButtonClick = () => {
+  if (Part_name === '' || Part_name === undefined) {
+      alert("Please choose part");
+      return;
+  }
+
+  if (Quantity > DefaultQty) {
+      alert("จำนวนอะไหล่ไม่เพียงพอ");
+      return;
+  }
+
+  const newParts = {
+    Part_no : Part_no,
+    Minus_Quantity : Quantity
+  }
+  const newLogs = {
+    Uf_asset_RESID: Uf_asset_RESID,
+    Part_no: Part_no,
+    Part_name: Part_name,
+    Quantity: Quantity,
+    Note: null,
+    Type: 'เบิกอะไหล่',
+    update_by: getUsername
+  };
+
+  setSelectedParts([...selectedParts, newParts]);
+  setSelectedLogs([...selectedLogs, newLogs]);
+  setPart_name(''); 
+  setQuantity(1);
+};
+
+//console.log('part:', JSON.stringify(selectedParts, null, 2));
+//console.log('log:', JSON.stringify(selectedLogs, null, 2));
+
+const handleDelButtonClick = () => {
+
+  const lenParts = selectedParts.length;
+  if(lenParts === 0){
+    alert("Not found");
+    return;
+  }
+  const updatedParts = [...selectedParts];
+  updatedParts.pop();
+  const updatedLogs = [...selectedLogs];
+  updatedLogs.pop();
+  setSelectedParts(updatedParts);
+  setSelectedLogs(updatedLogs);
+};
+
+const onClickUploadBG = async() => {
+  setPopupBG(true)
+  try{
+    setloading(true);
+    const response = await axios.get("http://192.168.10.27:5000/web/location");
+    setBgLocation(response.data);
+    setloading(false);
+  } catch (error) {
+    console.error("Fetch list page error : " , error);
+  }
+};
+
     return(
         <div>
         <section>
@@ -322,11 +534,13 @@ export default function DataListing() {
                   required/>
           <span className="caret"></span>
         </form>
-        <button className="btn-upload-bg" onClick={() => setPopupBG(true)}>Upload BG</button>
+        <button className="btn-upload-bg" onClick={onClickUploadBG}>Upload BG</button>
+        <button className="btn-upload-bg" onClick={() => navigate("/sparepart")}>Spare Part</button>
         <button className="btn-back" onClick={() => buttonback()}>Back</button>
         </div>
+        <div style={{ overflow: 'auto', maxHeight: '750px' }}>
         <table className="styled-table">
-            <thead>
+            <thead style={{ position: 'sticky', top: '0', background: '#fff' }}>
             <tr>
                 <td>NO</td>
                 <td>Resource ID</td>
@@ -347,13 +561,17 @@ export default function DataListing() {
               <td>
                 <button className="btn-edit" onClick={() => handleEdit(item)}>Edit</button>
                 <button onClick={() => Removefunction(item.no, item.Uf_asset_department, item.Uf_asset_RESID)} className="btn-remove">Remove</button>
-                <button className="btn-stat" onClick={() => handleStat(item)} >Status</button>
-                
+                {/* <button className="btn-stat" onClick={() => handleStat(item)} >Status</button> */}
+                {item.stat === 0 && (
+                <button className="btn-stat" onClick={() => handleWithdraw(item)}>เบิกอะไหล่</button>
+                )}
               </td>
             </tr>
           ))}
             </tbody>
         </table>
+        </div>
+        
 
       <Popup open={popupOpen} onClose={() => setPopupOpen(false)} 
         contentStyle={{
@@ -375,7 +593,7 @@ export default function DataListing() {
               maxLength={30}
               value={Uf_asset_RESID === null ? '' : Uf_asset_RESID}
               onChange={(e) => setUf_asset_RESID(e.target.value)}
-              required 
+              readOnly 
             /> <br />
 
             <label htmlFor="SerialNumber">Serial Number : <label style={{color: 'red'}}>***</label></label>
@@ -386,26 +604,6 @@ export default function DataListing() {
               value={Uf_asset_SerialNumber === null ? '' : Uf_asset_SerialNumber}
               onChange={(e) => setUf_asset_SerialNumber(e.target.value)}
               required 
-            /> <br />
-
-            <label htmlFor="Car_Exp">ภาษีรถยนต์ : {formatDate(Uf_asset_Car_Exp)}</label>
-            <input
-              className="form-field"
-              type="date"
-              name="Uf_asset_Car_Exp" 
-              value={Uf_asset_Car_Exp === null ? '' : Uf_asset_Car_Exp}
-              onChange={(e) => setUf_asset_Car_Exp(e.target.value)}
-              required
-            /> <br />
-
-            <label htmlFor="Compulsory_Exp">พ.ร.บ. : {formatDate(Uf_asset_Compulsory_Exp)}</label>
-            <input
-              className="form-field"
-              type="date"
-              name="Uf_asset_Compulsory_Exp" 
-              value={Uf_asset_Compulsory_Exp === null ? '' : Uf_asset_Compulsory_Exp}
-              onChange={(e) => setUf_asset_Compulsory_Exp(e.target.value)}
-              required
             /> <br />
 
             <label htmlFor="Contact">Contact : </label>
@@ -432,21 +630,21 @@ export default function DataListing() {
 
             <label htmlFor="location">Location :  <label style={{color: 'red'}}>***</label></label>
             <select
-              className="form-field-select"
-              value={Uf_asset_Location === null ? '' : Uf_asset_Location}
-              onChange={(e) => setUf_asset_Location(e.target.value)}
-              required
-            >
-              <option value="" disabled hidden>Choose Location</option>
-              <option value="OFFICE FLOOR 1">OFFICE FLOOR 1</option>
-              <option value="OFFICE FLOOR 2">OFFICE FLOOR 2</option>
-              <option value="OFFICE PD 1">OFFICE PD 1</option>
-              <option value="OFFICE PD 2">OFFICE PD 2</option>
-              <option value="FACTORY 1A">FACTORY 1A</option>
-              <option value="FACTORY 1B">FACTORY 1B</option>
-            </select>
+                  className="form-field-select"
+                  value={Uf_asset_Location}
+                  onChange={(e) => setUf_asset_Location(e.target.value)}
+                  required
+                >
+                  <option value="" disabled hidden>Choose Location</option>
+                  {BgLocation &&
+                      BgLocation.map((item) => (
+                        <option key={item.values_select}>
+                          {item.Uf_asset_Location}
+                        </option>
+                      ))}
+              </select> <br />
 
-          <label htmlFor="ModelNumber">ModelNumber : </label>
+          <label htmlFor="ModelNumber">ModelNumber : <label style={{color: 'red'}}>***</label></label>
           <input
             className="form-field"
             type="text"
@@ -570,7 +768,7 @@ export default function DataListing() {
         </div>
       </Popup>
 
-      <Popup open={popupStat} onClose={() => setPopupStat(false)}
+      {/* <Popup open={popupStat} onClose={() => setPopupStat(false)}
             contentStyle={{
               padding: "20px",
               borderRadius: "8px",
@@ -588,7 +786,7 @@ export default function DataListing() {
             </div> <br />
             <button type="button" className="btn-save" onClick={onButtonSaveStat}>Save</button>
             <button type="button" className="btn-cancel" onClick={() => setPopupStat(false)}>Cancel</button>
-      </Popup>
+      </Popup> */}
 
       <Popup open={popupBG} onClose={() => setPopupBG(false)}
             contentStyle={{
@@ -597,7 +795,10 @@ export default function DataListing() {
               boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
               }}>
             <h1 htmlFor="status" align='center'>Upload Background</h1> <br />
-            <label>ดาวน์โหลดคู่มือการ Upload ได้ที่นี่ 👉 <a href={UploadManual} download="คู่มือการ Upload Background">Download คู่มือการใช้งาน</a></label><br />
+
+            <label>ปรับขนาดรูปภาพได้ที่นี่ 👉 &nbsp;<a href="https://www.iloveimg.com/resize-image" target="_blank" rel="noreferrer">Resize image</a></label><br/><br/>
+            <label>แปลงไฟล์เป็น .SVG ได้ที่นี่ 👉 &nbsp;<a href="https://products.groupdocs.app/th/conversion/jpg-to-svg" target="_blank" rel="noreferrer">Convert JPEG To SVG</a></label><br/><br/>
+            {/* <label>ดาวน์โหลดคู่มือการ Upload ได้ที่นี่ 👉 <a href={UploadManual} download="คู่มือการ Upload Background">Download คู่มือการใช้งาน</a></label><br />
             <label>ดาวน์โหลด PowerPoint ได้ที่นี่ 👉 <a href={TemplatePPT} download="TemplateBackground">Download file</a></label><br /><br />
             <h3 className="txt-upload">โปรดกำหนดชื่อไฟล์ดังนี้</h3>
             <label>OFFICE FLOOR 1 ให้ตั้งชื่อไฟล์เป็น Office_floor_1.svg</label><br />
@@ -605,27 +806,27 @@ export default function DataListing() {
             <label>OFFICE PD 1 ให้ตั้งชื่อไฟล์เป็น Office_pd_1.svg</label><br />
             <label>OFFICE PD 2 ให้ตั้งชื่อไฟล์เป็น Office_pd_2.svg</label><br />
             <label>FACTORY 1A ให้ตั้งชื่อไฟล์เป็น Factory1A.svg</label><br />
-            <label>FACTORY 1B ให้ตั้งชื่อไฟล์เป็น Factory1B.svg</label><br /><br />
+            <label>FACTORY 1B ให้ตั้งชื่อไฟล์เป็น Factory1B.svg</label><br /><br /> */}
           
             <form>
                 <label htmlFor="location">Location : </label>
                 <select
                   className="form-field-select"
-                  value={Uf_asset_department}
-                  onChange={(e) => setUf_asset_department(e.target.value)}
+                  value={Uf_asset_Location}
+                  onChange={(e) => setUf_asset_Location(e.target.value)}
                   required
                 >
                   <option value="" disabled hidden>Choose Location</option>
-                  <option value="Office_floor_1">OFFICE FLOOR 1</option>
-                  <option value="Office_floor_2">OFFICE FLOOR 2</option>
-                  <option value="Office_pd_1">OFFICE PD 1</option>
-                  <option value="Office_pd_2">OFFICE PD 2</option>
-                  <option value="Factory1A">FACTORY 1A</option>
-                  <option value="Factory1B">FACTORY 1B</option>
+                  {BgLocation &&
+                      BgLocation.map((item) => (
+                        <option key={item.values_select}>
+                          {item.Uf_asset_Location}
+                        </option>
+                      ))}
                 </select> <br />
-
+              
                 <label>Image : </label>
-                <label style={{color: 'red'}}>&emsp; &emsp; ***หมายเหตุ ใช้นามสกุล.svg เท่านั้น***</label>
+                <label style={{color: 'red'}}>&emsp; &emsp; ***หมายเหตุ ชื่อไฟล์ห้ามมีช่องว่าง/เว้นวรรค (spacebar) และใช้นามสกุล .svg เท่านั้น***</label>
                 <input
                   className="form-field"
                   type="file"
@@ -638,6 +839,133 @@ export default function DataListing() {
                 <button type="button" className="btn-save" onClick={onButtonUploadImage}>Upload</button>
                 <button type="button" className="btn-cancel" onClick={() => setPopupBG(false)}>Cancel</button>
             </form>
+      </Popup>
+
+      <Popup open={popupWithdraw} onClose={() => setPopupWithdraw(false)}
+            contentStyle={{
+              padding: "20px",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              }}>
+            <h1 htmlFor="status" align='center'>เบิกอะไหล่</h1> <br />
+            <label htmlFor="PartName" style={{display:"none", padding: "10px"}}>Resource : {Uf_asset_RESID} </label><br />
+            <label htmlFor="PartName" style={{display:"none", padding: "10px"}}>Part No : {Part_no} </label><br />
+            
+            <div style={{ marginLeft:"15%", marginRight:"15%"}}>
+                <label htmlFor="PartName" style={{padding: "10px"}}>Part Name : </label>
+                <select
+                  className="form-field-select"
+                  style={{width : "40%"}}
+                  value={Part_name}
+                  onChange={(e) => {
+                    setPart_name(e.target.value);
+                    const selectedPart = stockSparePart.find(item => item.Part_name === e.target.value);
+                    if (selectedPart) {
+                      setPart_no(selectedPart.Part_no);
+                      setDefaultQty(selectedPart.Quantity);
+                    } else {
+                      setPart_no(''); 
+                      setDefaultQty('');
+                    }
+                  }}
+                  >
+                <option value='' hidden>Select Part Name</option>
+                {stockSparePart && stockSparePart.map((item) => (
+                <option key={item.Part_no} value={item.Part_name}>
+                  {item.Part_name}
+                </option>
+                ))}
+                </select>
+                
+                <label htmlFor="Quantity" style={{padding: "10px"}}>Quantity : </label>
+                <button onClick={decrementCount} className="btn-minus">-</button>&nbsp;
+                    <input 
+                      className="form-field"
+                      style={{width : "10%", textAlign: 'center'}}
+                        type="number"
+                        value={Quantity}
+                        onChange={(e)=>setQuantity(e.target.value)}
+                        readOnly
+                        >
+                    </input>&nbsp;
+                <button onClick={incrementCount} className="btn-plus">+</button>
+                
+              {/* </div> */}
+
+            <br />
+
+            {/* {Array.from({ length: selectCount }).map((_, index) => (
+            <div style={{ marginLeft:"10%", marginRight:"10%"}}>
+              <label htmlFor="PartName" style={{padding: "10px"}}>Part Name : </label>
+              <select
+              className="form-field-select"
+              style={{width : "40%"}}
+              value={Part_name}
+              onChange={(e) => {
+                setPart_name(e.target.value);
+                const selectedPart = stockSparePart.find(item => item.Part_name === e.target.value);
+                if (selectedPart) {
+                  setPart_no(selectedPart.Part_no);
+                  setDefaultQty(selectedPart.Quantity);
+                } else {
+                  setPart_no(''); 
+                  setDefaultQty('');
+                }
+              }}
+              >
+              <option value='' >Select Part Name</option>
+              {stockSparePart && stockSparePart.map((item) => (
+              <option key={item.Part_no} value={item.Part_name}>
+                {item.Part_name}
+              </option>
+              ))}
+              </select>
+
+              <label htmlFor="Quantity" style={{padding: "10px"}}>Quantity : </label>
+              <button onClick={decrementCount} className="btn-minus">-</button>&nbsp;
+                  <input 
+                    className="form-field"
+                    style={{width : "10%", textAlign: 'center'}}
+                      type="number"
+                      value={Quantity}
+                      onChange={(e)=>setQuantity(e.target.value)}
+                      readOnly
+                      >
+                  </input>&nbsp;
+              <button onClick={incrementCount} className="btn-plus">+</button>
+            </div>
+    ))} */}
+
+            <button type="button" className="btn-save" style={{marginTop:"10px", marginBottom:"10px", marginLeft:"33%"}} onClick={handleAddButtonClick}> เพิ่มรายการ </button>
+            <button type="button" className="btn-cancel" style={{marginBottom:"10px"}} onClick={handleDelButtonClick}>ลบรายการ </button>
+
+            <h2>รายการที่ต้องการเบิก</h2>
+                {/* <ul>
+                  {selectedLogs.map((item, index) => (
+                    <li key={index}>
+                        ชื่อ : {item.Part_name} | จำนวน : {item.Quantity}
+                    </li>
+                    ))}
+                </ul> */}
+                <table className="styled-table">
+                  <thead>
+                  <tr>
+                      <td>Part Name</td>
+                      <td>จำนวน</td>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {selectedLogs.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.Part_name}</td>
+                    <td>{item.Quantity}</td>
+                  </tr>
+                  ))}
+                  </tbody>
+                </table>
+            </div><br />
+            <button type="button" className="btn-save" onClick={onButtonWithdrawStock}>เบิกอะไหล่</button>
+            <button type="button" className="btn-cancel" onClick={onButtonClose}>Cancel</button>
       </Popup>
 
       <Snackbar open={openDeleteSuccess} autoHideDuration={4000} onClose={() => setOpenDeleteSuccess(false)}
@@ -675,6 +1003,31 @@ export default function DataListing() {
           </Alert>
         </div>
       </Snackbar>
+
+      <Snackbar open={openWithdrawSuccess} autoHideDuration={4000} onClose={() => setopenWithdrawSuccess(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+        <div>
+          <Alert onClose={() => setopenWithdrawSuccess(false)} severity="success">
+            Withdraw Successfully!
+          </Alert>
+        </div>
+      </Snackbar>
+
+      <Snackbar open={openWithdrawError} autoHideDuration={4000} onClose={() => setopenWithdrawError(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+        <div>
+          <Alert onClose={() => setopenWithdrawError(false)} severity="error">
+            Withdraw Fail !
+          </Alert>
+        </div>
+      </Snackbar>
+
+      <Backdrop 
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
     );
 }

@@ -212,6 +212,22 @@
     display: flex;
   }
 
-  .text-back{
+  .text-back {
     color: blue;
   }
+
+  .select-status {
+    display:flex;
+    flex-direction: column;
+    position:relative;
+    width:180px;
+    height:40px;
+    border-radius: 5px;
+    padding-right: 1%;
+    padding-top: 4%;
+    font-size: 16px;
+  }
+
+  
+
+
