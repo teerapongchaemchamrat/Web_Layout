@@ -31,7 +31,7 @@ function Alert(props) {
          
         try {
                 setloading(true);
-                const response = await axios.post("http://192.168.10.27:5000/login/login", userData);
+                const response = await axios.post("http://XX.XX.XX.XX:XX/login/login", userData);
                 const role = response.data.role;
                 const fullname = response.data.fullname;
                 console.log("POST Response:", response.data);
@@ -39,25 +39,7 @@ function Alert(props) {
                 localStorage.setItem('Fullname' , fullname);
                 localStorage.setItem('RoleType', role);
                 setOpenSuccess(true);
-                //navigate('/home', {state:{valueUser: fullname}});
                 navigate('/home');
-                // if ( username === 'teerapong'){
-                //   localStorage.setItem('RoleType', 'Super_administrator');
-                //   setPassword("");
-                //   navigate('/home', {state:{valueUser: username}});
-                // } else if ( username === 'admin' || username === 'threepol') {    // admin   เครื่องหมายหรือ ||
-                //     localStorage.setItem('RoleType', 'administrator');
-                //     setPassword("");
-                //     navigate('/home', {state:{valueUser: username}});
-                // } else if( username === 'wattanajo'){                      // Production
-                //     localStorage.setItem('RoleType', 'production');
-                //     setPassword("");
-                //     navigate('/home', {state:{valueUser: username}}); 
-                // } else{
-                //     localStorage.setItem('RoleType', 'user');
-                //     setPassword("");
-                //     navigate('/home', {state:{valueUser: username}});
-                // }
                 setloading(false);
             } catch (error) {
                 console.error("Error login data:", error);
