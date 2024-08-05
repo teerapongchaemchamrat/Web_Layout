@@ -43,7 +43,7 @@ function Alert(props) {
           setloading(true); 
           if(password === confirm_password){
               if (username.trim() !== '' && password.trim() !== '' && fullname.trim() !== '' && role.trim() !== ''){
-                await axios.post("http://192.168.10.27:5000/login/register", regUser);
+                await axios.post("http://XX.XX.XX.XX:XX/login/register", regUser);
                 setUsername("");
                 setPassword("");
                 setConfirm_password("");
