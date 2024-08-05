@@ -38,7 +38,7 @@ function Alert(props) {
       try {
           setloading(true); 
           if (username.trim() !== '' && password.trim() !== '' ){
-            await axios.put("http://192.168.10.27:5000/login/forget/password", resetPass);
+            await axios.put("http://XX.XX.XX.XX:XX/login/forget/password", resetPass);
             setUsername("");
             setPassword("");
             
