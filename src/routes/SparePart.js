@@ -33,7 +33,7 @@ export default function SparePart() {
 
     useEffect(() => {
         setloading(true);
-        fetch("http://192.168.10.27:5000/web/sparepart/all").then((res) => {
+        fetch("http://XX.XX.XX.XX:XX/web/sparepart/all").then((res) => {
             return res.json();
         }).then((resp) => {
             setstockSparePart(resp);
@@ -91,13 +91,13 @@ export default function SparePart() {
               update_by : getUsername
             };
 
-            await axios.put(`http://192.168.10.27:5000/web/sparepart/add/stock/${selectedItem.Part_no}`, dataAddStock);
-            await axios.post(`http://192.168.10.27:5000/web/log/add`, logData);
+            await axios.put(`http://XX.XX.XX.XX:XX/web/sparepart/add/stock/${selectedItem.Part_no}`, dataAddStock);
+            await axios.post(`http://XX.XX.XX.XX:XX/web/log/add`, logData);
             setPopupAdd(false);
             setopenAddSuccess(true);
             setCount(1);
             
-            const response = await fetch("http://192.168.10.27:5000/web/sparepart/all");
+            const response = await fetch("http://XX.XX.XX.XX:XX/web/sparepart/all");
             const resp = await response.json();
             setstockSparePart(resp);
             setloading(false);
@@ -132,12 +132,12 @@ export default function SparePart() {
               update_by : getUsername
             };
 
-            await axios.post(`http://192.168.10.27:5000/web/sparepart/add`, dataAddNewStock);
-            await axios.post(`http://192.168.10.27:5000/web/log/add`, logData);
+            await axios.post(`http://XX.XX.XX.XX:XX/web/sparepart/add`, dataAddNewStock);
+            await axios.post(`http://XX.XX.XX.XX:XX/web/log/add`, logData);
             setPopupAddNew(false);
             setopenAddSuccess(true);
 
-            const response = await fetch("http://192.168.10.27:5000/web/sparepart/all");
+            const response = await fetch("http://XX.XX.XX.XX:XX/web/sparepart/all");
             const resp = await response.json();
             setstockSparePart(resp);
             setloading(false);
