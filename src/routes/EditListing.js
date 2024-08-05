@@ -7,11 +7,6 @@ import MuiAlert from '@mui/material/Alert';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Popup from 'reactjs-popup';
-//import ReactSwitch from 'react-switch';
-//import emailjs from '@emailjs/browser';
-// import TemplatePPT from '../Background_Web.pptx'
-// import UploadManual from '../Manual_Upload.pdf'
-
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -44,16 +39,6 @@ export default function DataListing() {
 
     const [selectedParts, setSelectedParts] = useState([]);
     const [selectedLogs, setSelectedLogs] = useState([]);
-
-    // const [selectCount, setSelectCount] = useState(1);
-
-    // const handleAddButtonClick = () => {
-    //   setSelectCount(prevCount => prevCount + 1);
-    // }
-
-    // const handleDelButtonClick = () => {
-    //   setSelectCount(prevCount => prevCount - 1);
-    // }
 
     const [Uf_asset_RESID, setUf_asset_RESID] = useState('');
     const [Uf_asset_SerialNumber, setUf_asset_SerialNumber] = useState('');
@@ -92,14 +77,14 @@ export default function DataListing() {
     const deleteData = async (no, Uf_asset_department, Uf_asset_RESID) => {
         try {
             setloading(true);
-            await axios.delete(`http://192.168.10.27:5000/web/pointer/${no}`);
-            await axios.delete(`http://192.168.10.27:5000/web/department/${Uf_asset_department}`);
-            await axios.delete(`http://192.168.10.27:5000/web/resource/${Uf_asset_RESID}`);
+            await axios.delete(`http://XX.XX.XX.XX:XX/web/pointer/${no}`);
+            await axios.delete(`http://XX.XX.XX.XX:XX/web/department/${Uf_asset_department}`);
+            await axios.delete(`http://XX.XX.XX.XX:XX/web/resource/${Uf_asset_RESID}`);
             
             setOpenDeleteSuccess(true);
     
             // Update state to trigger a re-render
-            const response = await fetch("http://192.168.10.27:5000/web/pointer/all");
+            const response = await fetch("http://XX.XX.XX.XX:XX/web/pointer/all");
             const resp = await response.json();
             editdatachange(resp);
             setloading(false);
@@ -135,55 +120,6 @@ export default function DataListing() {
       setImage(selectedImage);
     };
 
-    // const handleStat = (item) => {
-    //   setPopupStat(true);
-    //   setUf_asset_RESID(item.Uf_asset_RESID);
-    //   setUf_asset_SerialNumber(item.Uf_asset_SerialNumber);
-    //   setUf_asset_Location(item.Uf_asset_Location);
-    //   setStat(item.stat === 1 ? "0" : "1");
-    //   setChecked(item.stat === 1);
-    // };
-
-    // const handleChange = val => {
-    //   setChecked(val);
-    //   setStat(val ? "1" : "0");
-    // };
-
-    // const onButtonSaveStat = async(e) => {
-    //   e.preventDefault();
-    //   try{
-    //      const statDataUpdate = {
-    //         Uf_asset_RESID: Uf_asset_RESID,
-    //         stat: stat
-    //      };
-
-    //      const logData ={
-    //         Uf_asset_RESID : Uf_asset_RESID,
-    //         Part_no : null,
-    //         Part_name : null,
-    //         Quantity : null,
-    //         Note : 'แจ้งเสีย'
-    //      };
-
-    //      await axios.put(`http://192.168.10.114:93/web/pointer/stat/${Uf_asset_RESID}`, statDataUpdate);
-    //      setOpenUpdateSuccess(true);
-    //      setPopupStat(false);
-
-    //      if (stat === "0") {
-    //       sendEmail(); // Send email only if stat is 0
-    //       await axios.post(`http://192.168.10.27:8080/web/log/add`, logData)
-    //     }
-
-    //      const response = await fetch("http://192.168.10.114:93/web/pointer/all");
-    //      const resp = await response.json();
-    //      editdatachange(resp);
-    //   } catch (error){
-    //         console.log("data serial: " + Uf_asset_RESID);
-    //         console.error("Error updating data:", error);
-    //         setOpenUpdateError(true);
-    //   }
-    // };
-
     const onButtonUploadImage = async(e) => {
       e.preventDefault();
       if (!Uf_asset_Location){
@@ -201,7 +137,7 @@ export default function DataListing() {
             'content-type': 'multipart/form-data',
           },
         };
-        await axios.post(`http://192.168.10.27:5000/web/upload/bg/new`, DataUploadImage, config);
+        await axios.post(`http://XX.XX.XX.XX:XX/web/upload/bg/new`, DataUploadImage, config);
         setOpenUpdateSuccess(true);
         setPopupBG(false);
         setloading(false);
@@ -255,11 +191,11 @@ export default function DataListing() {
 
               if (Uf_asset_RESID != null || Uf_asset_SerialNumber != null || Uf_asset_Location != null || Uf_asset_department != null || Uf_asset_StartUsedDate != null || Uf_asset_ModelNumber != null)
               {
-                  await axios.put(`http://192.168.10.27:5000/web/pointer/${selectedItem.no}`, pointerDataUpdate);
+                  await axios.put(`http://XX.XX.XX.XX:XX/web/pointer/${selectedItem.no}`, pointerDataUpdate);
 
-                  await axios.put(`http://192.168.10.27:5000/web/resource/${selectedItem.Uf_asset_RESID}`, resourceDataUpdate);
+                  await axios.put(`http://XX.XX.XX.XX:XX/web/resource/${selectedItem.Uf_asset_RESID}`, resourceDataUpdate);
 
-                  await axios.put(`http://192.168.10.27:5000/web/department/${selectedItem.Uf_asset_department}`, departmentDataUpdate);
+                  await axios.put(`http://XX.XX.XX.XX:XX/web/department/${selectedItem.Uf_asset_department}`, departmentDataUpdate);
                 
                   setOpenUpdateSuccess(true);
                   setPopupOpen(false);
@@ -267,7 +203,7 @@ export default function DataListing() {
                 alert("Error: One or more requests failed");
               }
             
-            const response = await fetch("http://192.168.10.27:5000/web/pointer/all");
+            const response = await fetch("http://XX.XX.XX.XX:XX/web/pointer/all");
             const resp = await response.json();
             editdatachange(resp);
             setloading(false);
@@ -283,7 +219,7 @@ export default function DataListing() {
     const fetchPointerAll = async () => {
       try {
         setloading(true);
-        const response = await axios.get('http://192.168.10.27:5000/web/pointer/all');
+        const response = await axios.get('http://XX.XX.XX.XX:XX/web/pointer/all');
         editdatachange(response.data);
         setloading(false);
       } catch (error) {
@@ -295,7 +231,7 @@ export default function DataListing() {
     const fetchSparepartAll = async () => {
       try {
         setloading(true);
-        const response = await axios.get('http://192.168.10.27:5000/web/sparepart/all');
+        const response = await axios.get('http://XX.XX.XX.XX:XX/web/sparepart/all');
         setstockSparePart(response.data);
         setloading(false);
       } catch (error) {
@@ -312,27 +248,6 @@ export default function DataListing() {
       fetchData();
     }, []);
 
-    // useEffect(() => {
-    //     fetch("http://192.168.10.27:5000/web/pointer/all").then((res) => {
-    //         return res.json();
-    //     }).then((resp) => {
-    //         editdatachange(resp);
-    //     }).catch((err) => {
-    //         console.log(err.message);
-    //     })
-        
-    // }, []);
-
-  //   useEffect(() => {
-  //     fetch("http://192.168.10.27:5000/web/location").then((res) => {
-  //         return res.json();
-  //     }).then((resp) => {
-  //         setBgLocation(resp);
-  //     }).catch((err) => {
-  //         console.log(err.message);
-  //     })
-  // }, []);
-
     const buttonback = () => {
       navigate('/home');
     };
@@ -343,26 +258,6 @@ export default function DataListing() {
         return searchFields.some(field => field.toLowerCase().includes(searchTerm.toLowerCase()));
       })
     : [];
-
-    // const sendEmail = () => {
-    //   const date = new Date();
-    //   const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    //   const CurrentDate = date.toLocaleDateString('nl-NL', dateOptions);
-
-    //   const dataContent = {
-    //     resource: Uf_asset_RESID,
-    //     serialnumber: Uf_asset_SerialNumber,
-    //     location: Uf_asset_Location,
-    //     status: "Stop Working",
-    //     date: CurrentDate 
-    //   }
-    //   emailjs.send('service_6oju5zk', 'template_s8zinja', dataContent, 'u2G-71zzuU8byo7kE') 
-    //   .then((result) => {
-    //     console.log("Send Email: " + result.text);
-    //   }, (error) => {
-    //     console.log("Send Email: " + error.text);
-    //   });
-    // }
 
     function formatDate(dateString) {
       if (dateString === null) {
@@ -377,11 +272,6 @@ export default function DataListing() {
       const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
       const formattedDate = modifiedDate.toLocaleDateString('nl-NL', dateOptions);
 
-      // Format the time portion as "HH:mm:ss" (24-hour format)
-      // const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-      // const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(modifiedDate);
-
-      // return `${formattedDate} ${formattedTime}`;
       return `${formattedDate}`;
   }
 
@@ -393,18 +283,6 @@ export default function DataListing() {
     setPart_name(item.Part_name);
     setDefaultQty(item.Quantity);
   };
-
-//   useEffect(() => {
-//     fetch("http://192.168.10.27:5000/web/sparepart/all").then((res) => {
-//         return res.json();
-//     }).then((response) => {
-//         setstockSparePart(response);
-//     }).catch((err) => {
-//         console.log(err.message);
-//     })
-// }, []);
-
-//console.log('data:', JSON.stringify(stockSparePart, null, 2));
 
 function incrementCount() {
   if (Quantity === '' || Quantity < 30){
@@ -436,8 +314,8 @@ const onButtonWithdrawStock = async(e) => {
           const partData = selectedParts[i];
           const logData = selectedLogs[i];
           setloading(true);
-          await axios.put(`http://192.168.10.27:5000/web/sparepart/minus/stock/${partData.Part_no}`, partData);
-          await axios.post(`http://192.168.10.27:5000/web/log/add`, logData);
+          await axios.put(`http://XX.XX.XX.XX:XX/web/sparepart/minus/stock/${partData.Part_no}`, partData);
+          await axios.post(`http://XX.XX.XX.XX:XX/web/log/add`, logData);
           //console.log("part data: ",JSON.stringify(partData, null, 2));
           //console.log("log data: ",JSON.stringify(logData, null, 2));
         }
@@ -507,7 +385,7 @@ const onClickUploadBG = async() => {
   setPopupBG(true)
   try{
     setloading(true);
-    const response = await axios.get("http://192.168.10.27:5000/web/location");
+    const response = await axios.get("http://XX.XX.XX.XX:XX/web/location");
     setBgLocation(response.data);
     setloading(false);
   } catch (error) {
@@ -768,26 +646,6 @@ const onClickUploadBG = async() => {
         </div>
       </Popup>
 
-      {/* <Popup open={popupStat} onClose={() => setPopupStat(false)}
-            contentStyle={{
-              padding: "20px",
-              borderRadius: "8px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-              }}>
-            <h1 htmlFor="status" align='center'>Status</h1> <br />
-            <div style={{display: 'flex'}}>
-              <div className="text-switch">
-                <h2 value={Uf_asset_RESID}>Resource ID : {Uf_asset_RESID} </h2>
-                <h2 style={{ display: 'none' }} value={Uf_asset_SerialNumber}>Serial Number : {Uf_asset_SerialNumber} </h2>
-                <h2 style={{ display: 'none' }} value={Uf_asset_Location}>Location : {Uf_asset_Location} </h2>
-              </div>
-              
-            <ReactSwitch checked={checked} onChange={handleChange} value={stat} className="react-switch"></ReactSwitch>
-            </div> <br />
-            <button type="button" className="btn-save" onClick={onButtonSaveStat}>Save</button>
-            <button type="button" className="btn-cancel" onClick={() => setPopupStat(false)}>Cancel</button>
-      </Popup> */}
-
       <Popup open={popupBG} onClose={() => setPopupBG(false)}
             contentStyle={{
               padding: "20px",
@@ -798,15 +656,6 @@ const onClickUploadBG = async() => {
 
             <label>ปรับขนาดรูปภาพได้ที่นี่ 👉 &nbsp;<a href="https://www.iloveimg.com/resize-image" target="_blank" rel="noreferrer">Resize image</a></label><br/><br/>
             <label>แปลงไฟล์เป็น .SVG ได้ที่นี่ 👉 &nbsp;<a href="https://products.groupdocs.app/th/conversion/jpg-to-svg" target="_blank" rel="noreferrer">Convert JPEG To SVG</a></label><br/><br/>
-            {/* <label>ดาวน์โหลดคู่มือการ Upload ได้ที่นี่ 👉 <a href={UploadManual} download="คู่มือการ Upload Background">Download คู่มือการใช้งาน</a></label><br />
-            <label>ดาวน์โหลด PowerPoint ได้ที่นี่ 👉 <a href={TemplatePPT} download="TemplateBackground">Download file</a></label><br /><br />
-            <h3 className="txt-upload">โปรดกำหนดชื่อไฟล์ดังนี้</h3>
-            <label>OFFICE FLOOR 1 ให้ตั้งชื่อไฟล์เป็น Office_floor_1.svg</label><br />
-            <label>OFFICE FLOOR 2 ให้ตั้งชื่อไฟล์เป็น Office_floor_2.svg</label><br />
-            <label>OFFICE PD 1 ให้ตั้งชื่อไฟล์เป็น Office_pd_1.svg</label><br />
-            <label>OFFICE PD 2 ให้ตั้งชื่อไฟล์เป็น Office_pd_2.svg</label><br />
-            <label>FACTORY 1A ให้ตั้งชื่อไฟล์เป็น Factory1A.svg</label><br />
-            <label>FACTORY 1B ให้ตั้งชื่อไฟล์เป็น Factory1B.svg</label><br /><br /> */}
           
             <form>
                 <label htmlFor="location">Location : </label>
@@ -894,59 +743,10 @@ const onClickUploadBG = async() => {
 
             <br />
 
-            {/* {Array.from({ length: selectCount }).map((_, index) => (
-            <div style={{ marginLeft:"10%", marginRight:"10%"}}>
-              <label htmlFor="PartName" style={{padding: "10px"}}>Part Name : </label>
-              <select
-              className="form-field-select"
-              style={{width : "40%"}}
-              value={Part_name}
-              onChange={(e) => {
-                setPart_name(e.target.value);
-                const selectedPart = stockSparePart.find(item => item.Part_name === e.target.value);
-                if (selectedPart) {
-                  setPart_no(selectedPart.Part_no);
-                  setDefaultQty(selectedPart.Quantity);
-                } else {
-                  setPart_no(''); 
-                  setDefaultQty('');
-                }
-              }}
-              >
-              <option value='' >Select Part Name</option>
-              {stockSparePart && stockSparePart.map((item) => (
-              <option key={item.Part_no} value={item.Part_name}>
-                {item.Part_name}
-              </option>
-              ))}
-              </select>
-
-              <label htmlFor="Quantity" style={{padding: "10px"}}>Quantity : </label>
-              <button onClick={decrementCount} className="btn-minus">-</button>&nbsp;
-                  <input 
-                    className="form-field"
-                    style={{width : "10%", textAlign: 'center'}}
-                      type="number"
-                      value={Quantity}
-                      onChange={(e)=>setQuantity(e.target.value)}
-                      readOnly
-                      >
-                  </input>&nbsp;
-              <button onClick={incrementCount} className="btn-plus">+</button>
-            </div>
-    ))} */}
-
             <button type="button" className="btn-save" style={{marginTop:"10px", marginBottom:"10px", marginLeft:"33%"}} onClick={handleAddButtonClick}> เพิ่มรายการ </button>
             <button type="button" className="btn-cancel" style={{marginBottom:"10px"}} onClick={handleDelButtonClick}>ลบรายการ </button>
 
             <h2>รายการที่ต้องการเบิก</h2>
-                {/* <ul>
-                  {selectedLogs.map((item, index) => (
-                    <li key={index}>
-                        ชื่อ : {item.Part_name} | จำนวน : {item.Quantity}
-                    </li>
-                    ))}
-                </ul> */}
                 <table className="styled-table">
                   <thead>
                   <tr>
